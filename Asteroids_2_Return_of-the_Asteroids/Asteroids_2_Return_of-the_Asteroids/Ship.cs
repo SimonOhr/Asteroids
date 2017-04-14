@@ -21,8 +21,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public int DamageOutput { get; private set; }
 
-        float speed;
-        bool isMoving;
+        float speed;        
 
         Vector2 directionOfShip;        
         Vector2 rotationTarget;
@@ -48,32 +47,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
             rotationTarget = mousePos;
 
             MovementInput();
-            
-            shipPos += speed * GetDirection();           
 
+            shipPos += speed * GetDirection();   
+            
         }
 
         private void MovementInput()
         {                         
 
             if (Vector2.Distance(mousePos, shipPos) < 4)
-            {
-                isMoving = false;
+            {                
+                speed = 0;
             }
             else if (Vector2.Distance(mousePos, shipPos) >= 4)
-            {
-                isMoving = true;
-            }
-
-            if (!isMoving)
-            {
-                speed = 0;                
-            }
-
-            else if (isMoving)
-            {
+            {                
                 speed = 3;
-            }
+            }          
 
             ShipRotation();
             GetDirection();

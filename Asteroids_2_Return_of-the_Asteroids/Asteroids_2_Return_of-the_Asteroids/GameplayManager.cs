@@ -95,7 +95,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 gunCooldownTimer = 500f;
             }
             CreateAsteroids(gt);
-
+            CheckIfAsteroidIsInPlay();
             ship.Update(gt);
 
             for (int i = 0; i < projectiles.Count; i++)
@@ -112,7 +112,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
 
             CheckAsteroidCollision();
-            CheckIfAsteroidIsInPlay();
+            
             CheckIfAsteroidIsHit();
         }
 
@@ -132,14 +132,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CheckIfAsteroidIsHit()
         {
-            for (int i = 0; i < asteroids.Count; i++)
+            for (int i = 0; i < asteroids.Count-1; i++)
             {
                 for (int j = 0; j < projectiles.Count; j++)
                 {
-                    if (Vector2.Distance(projectiles[j].projectilePos, asteroids[i].asteroidPos) < 50)
+                    if (asteroids[i] == null )
                     {
-                        projectiles.RemoveAt(j);
+                        break;
+                    }
+                    if (Vector2.Distance(asteroids[i].asteroidPos, projectiles[j].projectilePos) < 50)
+                    {
                         asteroids.RemoveAt(i);
+                        projectiles.RemoveAt(j);                       
                     }
                 }
             }
@@ -185,7 +189,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 if (asteroids[i].isOutOfPlay)
                 {
                     asteroids.RemoveAt(i);
-                   // Console.WriteLine("size of list " + asteroids.Count);
+                    // Console.WriteLine("size of list " + asteroids.Count);
                 }
             }
         }
