@@ -113,6 +113,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             CheckAsteroidCollision();
             CheckIfAsteroidIsInPlay();
+            CheckIfAsteroidIsHit();
         }
 
         private void PlayerIsShooting(GameTime gt)
@@ -127,6 +128,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 Console.WriteLine("number of shots " + projectiles.Count);
             }
                         
+        }
+
+        private void CheckIfAsteroidIsHit()
+        {
+            for (int i = 0; i < asteroids.Count; i++)
+            {
+                for (int j = 0; j < projectiles.Count; j++)
+                {
+                    if (Vector2.Distance(projectiles[j].projectilePos, asteroids[i].asteroidPos) < 50)
+                    {
+                        projectiles.RemoveAt(j);
+                        asteroids.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         private void CheckAsteroidCollision()
