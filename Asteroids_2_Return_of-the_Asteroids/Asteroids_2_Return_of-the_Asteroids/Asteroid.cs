@@ -44,6 +44,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Vector2 velocity;
         public int mass;
 
+        public int AsteroidRadius { get; private set; }
+
         float rotation;
 
         public Asteroid(GameWindow window, Random rnd)
@@ -77,17 +79,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             targetDirection = new Rectangle((window.ClientBounds.Width / 2), (window.ClientBounds.Height / 2), 1, 1);
 
-            speed = new Vector2(rnd.Next(1,7),rnd.Next(1,7));           
+            speed = new Vector2(rnd.Next(1,7),rnd.Next(1,7));   
+                    
             direction = GetDirection();
-            mass = rnd.Next(1,20);
-            velocity = speed * direction;           
+
+            AsteroidRadius = 50;
+
+            velocity = speed * direction;
+
+            GetAsteroidMass();        
         }
 
         public void Update(GameTime gt)
         {
             asteroidPos += velocity;            
             asteroidHitbox.X = (int)asteroidPos.X;
-            asteroidHitbox.Y = (int)asteroidPos.Y;
+            asteroidHitbox.Y = (int)asteroidPos.Y;            
 
             if (asteroidPos.X < -asteroidZoneLeft.Width || asteroidPos.X > window.ClientBounds.Width + asteroidZoneRight.Width
                 || asteroidPos.Y < -asteroidZoneUp.Height || asteroidPos.Y > window.ClientBounds.Height)
@@ -95,7 +102,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 isOutOfPlay = true;
             }                              
         }
-       
+        private void GetAsteroidMass()
+        {
+            if (choosenAsteroidTex == asteroidTextures[1])
+            {
+                mass = 1;
+            }
+            else if (choosenAsteroidTex == asteroidTextures[0])
+            {
+                mass = 1;
+            }
+        }
         private Vector2 GetDirection()
         {            
             Vector2 Direction = new Vector2(targetDirection.X - asteroidPos.X, targetDirection.Y - asteroidPos.Y);

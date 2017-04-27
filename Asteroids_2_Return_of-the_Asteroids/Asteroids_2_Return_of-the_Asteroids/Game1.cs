@@ -48,7 +48,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected override void Update(GameTime gameTime)
         {           
             gm.Update(gameTime);
-
+            
             base.Update(gameTime);
         }
 

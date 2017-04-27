@@ -18,7 +18,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Asteroid asteroid;
         List<Asteroid> asteroids = new List<Asteroid>();
 
-        Ship ship;
+        Ship ship;        
 
         Projectile projectile;
         List<Projectile> projectiles = new List<Projectile>();
@@ -35,7 +35,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Vector2 mousePos;
 
-        public int asteroidRadius;        
+        public bool TempInvulnarbility { get; private set; } = false;
+        double tempTimer, tempReset = 0;
+        float tempTarget = 2;
+        
 
         public GameplayManager(Random rnd, GameWindow window)
         {
@@ -51,33 +54,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
             numberOfAsteroidsPerTimerReset = 3;
 
             gunRateOfFire = 200f;
-            gunCooldownTimer = 500;
+            gunCooldownTimer = 0;
             gunCooldownTimerReset = 0;
-
-            asteroidRadius = 50;
         }
 
         private void CreatePlayerShip()
         {
             ship = new Ship(new Vector2(50, 50), mousePos);
-        }
-
-        private void CreateAsteroids(GameTime gt)
-        {
-            spawnAsteroidsTimer += gt.ElapsedGameTime.TotalSeconds;
-
-            if (spawnAsteroidsTimer > spawnAsteroidsInterval)
-            {
-                for (int i = 0; i < numberOfAsteroidsPerTimerReset; i++)
-                {
-                    asteroid = new Asteroid(window, rnd);
-                    asteroids.Add(asteroid);
-                }
-
-                spawnAsteroidsTimer = spawnAsteroidsTimerReset;
-            }
-
-           // Console.WriteLine(+asteroids.Count);
         }
 
         public void Update(GameTime gt)
@@ -88,7 +71,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
                 projectileTargetPos = Mouse.GetState().Position.ToVector2();
-                PlayerIsShooting(gt);                                         
+                PlayerIsShooting(gt);
             }
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
@@ -112,52 +95,70 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
 
             CheckAsteroidCollision();
-            
+
             CheckIfAsteroidIsHit();
+
+            CheckIfShipIsHit(gt);
         }
 
         private void PlayerIsShooting(GameTime gt)
         {
             gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
 
-            if ( gunCooldownTimer > gunRateOfFire)
+            if (gunCooldownTimer > gunRateOfFire)
             {
                 projectile = new Projectile(ship.shipPos, projectileTargetPos);
                 projectiles.Add(projectile);
                 gunCooldownTimer = gunCooldownTimerReset;
                 Console.WriteLine("number of shots " + projectiles.Count);
             }
-                        
+        }
+
+        private void CreateAsteroids(GameTime gt)
+        {
+            spawnAsteroidsTimer += gt.ElapsedGameTime.TotalSeconds;
+
+            if (spawnAsteroidsTimer > spawnAsteroidsInterval)
+            {
+                for (int i = 0; i < numberOfAsteroidsPerTimerReset; i++)
+                {
+                    asteroid = new Asteroid(window, rnd);
+                    asteroids.Add(asteroid);
+                }
+                spawnAsteroidsTimer = spawnAsteroidsTimerReset;
+            }
+
+            Console.WriteLine(+asteroids.Count);
         }
 
         private void CheckIfAsteroidIsHit()
         {
-            for (int i = 0; i < asteroids.Count-1; i++)
+            for (int j = 0; j < projectiles.Count; j++)
             {
-                for (int j = 0; j < projectiles.Count; j++)
+                for (int i = 0; i < asteroids.Count; i++)
                 {
-                    if (asteroids[i] == null )
+                    if (projectiles.Count > 0)
                     {
-                        break;
-                    }
-                    if (Vector2.Distance(asteroids[i].asteroidPos, projectiles[j].projectilePos) < 50)
-                    {
-                        asteroids.RemoveAt(i);
-                        projectiles.RemoveAt(j);                       
+                        if (Vector2.Distance(asteroids[i].asteroidPos, projectiles[j].projectilePos) < 50)
+                        {
+                            projectiles.RemoveAt(j);
+                            asteroids.RemoveAt(i);
+                            break;
+                        }
                     }
                 }
             }
-        }
+        }                
 
         private void CheckAsteroidCollision()
         {
-            for (int i = 0; i < asteroids.Count - 1; i++)
+            for (int i = 0; i < asteroids.Count; i++)
             {
                 Asteroid enemy1 = asteroids[i];
                 for (int j = i + 1; j < asteroids.Count; j++)
                 {
                     Asteroid enemy2 = asteroids[j];
-                    if (Vector2.Distance(asteroids[i].asteroidPos, asteroids[j].asteroidPos) < asteroidRadius * 2)
+                    if (Vector2.Distance(asteroids[i].asteroidPos, asteroids[j].asteroidPos) < asteroid.AsteroidRadius * 2)
                     {
                         Vector2 collisionNormal = asteroids[i].asteroidPos - asteroids[j].asteroidPos;
                         collisionNormal.Normalize();
@@ -168,7 +169,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         Vector2 v2Parallel = Vector2.Dot(collisionNormal, asteroids[j].velocity) * collisionNormal;
                         Vector2 v2Ortho = Vector2.Dot(collisionDirection, asteroids[j].velocity) * collisionDirection;
 
-                        var v1Length = v1Parallel.Length(); // ()
+                        var v1Length = v1Parallel.Length();
                         var v2Length = v2Parallel.Length();
                         var commonVelocity = (((asteroids[i].mass) * v1Length) + (asteroids[j].mass * v2Length)) / ((asteroids[i].mass) + (asteroids[j].mass));
                         var v1LengthAfterCollision = commonVelocity - v1Length;
@@ -177,7 +178,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         v2Parallel = v2Parallel * (v2LengthAfterCollision / v2Length);
 
                         asteroids[i].velocity = v1Parallel + v1Ortho;
-                        asteroids[j].velocity = v2Parallel + v2Ortho;                      
+                        asteroids[j].velocity = v2Parallel + v2Ortho;
                     }
                 }
             }
@@ -190,6 +191,33 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     asteroids.RemoveAt(i);
                     // Console.WriteLine("size of list " + asteroids.Count);
+                }
+            }
+        }
+
+        private void CheckIfShipIsHit(GameTime gt)
+        {            
+            if (TempInvulnarbility)
+            {
+                tempTimer += gt.ElapsedGameTime.TotalSeconds;
+                if (tempTimer >= tempTarget)
+                {
+                    TempInvulnarbility = false;
+                    ship.isHit = false;
+                    tempTimer = tempReset;
+                }
+            }
+            else if (!TempInvulnarbility)
+            {                
+                for (int i = 0; i < asteroids.Count; i++)
+                {
+                    if (Vector2.Distance(asteroids[i].asteroidPos, ship.shipPos) < asteroids[i].AsteroidRadius + (ship.ShipTex.Width / 2))
+                    {
+                        
+                        TempInvulnarbility = true;
+                        ship.isHit = true;
+                        ship.hitPoints -= 1;
+                    }
                 }
             }
         }
@@ -210,7 +238,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);
-            }                      
+            }
         }
     }
 }
