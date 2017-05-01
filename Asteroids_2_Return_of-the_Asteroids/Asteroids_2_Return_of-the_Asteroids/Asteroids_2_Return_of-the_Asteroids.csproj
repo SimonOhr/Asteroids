@@ -40,8 +40,11 @@
   <ItemGroup>
     <Compile Include="AssetsManager.cs" />
     <Compile Include="Asteroid.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="ButtonMenu.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameplayManager.cs" />
+    <Compile Include="KeyMouseReader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Projectile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +74,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\skepp.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\vitRektangel.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />

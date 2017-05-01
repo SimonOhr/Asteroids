@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
+    enum GameState { MenuPhase, PlayPhase, EndPhase}
+    enum Layout { Horizontal, Vertical }
 
     public class Game1 : Game
     {
@@ -15,6 +17,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         GameplayManager gm;        
 
         Random rnd = new Random();
+
+        GameState currentstate;
 
         public Game1()
         {
@@ -38,6 +42,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             AssetsManager.LoadContent(Content);
 
             gm = new GameplayManager(rnd, Window);
+
+            currentstate = GameState.PlayPhase;
         }
 
         protected override void UnloadContent()
@@ -46,8 +52,31 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         protected override void Update(GameTime gameTime)
-        {           
-            gm.Update(gameTime);
+        {
+            switch (currentstate)
+            {
+                case GameState.MenuPhase:
+                    //if ()
+                    //{
+                    //    currentstate = GameState.PlayPhase;
+                    //}
+                    break;
+                case GameState.PlayPhase:
+                    gm.Update(gameTime);
+
+                    if (Ship.hitPoints <= 0)
+                    {
+                        currentstate = GameState.EndPhase;
+                    }
+                    break;
+                case GameState.EndPhase:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    {
+                        currentstate = GameState.MenuPhase;
+                    }
+                    break;                
+            }
+           
             
             base.Update(gameTime);
         }
@@ -57,7 +86,31 @@ namespace Asteroids_2_Return_of_the_Asteroids
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            gm.Draw(spriteBatch);
+
+            switch (currentstate)
+            {
+                case GameState.MenuPhase:
+                    //if ()
+                    //{
+                    //    currentstate = GameState.PlayPhase;
+                    //}
+                    break;
+                case GameState.PlayPhase:
+                    gm.Draw(spriteBatch);
+
+                    if (Ship.hitPoints <= 0)
+                    {
+                        currentstate = GameState.EndPhase;
+                    }
+                    break;
+                case GameState.EndPhase:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    {
+                        currentstate = GameState.MenuPhase;
+                    }
+                    break;
+            }
+            
             spriteBatch.End();
 
             base.Draw(gameTime);

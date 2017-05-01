@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Vector2 shipPos;
         Rectangle shipHitBox;
 
-        public int hitPoints;
+        public static int hitPoints;
         public bool isHit;
 
         public int DamageOutput { get; private set; }

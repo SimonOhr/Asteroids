@@ -216,7 +216,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         
                         TempInvulnarbility = true;
                         ship.isHit = true;
-                        ship.hitPoints -= 1;
+                        Ship.hitPoints -= 1;
                     }
                 }
             }
