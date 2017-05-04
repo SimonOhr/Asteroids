@@ -18,6 +18,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Random rnd = new Random();
 
+        public static int score;
+
         GameState currentstate;
 
         public Game1()
@@ -97,7 +99,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     break;
                 case GameState.PlayPhase:
                     gm.Draw(spriteBatch);
-
+                    spriteBatch.DrawString(AssetsManager.text, "Score: " + score, new Vector2(10, 10), Color.White);
+                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + Ship.hitPoints, new Vector2(10, 30), Color.White);
                     if (Ship.hitPoints <= 0)
                     {
                         currentstate = GameState.EndPhase;

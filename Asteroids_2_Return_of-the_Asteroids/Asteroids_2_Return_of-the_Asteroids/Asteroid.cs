@@ -46,7 +46,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public int AsteroidRadius { get; private set; }
 
-        float rotation;
+       // float rotation;
 
         public Asteroid(GameWindow window, Random rnd)
         {
@@ -79,7 +79,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             targetDirection = new Rectangle((window.ClientBounds.Width / 2), (window.ClientBounds.Height / 2), 1, 1);
 
-            speed = new Vector2(rnd.Next(1,7),rnd.Next(1,7));   
+            speed = new Vector2(rnd.Next(1,10),rnd.Next(1,10));   
                     
             direction = GetDirection();
 

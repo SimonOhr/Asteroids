@@ -85,3 +85,9 @@
 /processorParam:TextureFormat=Color
 /build:skepp.png
 
+#begin text.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:text.spritefont
+

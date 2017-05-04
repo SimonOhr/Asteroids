@@ -18,7 +18,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Asteroid asteroid;
         List<Asteroid> asteroids = new List<Asteroid>();
 
-        Ship ship;        
+        Ship ship;
 
         Projectile projectile;
         List<Projectile> projectiles = new List<Projectile>();
@@ -33,12 +33,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
         double gunCooldownTimer, gunCooldownTimerReset;
         float gunRateOfFire;
 
+        double gunChargeTimer, gunChargeTimerReset;
+        float chargeRate;
+        int maxGunCharge;     
+        int currentGunCharge;
+
         Vector2 mousePos;
 
         public bool TempInvulnarbility { get; private set; } = false;
         double tempTimer, tempReset = 0;
         float tempTarget = 2;
-        
+
 
         public GameplayManager(Random rnd, GameWindow window)
         {
@@ -56,6 +61,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             gunRateOfFire = 200f;
             gunCooldownTimer = 0;
             gunCooldownTimerReset = 0;
+
+            chargeRate = 800f;
+            gunChargeTimerReset = 0;
+            maxGunCharge = 3;
         }
 
         private void CreatePlayerShip()
@@ -68,7 +77,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mousePos.X = Mouse.GetState().Position.X;
             mousePos.Y = Mouse.GetState().Position.Y;
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            GunCharging(gt);
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && currentGunCharge > 0)
             {
                 projectileTargetPos = Mouse.GetState().Position.ToVector2();
                 PlayerIsShooting(gt);
@@ -77,9 +88,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 gunCooldownTimer = 500f;
             }
+
             CreateAsteroids(gt);
             CheckIfAsteroidIsInPlay();
             ship.Update(gt);
+
 
             for (int i = 0; i < projectiles.Count; i++)
             {
@@ -101,6 +114,20 @@ namespace Asteroids_2_Return_of_the_Asteroids
             CheckIfShipIsHit(gt);
         }
 
+        private void GunCharging(GameTime gt)
+        {
+            if (currentGunCharge < 3)
+            {
+                gunChargeTimer += gt.ElapsedGameTime.TotalMilliseconds;
+
+                if (gunChargeTimer > chargeRate)
+                {
+                    currentGunCharge++;
+                    gunChargeTimer = gunChargeTimerReset;
+                    Console.WriteLine("number of shots " + currentGunCharge);
+                }
+            }
+        }
         private void PlayerIsShooting(GameTime gt)
         {
             gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
@@ -109,6 +136,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 projectile = new Projectile(ship.shipPos, projectileTargetPos);
                 projectiles.Add(projectile);
+                currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
                 Console.WriteLine("number of shots " + projectiles.Count);
             }
@@ -143,12 +171,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         {
                             projectiles.RemoveAt(j);
                             asteroids.RemoveAt(i);
+                            Game1.score += 10;
                             break;
                         }
                     }
                 }
             }
-        }                
+        }
 
         private void CheckAsteroidCollision()
         {
@@ -190,13 +219,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 if (asteroids[i].isOutOfPlay)
                 {
                     asteroids.RemoveAt(i);
-                    // Console.WriteLine("size of list " + asteroids.Count);
                 }
             }
         }
 
         private void CheckIfShipIsHit(GameTime gt)
-        {            
+        {
             if (TempInvulnarbility)
             {
                 tempTimer += gt.ElapsedGameTime.TotalSeconds;
@@ -208,12 +236,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 }
             }
             else if (!TempInvulnarbility)
-            {                
+            {
                 for (int i = 0; i < asteroids.Count; i++)
                 {
                     if (Vector2.Distance(asteroids[i].asteroidPos, ship.shipPos) < asteroids[i].AsteroidRadius + (ship.ShipTex.Width / 2))
                     {
-                        
+
                         TempInvulnarbility = true;
                         ship.isHit = true;
                         Ship.hitPoints -= 1;
