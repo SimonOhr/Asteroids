@@ -16,12 +16,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Rectangle backgroundRec;
 
         Asteroid asteroid;
-        List<Asteroid> asteroids = new List<Asteroid>();
+        public List<Asteroid> asteroids = new List<Asteroid>();
 
         Ship ship;
 
         Projectile projectile;
-        List<Projectile> projectiles = new List<Projectile>();
+         public List<Projectile> projectiles = new List<Projectile>();
 
         Random rnd;
 
@@ -107,7 +107,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 tempAsteroid.Update(gt);
             }
 
-            CheckAsteroidCollision();
+            //CheckAsteroidCollision();
 
             CheckIfAsteroidIsHit();
 
@@ -179,39 +179,39 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
-        private void CheckAsteroidCollision()
-        {
-            for (int i = 0; i < asteroids.Count; i++)
-            {
-                Asteroid enemy1 = asteroids[i];
-                for (int j = i + 1; j < asteroids.Count; j++)
-                {
-                    Asteroid enemy2 = asteroids[j];
-                    if (Vector2.Distance(asteroids[i].asteroidPos, asteroids[j].asteroidPos) < asteroid.AsteroidRadius * 2)
-                    {
-                        Vector2 collisionNormal = asteroids[i].asteroidPos - asteroids[j].asteroidPos;
-                        collisionNormal.Normalize();
-                        Vector2 collisionDirection = new Vector2(-collisionNormal.Y, collisionNormal.X);
+        //private void CheckAsteroidCollision()
+        //{
+        //    for (int i = 0; i < asteroids.Count; i++)
+        //    {
+        //        Asteroid enemy1 = asteroids[i];
+        //        for (int j = i + 1; j < asteroids.Count; j++)
+        //        {
+        //            Asteroid enemy2 = asteroids[j];
+        //            if (Vector2.Distance(asteroids[i].asteroidPos, asteroids[j].asteroidPos) < asteroid.AsteroidRadius * 2)
+        //            {
+        //                Vector2 collisionNormal = asteroids[i].asteroidPos - asteroids[j].asteroidPos;
+        //                collisionNormal.Normalize();
+        //                Vector2 collisionDirection = new Vector2(-collisionNormal.Y, collisionNormal.X);
 
-                        Vector2 v1Parallel = Vector2.Dot(collisionNormal, asteroids[i].velocity) * collisionNormal;
-                        Vector2 v1Ortho = Vector2.Dot(collisionDirection, asteroids[i].velocity) * collisionDirection;
-                        Vector2 v2Parallel = Vector2.Dot(collisionNormal, asteroids[j].velocity) * collisionNormal;
-                        Vector2 v2Ortho = Vector2.Dot(collisionDirection, asteroids[j].velocity) * collisionDirection;
+        //                Vector2 v1Parallel = Vector2.Dot(collisionNormal, asteroids[i].velocity) * collisionNormal;
+        //                Vector2 v1Ortho = Vector2.Dot(collisionDirection, asteroids[i].velocity) * collisionDirection;
+        //                Vector2 v2Parallel = Vector2.Dot(collisionNormal, asteroids[j].velocity) * collisionNormal;
+        //                Vector2 v2Ortho = Vector2.Dot(collisionDirection, asteroids[j].velocity) * collisionDirection;
 
-                        var v1Length = v1Parallel.Length();
-                        var v2Length = v2Parallel.Length();
-                        var commonVelocity = (((asteroids[i].mass) * v1Length) + (asteroids[j].mass * v2Length)) / ((asteroids[i].mass) + (asteroids[j].mass));
-                        var v1LengthAfterCollision = commonVelocity - v1Length;
-                        var v2LengthAfterCollision = commonVelocity - v2Length;
-                        v1Parallel = v1Parallel * (v1LengthAfterCollision / v1Length);
-                        v2Parallel = v2Parallel * (v2LengthAfterCollision / v2Length);
+        //                var v1Length = v1Parallel.Length();
+        //                var v2Length = v2Parallel.Length();
+        //                var commonVelocity = (((asteroids[i].mass) * v1Length) + (asteroids[j].mass * v2Length)) / ((asteroids[i].mass) + (asteroids[j].mass));
+        //                var v1LengthAfterCollision = commonVelocity - v1Length;
+        //                var v2LengthAfterCollision = commonVelocity - v2Length;
+        //                v1Parallel = v1Parallel * (v1LengthAfterCollision / v1Length);
+        //                v2Parallel = v2Parallel * (v2LengthAfterCollision / v2Length);
 
-                        asteroids[i].velocity = v1Parallel + v1Ortho;
-                        asteroids[j].velocity = v2Parallel + v2Ortho;
-                    }
-                }
-            }
-        }
+        //                asteroids[i].velocity = v1Parallel + v1Ortho;
+        //                asteroids[j].velocity = v2Parallel + v2Ortho;
+        //            }
+        //        }
+        //    }
+        //}
         private void CheckIfAsteroidIsInPlay()
         {
             for (int i = 0; i < asteroids.Count; i++)

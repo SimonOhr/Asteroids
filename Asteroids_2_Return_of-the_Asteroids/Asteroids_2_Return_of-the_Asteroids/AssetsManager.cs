@@ -10,7 +10,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     static class AssetsManager
     {
-        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, projectileTex, buttonTex;
+        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, projectileTex, buttonTex, transBackgroundTex;
 
         public static SpriteFont text;
 
@@ -23,6 +23,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             crosshairTex = Content.Load<Texture2D>("sikte");
             projectileTex = Content.Load<Texture2D>("laserskott");
             buttonTex = Content.Load<Texture2D>("vitRektangel");
+            transBackgroundTex = Content.Load<Texture2D>("TransBackground");
 
             text = Content.Load<SpriteFont>(@"text");
         }

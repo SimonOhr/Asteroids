@@ -60,7 +60,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             selected = false;
             if (selectable)
             {
-                recColor = Color.LightGray;
+                recColor = Color.LightSlateGray;
             }
             if (!selectable)
             {
@@ -77,10 +77,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 spriteBatch.Draw(AssetsManager.buttonTex, new Rectangle(destinationRec.X - 5, destinationRec.Y - 5, destinationRec.Height * 2, destinationRec.Height), Color.White);
             }
             spriteBatch.DrawString(spriteFont, text, new Vector2(destinationRec.X + destinationRec.Width / 2 - spriteFont.MeasureString(text).X / 2, destinationRec.Y + destinationRec.Height / 2 - spriteFont.MeasureString(text).Y / 2), textColor);
-            if (selected)
-            {
-                spriteBatch.Draw(AssetsManager.buttonTex, new Rectangle((int)destinationRec.X - (int)(destinationRec.Height * 0.8), (int)destinationRec.Y, (int)(destinationRec.Height * 0.8), destinationRec.Height), Color.White);
-            }
+            //if (selected)
+            //{
+            //    spriteBatch.Draw(AssetsManager.buttonTex, new Rectangle((int)destinationRec.X - (int)(destinationRec.Height * 0.8), (int)destinationRec.Y, (int)(destinationRec.Height * 0.8), destinationRec.Height), Color.White);
+            //}
         }
     }
 }

@@ -129,7 +129,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(backgroundTex, menuRec, Color.White);
+            spriteBatch.Draw(backgroundTex, menuRec, Color.DarkBlue);
 
             for (int i = 0; i < menuButtons.Count; i++)
             {
