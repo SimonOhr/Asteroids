@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    enum GameState { MenuPhase, PlayPhase, EndPhase }
+    enum GameState { MenuPhase, PlayPhase, EndPhase, SaveHighScorePhase }
     enum Layout { Horizontal, Vertical }
 
     public class Game1 : Game
@@ -27,6 +28,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         ButtonMenu startMenu, endgameMenu, pauseMenu;
 
         bool hasPaused;
+
+        List<HighScoreItem> hsArray;
+        Form1 form;
 
         public Game1()
         {
@@ -53,13 +57,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             screenRec = Window.ClientBounds;
 
-            endgameMenu = new ButtonMenu(true, new string[4] { "Asteroids", "Restart", "MainMenu", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.White, false);
+            endgameMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Restart", "Save HighScore", "MainMenu", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.White, false);
 
             startMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Start Game", "HighScore", "Instructions", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
 
             pauseMenu = new ButtonMenu(false, new string[3] { "Resume Game", "HighScore", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.transBackgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
 
-            currentstate = GameState.MenuPhase;
+            //playerName = "Test4";
+
+            score = 10;
+
+            form = new Form1(this);
+
+            hsArray = new List<HighScoreItem>();   
+
+            currentstate = GameState.EndPhase;
         }
 
         protected override void UnloadContent()
@@ -109,7 +121,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                     endgameMenu.Update();
                     EndgameMenuButtons();
-
+                    break;
+                case GameState.SaveHighScorePhase:
+                    form.Show();
+                    if (form.formDone)
+                    {
+                        form.Close();                
+                        form.formDone = false;
+                        SaveHighScore();
+                        currentstate = GameState.EndPhase;
+                        form = new Form1(this);
+                    }
                     break;
             }
             base.Update(gameTime);
@@ -142,16 +164,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         private void EndgameMenuButtons()
-        {
-            if (endgameMenu.ClickedName() == "Exit")
-            {
-                Exit();
-            }
-
+        {         
             if (endgameMenu.ClickedName() == "Restart")
             {
                 CleanSlate();
                 currentstate = GameState.PlayPhase;
+            }
+
+            if (endgameMenu.ClickedName() == "Save HighScore")
+            {
+                currentstate = GameState.SaveHighScorePhase;
             }
 
             if (endgameMenu.ClickedName() == "MainMenu")
@@ -159,7 +181,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 CleanSlate();
                 currentstate = GameState.MenuPhase;
             }
-        }
+
+            if (endgameMenu.ClickedName() == "Exit")
+            {
+                Exit();
+            }
+        }       
 
         private void CleanSlate()
         {
@@ -206,6 +233,41 @@ namespace Asteroids_2_Return_of_the_Asteroids
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void ReadFromFile()
+        {
+            StreamReader file = new StreamReader("HighScore.txt");
+            string line;
+            hsArray.Clear();
+            while (!file.EndOfStream)
+            {
+                line = file.ReadLine();
+                string[] temp = line.Split(',');
+                int poäng = int.Parse(temp[1]);
+                HighScoreItem h = new HighScoreItem(temp[0], poäng);
+                hsArray.Add(h);
+            }
+            file.Close(); //you should always close the file
+        }
+
+        private void SaveToFile()
+        {
+            StreamWriter file = new StreamWriter("HighScore.txt");
+            for (int i = 0; i < hsArray.Count; i++)
+            {
+                file.WriteLine(hsArray[i].ToString());
+            }
+            file.Close(); //you should always close the file
+        }
+
+        private void SaveHighScore()
+        {
+            ReadFromFile();
+            hsArray.Add(new HighScoreItem(form.PlayerName, score));
+            SaveToFile();
+            Console.WriteLine("Score is saved");
+          //  MessageBox.Show("Score is saved");
         }
     }
 }
