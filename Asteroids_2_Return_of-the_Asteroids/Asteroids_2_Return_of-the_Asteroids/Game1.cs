@@ -17,6 +17,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         GameplayManager gm;
 
+        ParticleEngine particleEngine;
+
         Random rnd = new Random();
 
         public static int score;
@@ -53,6 +55,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             AssetsManager.LoadContent(Content);
 
+            List<Texture2D> textures = new List<Texture2D>();
+
+            textures.Add(AssetsManager.particleCircleTex);
+            textures.Add(AssetsManager.particleStarTex);
+            textures.Add(AssetsManager.particleDiamondTex);
+
+            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));
+
             gm = new GameplayManager(rnd, Window);
 
             screenRec = Window.ClientBounds;
@@ -62,9 +72,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             startMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Start Game", "HighScore", "Instructions", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
 
             pauseMenu = new ButtonMenu(false, new string[3] { "Resume Game", "HighScore", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.transBackgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
-
-            //playerName = "Test4";
-
+                       
             score = 10;
 
             form = new Form1(this);
@@ -97,6 +105,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     if (!hasPaused)
                     {
                         gm.Update(gameTime);
+                        particleEngine.EmitterLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+                        particleEngine.Update();
                     }
 
                     if (KeyMouseReader.KeyPressed(Keys.Escape) && !hasPaused)
@@ -211,7 +221,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     gm.Draw(spriteBatch);
                     spriteBatch.DrawString(AssetsManager.text, "Score: " + score, new Vector2(10, 10), Color.White);
                     spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + Ship.hitPoints, new Vector2(10, 30), Color.White);
-
+                    particleEngine.Draw(spriteBatch);
                     if (hasPaused)
                     {
                         pauseMenu.Draw(spriteBatch);
