@@ -15,9 +15,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        GameplayManager gm;
-
-        ParticleEngine particleEngine;
+        GameplayManager gm;       
 
         Random rnd = new Random();
 
@@ -55,15 +53,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             AssetsManager.LoadContent(Content);
 
-            List<Texture2D> textures = new List<Texture2D>();
-
-            textures.Add(AssetsManager.particleCircleTex);
-            textures.Add(AssetsManager.particleStarTex);
-            textures.Add(AssetsManager.particleDiamondTex);
-
-            particleEngine = new ParticleEngine(textures, new Vector2(400, 240));
+                              
 
             gm = new GameplayManager(rnd, Window);
+
+            
 
             screenRec = Window.ClientBounds;
 
@@ -104,9 +98,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                     if (!hasPaused)
                     {
-                        gm.Update(gameTime);
-                        particleEngine.EmitterLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-                        particleEngine.Update();
+                        gm.Update(gameTime);                        
                     }
 
                     if (KeyMouseReader.KeyPressed(Keys.Escape) && !hasPaused)
@@ -220,8 +212,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 case GameState.PlayPhase:
                     gm.Draw(spriteBatch);
                     spriteBatch.DrawString(AssetsManager.text, "Score: " + score, new Vector2(10, 10), Color.White);
-                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + Ship.hitPoints, new Vector2(10, 30), Color.White);
-                    particleEngine.Draw(spriteBatch);
+                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + Ship.hitPoints, new Vector2(10, 30), Color.White);                    
                     if (hasPaused)
                     {
                         pauseMenu.Draw(spriteBatch);

@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Vector2 mousePos;
         Color color;
         public Texture2D ShipTex { get; private set; }
-        public Vector2 shipPos;
+        public Vector2 ShipPos { get; private set; }
         Rectangle shipHitBox;
 
         public static int hitPoints;
@@ -23,6 +23,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public int DamageOutput { get; private set; }
 
         float speed;
+
+        ParticleEngine shipAfterburner;
+        List<Texture2D> afterBurnerTextures;
 
         Vector2 directionOfShip;
         Vector2 rotationTarget;
@@ -33,40 +36,47 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.mousePos = mousePos;
             color = Color.White;
             ShipTex = AssetsManager.shipTex;
-            shipPos = pos;
-            shipHitBox = new Rectangle((int)shipPos.X, (int)shipPos.Y, 50, 50);
+            ShipPos = pos;
+            shipHitBox = new Rectangle((int)ShipPos.X, (int)ShipPos.Y, 50, 50);
             hitPoints = 2;
             speed = 3;
+
+            afterBurnerTextures = new List<Texture2D>();
+            afterBurnerTextures.Add(AssetsManager.particleCircleTex);
+            afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
+
+            shipAfterburner = new ParticleEngine(afterBurnerTextures, ShipPos, true, false);
+
         }
         public void Update(GameTime gt)
         {
-            shipHitBox.X = (int)shipPos.X;
-            shipHitBox.Y = (int)shipPos.Y;
+            shipHitBox.X = (int)ShipPos.X;
+            shipHitBox.Y = (int)ShipPos.Y;
 
             mousePos.X = Mouse.GetState().X;
             mousePos.Y = Mouse.GetState().Y;
 
-            rotationTarget = mousePos;
-
             MovementInput();
 
-            shipPos += speed * GetDirection();
+            ShipPos += speed * GetDirection();
 
             if (hitPoints <= 0)
             {
                 color = Color.Blue;
             }
 
+            shipAfterburner.EmitterLocation = ShipPos + speed * GetDirection();
+            shipAfterburner.Update();
         }
 
         private void MovementInput()
         {
 
-            if (Vector2.Distance(mousePos, shipPos) < 4)
+            if (Vector2.Distance(mousePos, ShipPos) < 4)
             {
                 speed = 0;
             }
-            else if (Vector2.Distance(mousePos, shipPos) >= 4)
+            else if (Vector2.Distance(mousePos, ShipPos) >= 4)
             {
                 speed = 3;
             }
@@ -86,19 +96,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void ShipRotation()
         {
-            directionOfShip = mousePos - (shipPos);
+            directionOfShip = mousePos - (ShipPos);
             currentRotation = (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);
         }
 
         private Vector2 GetDirection()
         {
-            Vector2 Direction = new Vector2(Mouse.GetState().X - shipPos.X, Mouse.GetState().Y - shipPos.Y);
+            Vector2 Direction = new Vector2(Mouse.GetState().X - ShipPos.X, Mouse.GetState().Y - ShipPos.Y);
             return Vector2.Normalize(Direction);
         }
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(ShipTex, shipPos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(ShipTex.Width / 2, ShipTex.Height / 2), 1, SpriteEffects.None, 1);
+            shipAfterburner.Draw(sb);
+
+            sb.Draw(ShipTex, ShipPos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(ShipTex.Width / 2, ShipTex.Height / 2), 1, SpriteEffects.None, 1);
+
         }
     }
 }

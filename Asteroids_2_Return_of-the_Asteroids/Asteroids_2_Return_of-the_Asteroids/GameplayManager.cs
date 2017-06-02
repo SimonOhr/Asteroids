@@ -18,7 +18,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
 
-        Ship ship;
+        public Ship Ship { get; private set; }
 
         Projectile projectile;
          public List<Projectile> projectiles = new List<Projectile>();
@@ -44,6 +44,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         double tempTimer, tempReset = 0;
         float tempTarget = 2;
 
+        ParticleEngine asteroidExplosion;
+        List<ParticleEngine> explosionList;
+
+        double explosionTimer, explosionReset;
+        float explosionTargetLength;
 
         public GameplayManager(Random rnd, GameWindow window)
         {
@@ -65,11 +70,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             chargeRate = 800f;
             gunChargeTimerReset = 0;
             maxGunCharge = 3;
+
+            explosionList = new List<ParticleEngine>();
+
+            explosionReset = 0;
+            explosionTargetLength = 200f;
         }
 
         private void CreatePlayerShip()
         {
-            ship = new Ship(new Vector2(50, 50), mousePos);
+            Ship = new Ship(new Vector2(50, 50), mousePos);
         }
 
         public void Update(GameTime gt)
@@ -91,7 +101,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             CreateAsteroids(gt);
             CheckIfAsteroidIsInPlay();
-            ship.Update(gt);
+            Ship.Update(gt);
 
 
             for (int i = 0; i < projectiles.Count; i++)
@@ -105,6 +115,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Update(gt);
+            }
+
+            if (explosionList.Count > 0)
+            {
+                ExplosionTime(gt);
+                foreach (ParticleEngine explosion in explosionList)
+                {
+                    explosion.Update();
+                }
             }
 
             //CheckAsteroidCollision();
@@ -134,7 +153,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new Projectile(ship.shipPos, projectileTargetPos);
+                projectile = new Projectile(Ship.ShipPos, projectileTargetPos);
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
@@ -169,9 +188,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {
                         if (Vector2.Distance(asteroids[i].asteroidPos, projectiles[j].projectilePos) < 50)
                         {
+                            asteroidExplosion = new ParticleEngine(AssetsManager.textures, asteroids[i].asteroidPos, false, true);
+                            asteroidExplosion.EmitterLocation = asteroids[i].asteroidPos;
+                            explosionList.Add(asteroidExplosion);
+                                                     
                             projectiles.RemoveAt(j);
-                            asteroids.RemoveAt(i);
+                            asteroids.RemoveAt(i);   
+                                                     
                             Game1.score += 10;
+
                             break;
                         }
                     }
@@ -179,6 +204,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
+        private void ExplosionTime(GameTime gt)
+        {
+            explosionTimer += gt.ElapsedGameTime.TotalMilliseconds;
+
+            if (explosionTimer > explosionTargetLength)
+            {
+                explosionList.RemoveAt(0);
+                explosionTimer = explosionReset;               
+            }
+        }
         //private void CheckAsteroidCollision()
         //{
         //    for (int i = 0; i < asteroids.Count; i++)
@@ -231,7 +266,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 if (tempTimer >= tempTarget)
                 {
                     TempInvulnarbility = false;
-                    ship.isHit = false;
+                    Ship.isHit = false;
                     tempTimer = tempReset;
                 }
             }
@@ -239,11 +274,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 for (int i = 0; i < asteroids.Count; i++)
                 {
-                    if (Vector2.Distance(asteroids[i].asteroidPos, ship.shipPos) < asteroids[i].AsteroidRadius + (ship.ShipTex.Width / 2))
+                    if (Vector2.Distance(asteroids[i].asteroidPos, Ship.ShipPos) < asteroids[i].AsteroidRadius + (Ship.ShipTex.Width / 2))
                     {
 
                         TempInvulnarbility = true;
-                        ship.isHit = true;
+                        Ship.isHit = true;
                         Ship.hitPoints -= 1;
                     }
                 }
@@ -261,8 +296,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 tempProjectile.Draw(sb);
             }
 
-            ship.Draw(sb);
-
+            Ship.Draw(sb);
+            if (explosionList.Count > 0)
+            {
+                asteroidExplosion.Draw(sb);
+            }
+          
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);

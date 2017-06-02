@@ -14,6 +14,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public static SpriteFont text;
 
+        public static List<Texture2D> textures = new List<Texture2D>();
+
+          
+
         public static void LoadContent(ContentManager Content)
         {
             backgroundTex = Content.Load<Texture2D>("bakgrund");
@@ -29,6 +33,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             particleDiamondTex = Content.Load<Texture2D>("diamond");
 
             text = Content.Load<SpriteFont>(@"text");
+
+            textures.Add(particleCircleTex);
+            textures.Add(particleStarTex);
+            textures.Add(particleDiamondTex);
         }
     }
 }
