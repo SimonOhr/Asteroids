@@ -24,7 +24,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         float speed;
 
-        ParticleEngine shipAfterburner;
+        ParticleEngine shipAfterburnerParticles;
         List<Texture2D> afterBurnerTextures;
 
         Vector2 directionOfShip;
@@ -45,7 +45,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             afterBurnerTextures.Add(AssetsManager.particleCircleTex);
             afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
 
-            shipAfterburner = new ParticleEngine(afterBurnerTextures, ShipPos, true, false);
+            shipAfterburnerParticles = new ParticleEngine(afterBurnerTextures, ShipPos);
+            shipAfterburnerParticles.isAfterBurner = true;
 
         }
         public void Update(GameTime gt)
@@ -65,8 +66,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 color = Color.Blue;
             }
 
-            shipAfterburner.EmitterLocation = ShipPos + speed * GetDirection();
-            shipAfterburner.Update();
+            shipAfterburnerParticles.EmitterLocation = ShipPos + speed * GetDirection();
+            shipAfterburnerParticles.Update();
         }
 
         private void MovementInput()
@@ -108,7 +109,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Draw(SpriteBatch sb)
         {
-            shipAfterburner.Draw(sb);
+            shipAfterburnerParticles.Draw(sb);
 
             sb.Draw(ShipTex, ShipPos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(ShipTex.Width / 2, ShipTex.Height / 2), 1, SpriteEffects.None, 1);
 

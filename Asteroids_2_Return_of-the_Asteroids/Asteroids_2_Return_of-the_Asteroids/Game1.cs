@@ -73,7 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hsArray = new List<HighScoreItem>();   
 
-            currentstate = GameState.EndPhase;
+            currentstate = GameState.MenuPhase;
         }
 
         protected override void UnloadContent()
@@ -112,6 +112,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         pauseMenu.Update();
                         PauseMenuButtons();
                     }
+
                     if (Ship.hitPoints <= 0)
                     {
                         currentstate = GameState.EndPhase;
@@ -123,9 +124,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                     endgameMenu.Update();
                     EndgameMenuButtons();
+
                     break;
                 case GameState.SaveHighScorePhase:
+
                     form.Show();
+
                     if (form.formDone)
                     {
                         form.Close();                

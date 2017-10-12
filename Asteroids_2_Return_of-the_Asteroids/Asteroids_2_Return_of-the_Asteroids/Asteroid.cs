@@ -28,7 +28,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Rectangle asteroidZoneUp;
         Vector2 asteroidPosZoneUp;
 
-        public Vector2 asteroidPos;
+        public Vector2 pos;
 
         Rectangle asteroidHitbox;
 
@@ -43,6 +43,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         
         public Vector2 velocity;
         public int mass;
+
+        public int hitPoints = 2;
 
         public int AsteroidRadius { get; private set; }
 
@@ -73,9 +75,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroidSpawnPoints.Add(asteroidPosZoneRight);
             asteroidSpawnPoints.Add(asteroidPosZoneUp);
                      
-            asteroidPos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
+            pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
 
-            asteroidHitbox = new Rectangle((int)asteroidPos.X, (int)asteroidPos.Y, choosenAsteroidTex.Width, choosenAsteroidTex.Height);          
+            asteroidHitbox = new Rectangle((int)pos.X, (int)pos.Y, choosenAsteroidTex.Width, choosenAsteroidTex.Height);          
 
             targetDirection = new Rectangle((window.ClientBounds.Width / 2), (window.ClientBounds.Height / 2), 1, 1);
 
@@ -92,12 +94,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update(GameTime gt)
         {
-            asteroidPos += velocity;            
-            asteroidHitbox.X = (int)asteroidPos.X;
-            asteroidHitbox.Y = (int)asteroidPos.Y;            
+            pos += velocity;            
+            asteroidHitbox.X = (int)pos.X;
+            asteroidHitbox.Y = (int)pos.Y;            
 
-            if (asteroidPos.X < -asteroidZoneLeft.Width || asteroidPos.X > window.ClientBounds.Width + asteroidZoneRight.Width
-                || asteroidPos.Y < -asteroidZoneUp.Height || asteroidPos.Y > window.ClientBounds.Height)
+            if (pos.X < -asteroidZoneLeft.Width || pos.X > window.ClientBounds.Width + asteroidZoneRight.Width
+                || pos.Y < -asteroidZoneUp.Height || pos.Y > window.ClientBounds.Height)
             {
                 isOutOfPlay = true;
             }                              
@@ -115,7 +117,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
         private Vector2 GetDirection()
         {            
-            Vector2 Direction = new Vector2(targetDirection.X - asteroidPos.X, targetDirection.Y - asteroidPos.Y);
+            Vector2 Direction = new Vector2(targetDirection.X - pos.X, targetDirection.Y - pos.Y);
             return Vector2.Normalize(Direction);
         }
         public void Draw(SpriteBatch sb)
