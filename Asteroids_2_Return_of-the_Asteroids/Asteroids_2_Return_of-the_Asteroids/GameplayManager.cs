@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,6 +80,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             explosionReset = 0;
             explosionTargetLength = 100f;
+            MediaPlayer.Play(AssetsManager.backgroundMusic);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
         }
 
         private void CreatePlayerShip()
@@ -168,7 +172,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
-                Console.WriteLine("number of shots " + projectiles.Count);
+                Console.WriteLine("number of shots " + projectiles.Count);                
+                var instance = AssetsManager.laserShot.CreateInstance();
+                instance.Volume = 0.5f;
+                instance.Play();
             }
         }
 
@@ -211,6 +218,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
                                 asteroidExplosion.isAsteroidExplosion = true;
                                 asteroidExplosionList.Add(asteroidExplosion);
                                 //asteroidExplosion.EmitterLocation = asteroids[i].pos;
+                                var instance = AssetsManager.asteroidExplosion.CreateInstance();
+                                instance.Volume = 0.1f;
+                                instance.Play();
 
                                 asteroids.RemoveAt(i);
                             }

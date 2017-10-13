@@ -1,5 +1,7 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, projectileTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex;
 
         public static SpriteFont text;
+
+        public static Song backgroundMusic;
+
+        public static SoundEffect laserShot, asteroidExplosion;
 
         public static List<Texture2D> textures = new List<Texture2D>();
 
@@ -33,6 +39,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             particleDiamondTex = Content.Load<Texture2D>("diamond");
 
             text = Content.Load<SpriteFont>(@"text");
+
+            backgroundMusic = Content.Load<Song>(@"Steamtech-Mayhem");
+
+            laserShot = Content.Load<SoundEffect>(@"laser9");
+            asteroidExplosion = Content.Load<SoundEffect>(@"Depth_Charge");
 
             textures.Add(particleCircleTex);
             textures.Add(particleStarTex);
