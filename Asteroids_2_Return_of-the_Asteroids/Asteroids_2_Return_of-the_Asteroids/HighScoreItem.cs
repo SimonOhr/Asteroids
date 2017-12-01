@@ -8,8 +8,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class HighScoreItem
     {
-        string name;
-        int score;
+        public string name { get; private set; }
+        public int score { get; private set; }
         public HighScoreItem(string name, int score)
         {
             this.name = name;
