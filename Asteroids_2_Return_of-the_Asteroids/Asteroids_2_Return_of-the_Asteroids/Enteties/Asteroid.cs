@@ -12,118 +12,112 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         GameWindow window;
 
-        Texture2D asteroid1Tex;
-        Texture2D asteroid2Tex;        
-        List<Texture2D> asteroidTextures = new List<Texture2D>();
-        Texture2D choosenAsteroidTex;
+        Texture2D tex;
+
+        List<Texture2D> textures = new List<Texture2D>();
 
         List<Vector2> asteroidSpawnPoints;
 
-        Rectangle asteroidZoneLeft;
-        Vector2 asteroidPosZoneLeft;       
+        Rectangle spawnZoneLeft, spawnZoneRight, spawnZoneUp, hitbox, targetDirection;
 
-        Rectangle asteroidZoneRight;
-        Vector2 asteroidPosZoneRight;        
-
-        Rectangle asteroidZoneUp;
-        Vector2 asteroidPosZoneUp;
-
-        public Vector2 pos;
-
-        Rectangle asteroidHitbox;
-
-        Vector2 speed;
-
-        Rectangle targetDirection;
-        public Vector2 direction;
-
-        Random rnd;        
-
-        public bool isOutOfPlay;        
+        Vector2 posZoneLeft, posZoneRight, posZoneUp, speed;
         
+        public Vector2 pos, direction;
+
+        Random rnd;
+
+        public bool isOutOfPlay;
+
         public Vector2 velocity;
-        public int mass;
 
-        public int hitPoints = 2;
+        public int hitPoints/*, mass*/;
 
-        public int AsteroidRadius { get; private set; }
+        public int radius { get; private set; }
 
-       // float rotation;
+        // float rotation;
 
         public Asteroid(GameWindow window, Random rnd)
         {
             this.window = window;
             this.rnd = rnd;
 
-            asteroid1Tex = AssetsManager.asteroid1Tex;
-            asteroid2Tex = AssetsManager.asteroid2Tex;
-            asteroidTextures.Add(asteroid1Tex);
-            asteroidTextures.Add(asteroid2Tex);
-            choosenAsteroidTex = asteroidTextures[rnd.Next(asteroidTextures.Count)];           
+            textures.Add(AssetsManager.asteroid1Tex);
+            textures.Add(AssetsManager.asteroid2Tex);
 
-            asteroidZoneLeft = new Rectangle(0, 0, 400, window.ClientBounds.Height);
-            asteroidPosZoneLeft = new Vector2(rnd.Next((asteroidZoneLeft.Width) + choosenAsteroidTex.Width) * -1, rnd.Next(asteroidZoneLeft.Height));
+            tex = textures[rnd.Next(textures.Count)];
 
-            asteroidZoneRight = new Rectangle(window.ClientBounds.Width, 0, 400, window.ClientBounds.Height);
-            asteroidPosZoneRight = new Vector2(window.ClientBounds.Width + choosenAsteroidTex.Width, rnd.Next(asteroidZoneRight.Height));
+            textures.Clear();
 
-            asteroidZoneUp = new Rectangle(0, 0, window.ClientBounds.Width, 400);
-            asteroidPosZoneUp = new Vector2(rnd.Next(asteroidZoneUp.Width), rnd.Next(asteroidZoneUp.Height) *-1);
+            spawnZoneLeft = new Rectangle(0, 0, (tex.Width + 100), window.ClientBounds.Height);
+            posZoneLeft = new Vector2(rnd.Next((spawnZoneLeft.Width) + tex.Width) * -1, rnd.Next(spawnZoneLeft.Height));
+
+            spawnZoneRight = new Rectangle(window.ClientBounds.Width, 0, tex.Width, window.ClientBounds.Height);
+            posZoneRight = new Vector2(window.ClientBounds.Width + tex.Width, rnd.Next(spawnZoneRight.Height));
+
+            spawnZoneUp = new Rectangle(0, 0, window.ClientBounds.Width, tex.Height);
+            posZoneUp = new Vector2(rnd.Next(spawnZoneUp.Width), rnd.Next(spawnZoneUp.Height) * -1);
 
             asteroidSpawnPoints = new List<Vector2>();
-            asteroidSpawnPoints.Add(asteroidPosZoneLeft);
-            asteroidSpawnPoints.Add(asteroidPosZoneRight);
-            asteroidSpawnPoints.Add(asteroidPosZoneUp);
-                     
+            asteroidSpawnPoints.Add(posZoneLeft);
+            asteroidSpawnPoints.Add(posZoneRight);
+            asteroidSpawnPoints.Add(posZoneUp);
+
             pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
 
-            asteroidHitbox = new Rectangle((int)pos.X, (int)pos.Y, choosenAsteroidTex.Width, choosenAsteroidTex.Height);          
+            asteroidSpawnPoints.Clear();
 
-            targetDirection = new Rectangle((window.ClientBounds.Width / 2), (window.ClientBounds.Height / 2), 1, 1);
+            targetDirection = new Rectangle(window.ClientBounds.Width / 2, window.ClientBounds.Height / 2, 1, window.ClientBounds.Height / 3);
 
-            speed = new Vector2(rnd.Next(1,10),rnd.Next(1,10));   
-                    
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+
+            speed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+
             direction = GetDirection();
 
-            AsteroidRadius = 50;
+            radius = 50;
 
             velocity = speed * direction;
 
-            GetAsteroidMass();        
+            hitPoints = 2;
+
+           // GetAsteroidMass();
         }
 
         public void Update(GameTime gt)
         {
-            pos += velocity;            
-            asteroidHitbox.X = (int)pos.X;
-            asteroidHitbox.Y = (int)pos.Y;            
+            pos += velocity;
+            hitbox.X = (int)pos.X;
+            hitbox.Y = (int)pos.Y;
 
-            if (pos.X < -asteroidZoneLeft.Width || pos.X > window.ClientBounds.Width + asteroidZoneRight.Width
-                || pos.Y < -asteroidZoneUp.Height || pos.Y > window.ClientBounds.Height)
+            if (pos.X < -spawnZoneLeft.Width || pos.X > window.ClientBounds.Width + spawnZoneRight.Width
+                || pos.Y < -spawnZoneUp.Height || pos.Y > window.ClientBounds.Height)
             {
                 isOutOfPlay = true;
-            }                              
-        }
-        private void GetAsteroidMass()
-        {
-            if (choosenAsteroidTex == asteroidTextures[1])
-            {
-                mass = 1;
-            }
-            else if (choosenAsteroidTex == asteroidTextures[0])
-            {
-                mass = 1;
             }
         }
+        /// <summary>
+        /// Simple mass for physics, not implemented
+        /// </summary>
+        /// <returns></returns>
+        //private void GetAsteroidMass()
+        //{
+        //    if (tex == textures[1])
+        //    {
+        //        mass = 1;
+        //    }
+        //    else if (tex == textures[0])
+        //    {
+        //        mass = 1;
+        //    }
+        //}
         private Vector2 GetDirection()
-        {            
+        {
             Vector2 Direction = new Vector2(targetDirection.X - pos.X, targetDirection.Y - pos.Y);
             return Vector2.Normalize(Direction);
         }
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(choosenAsteroidTex, new Vector2(asteroidHitbox.X, asteroidHitbox.Y), null, Color.White,0, new Vector2(choosenAsteroidTex.Width / 2, choosenAsteroidTex.Height / 2), 1, SpriteEffects.None, 1);
-           // sb.Draw(shipTex, shipPos, null, Color.White, currentRotation + MathHelper.ToRadians(90), new Vector2(shipTex.Width / 2, shipTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(tex, new Vector2(hitbox.X, hitbox.Y), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);           
         }
     }
 }

@@ -13,9 +13,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         Vector2 mousePos;
         Color color;
-        public Texture2D ShipTex { get; private set; }
-        public Vector2 ShipPos { get; private set; }
-        Rectangle shipHitBox;
+        public Texture2D tex { get; private set; }       
+        public Vector2 pos { get; private set; }
+        Rectangle hitbox;
 
         public static int hitPoints;
         public bool isHit;
@@ -23,22 +23,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public int DamageOutput { get; private set; }
 
         float speed;
-
-        TypeOfEffect effect;
-        ParticleEngine shipAfterburnerParticles;
+      
+        ParticleEngine AfterburnerEffect;
         List<Texture2D> afterBurnerTextures;
-
-        Vector2 directionOfShip;
-        Vector2 rotationTarget;
+                
         float currentRotation;
 
         public Ship(Vector2 pos, Vector2 mousePos)
         {
             this.mousePos = mousePos;
             color = Color.White;
-            ShipTex = AssetsManager.shipTex;
-            ShipPos = pos;
-            shipHitBox = new Rectangle((int)ShipPos.X, (int)ShipPos.Y, 50, 50);
+            tex = AssetsManager.shipTex;
+            this.pos = pos;
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 50, 50);
             hitPoints = 2;
             speed = 3;
 
@@ -46,39 +43,40 @@ namespace Asteroids_2_Return_of_the_Asteroids
             afterBurnerTextures.Add(AssetsManager.particleCircleTex);
             afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
 
-            shipAfterburnerParticles = new ParticleEngine(afterBurnerTextures, ShipPos, effect = TypeOfEffect.AfterBurner);
-            //shipAfterburnerParticles.isAfterBurner = true;
+            AfterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);          
 
         }
         public void Update(GameTime gt)
         {
-            shipHitBox.X = (int)ShipPos.X;
-            shipHitBox.Y = (int)ShipPos.Y;
+            hitbox.X = (int)pos.X;
+            hitbox.Y = (int)pos.Y;
 
             mousePos.X = Mouse.GetState().X;
             mousePos.Y = Mouse.GetState().Y;
 
             MovementInput();
+            ShipRotation();
+            GetDirection();
 
-            ShipPos += speed * GetDirection();
+            pos += speed * GetDirection();
 
             if (hitPoints <= 0)
             {
                 color = Color.Blue;
             }
 
-            shipAfterburnerParticles.EmitterLocation = ShipPos + speed * GetDirection();
-            shipAfterburnerParticles.Update();
+            AfterburnerEffect.EmitterLocation = pos + speed * GetDirection();
+            AfterburnerEffect.Update();
         }
 
         private void MovementInput()
         {
 
-            if (Vector2.Distance(mousePos, ShipPos) < 4)
+            if (Vector2.Distance(mousePos, pos) < 4)
             {
                 speed = 0;
             }
-            else if (Vector2.Distance(mousePos, ShipPos) >= 4)
+            else if (Vector2.Distance(mousePos, pos) >= 4)
             {
                 speed = 3;
             }
@@ -90,29 +88,26 @@ namespace Asteroids_2_Return_of_the_Asteroids
             else if (!isHit)
             {
                 color = Color.White;
-            }
-
-            ShipRotation();
-            GetDirection();
+            }            
         }
 
         private void ShipRotation()
         {
-            directionOfShip = mousePos - (ShipPos);
+            Vector2 directionOfShip = mousePos - (pos);
             currentRotation = (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);
         }
 
         private Vector2 GetDirection()
         {
-            Vector2 Direction = new Vector2(Mouse.GetState().X - ShipPos.X, Mouse.GetState().Y - ShipPos.Y);
+            Vector2 Direction = new Vector2(Mouse.GetState().X - pos.X, Mouse.GetState().Y - pos.Y);
             return Vector2.Normalize(Direction);
         }
 
         public void Draw(SpriteBatch sb)
         {
-            shipAfterburnerParticles.Draw(sb);
+            AfterburnerEffect.Draw(sb);
 
-            sb.Draw(ShipTex, ShipPos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(ShipTex.Width / 2, ShipTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(tex, pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
 
         }
     }

@@ -86,8 +86,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                        velMultiplier * (float)(random.NextDouble() * velSpeed - 1),
                        velMultiplier * (float)(random.NextDouble() * velSpeed - 1));
             angle = 0f;
-            angularVelocity = angularVelMultiplier * (float)(random.NextDouble() * 2 - 1);
-          //  size = (float)random.NextDouble();
+            angularVelocity = angularVelMultiplier * (float)(random.NextDouble() * 2 - 1);          
             ttl = 1 + random.Next(ttlMaxLength);
 
             return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl);

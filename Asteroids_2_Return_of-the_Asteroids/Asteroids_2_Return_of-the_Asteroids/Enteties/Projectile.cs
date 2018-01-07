@@ -15,21 +15,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Vector2 projectilePos;
 
-        Vector2 speed;
-
-        Vector2 direction;
-
-        Vector2 originalPos;
-
-        Vector2 targetPos;
+        Vector2 speed, direction, originalPos, targetPos;       
 
         int gunRange;
 
-        public bool removeProjectile;
+        public bool doRemove;
 
-        Rectangle projectileHitbox;
-
-        Vector2 directionOfProjectile;
+        Rectangle hitbox;
+      
         float rotation;        
 
         public Projectile(Vector2 projectilePos, Vector2 targetPos)
@@ -50,19 +43,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             GetRotation();
 
-            projectileHitbox = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 20, 30);
-        }
-
-        public void Update(GameTime gt)
-        {
-            projectilePos += speed * direction;
-            projectileHitbox.X = (int)projectilePos.X;
-            projectileHitbox.Y = (int)projectilePos.Y;
-
-            if (Vector2.Distance(projectilePos, originalPos) >= gunRange)
-            {
-                removeProjectile = true;
-            }         
+            hitbox = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 20, 30);
         }
 
         private Vector2 GetDirection()
@@ -73,13 +54,29 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void GetRotation()
         {
-            directionOfProjectile = Mouse.GetState().Position.ToVector2() - projectilePos;
+            Vector2 directionOfProjectile = Mouse.GetState().Position.ToVector2() - projectilePos;
             rotation = (float)Math.Atan2(directionOfProjectile.Y, directionOfProjectile.X);
         }
 
+        public void Update(GameTime gt)
+        {
+            projectilePos += speed * direction;
+            hitbox.X = (int)projectilePos.X;
+            hitbox.Y = (int)projectilePos.Y;
+            CheckIfOutOfRange();
+        }
+
+        private void CheckIfOutOfRange()
+        {
+            if (Vector2.Distance(projectilePos, originalPos) >= gunRange)
+            {
+                doRemove = true;
+            }
+        }       
+
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(projectileTex, projectilePos,null, Color.White,rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(projectileTex, projectilePos, null, Color.White,rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }

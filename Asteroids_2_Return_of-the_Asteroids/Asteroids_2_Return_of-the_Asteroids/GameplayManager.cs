@@ -120,7 +120,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             for (int i = 0; i < projectiles.Count; i++)
             {
                 projectiles[i].Update(gt);
-                if (projectiles[i].removeProjectile)
+                if (projectiles[i].doRemove)
                 {
                     projectiles.RemoveAt(i);
                 }
@@ -207,7 +207,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new Projectile(Ship.ShipPos, projectileTargetPos);
+                projectile = new Projectile(Ship.pos, projectileTargetPos);
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
@@ -345,7 +345,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 for (int i = 0; i < asteroids.Count; i++)
                 {
-                    if (Vector2.Distance(asteroids[i].pos, Ship.ShipPos) < asteroids[i].AsteroidRadius + (Ship.ShipTex.Width / 2))
+                    if (Vector2.Distance(asteroids[i].pos, Ship.pos) < asteroids[i].radius + (Ship.tex.Width / 2))
                     {
 
                         TempInvulnarbility = true;
