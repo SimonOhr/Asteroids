@@ -170,7 +170,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     explosionEffect.Update();
                 }
-                for (int i = 0; i < asteroidExplosionList.Count - 1; i++)
+                for (int i = 0; i < asteroidExplosionList.Count; i++)
                 {
                   //  Console.WriteLine(asteroidExplosionList.Count); 
                     if (asteroidExplosionList[i].particles.Count <= 0)

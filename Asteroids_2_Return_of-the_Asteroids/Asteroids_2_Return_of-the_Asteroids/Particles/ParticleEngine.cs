@@ -18,22 +18,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public List<Particle> particles { get; private set; }
         private List<Texture2D> textures;
 
-        Vector2 velocity;
-        Color color;
-        float angle;
-        float angularVelocity;
-        float size;
-        int ttl;
+        Vector2 velocity;            
 
-        Color colorStates;
-        List<Color> colourPallet = new List<Color>();
+        Color colorStates, color;
+        List<Color> colourPallet = new List<Color>();        
 
-        int total;
-
-        float velMultiplier, angularVelMultiplier;
-        int velSpeed, ttlMaxLength;
-
-        int asteroidExplosionTimer;
+        float velMultiplier, angularVelMultiplier, size, angularVelocity, angle;
+        int velSpeed, ttlMaxLength, ttl, particlesPerTick, totalTicks;       
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location, TypeOfEffect effect)
         {
@@ -47,7 +38,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
             colourPallet.Add(Color.OrangeRed);
             this.effect = effect;
         }
-
 
         private Particle GenerateNewParticle(Color color)
         {
@@ -66,6 +56,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                        (float)random.NextDouble(),
                        (float)random.Next(0, 1),
                        (float)random.Next(0, 1));
+                    size = (float)random.NextDouble()/3;
 
                     break;
                 case TypeOfEffect.AsteroidExplosion:
@@ -75,7 +66,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     angularVelMultiplier = 20f;
                     ttlMaxLength = 25;
                     this.color = color; // colorpallet
-
+                    size = (float)random.NextDouble()/2;
                     break;
                 case TypeOfEffect.AsteroidHit:
                     velMultiplier = 10f;
@@ -87,7 +78,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     (float)random.NextDouble(),
                        (float)random.Next(10, 50),
                           (float)random.Next(20, 50));
-
+                    size = (float)random.NextDouble()/2;
                     break;
             }
 
@@ -96,7 +87,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                        velMultiplier * (float)(random.NextDouble() * velSpeed - 1));
             angle = 0f;
             angularVelocity = angularVelMultiplier * (float)(random.NextDouble() * 2 - 1);
-            size = (float)random.NextDouble();
+          //  size = (float)random.NextDouble();
             ttl = 1 + random.Next(ttlMaxLength);
 
             return new Particle(texture, position, velocity, angle, angularVelocity, color, size, ttl);
@@ -109,53 +100,48 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update()
         {
-
             switch (effect)
             {
                 case TypeOfEffect.AfterBurner:
 
-                    total = 3;
+                    particlesPerTick = 3;
 
-                    for (int i = 0; i < total; i++)
+                    for (int i = 0; i < particlesPerTick; i++)
                     {
                         particles.Add(GenerateNewParticle(Color.White));
                     }
                     break;
                 case TypeOfEffect.AsteroidExplosion:
-                    while (asteroidExplosionTimer < 50)
+                    while (totalTicks < 50)
                     {
-                        total = 2;
+                        particlesPerTick = 2;
 
-                        if (asteroidExplosionTimer <= 10)
+                        if (totalTicks <= 20)
                         {
-                            colorStates = Color.Gray;
+                            colorStates = Color.Gray;                            
                         }
-                        else if (asteroidExplosionTimer > 20 && asteroidExplosionTimer <= 30)
-                        {
-                            colorStates = Color.Red;
-                        }
-                        else if (asteroidExplosionTimer > 30)
-                        {
+                        else if (totalTicks > 20 )
+                        {                           
                             colorStates = colourPallet[random.Next(0, colourPallet.Count)];
-                        }
+                        }                       
 
-                        for (int i = 0; i < total; i++)
+                        for (int i = 0; i < particlesPerTick; i++)
                         {
                             particles.Add(GenerateNewParticle(colorStates));
                         }
-                        asteroidExplosionTimer++;
+                        totalTicks++;
                     }
                     break;
                 case TypeOfEffect.AsteroidHit:
-                    while (asteroidExplosionTimer < 20)
+                    while (totalTicks < 20)
                     {
-                        total = 1;
+                        particlesPerTick = 1;
 
-                        for (int i = 0; i < total; i++)
+                        for (int i = 0; i < particlesPerTick; i++)
                         {
                             particles.Add(GenerateNewParticle(Color.White));
                         }
-                        asteroidExplosionTimer++;
+                        totalTicks++;
                     }
                     break;               
             }
