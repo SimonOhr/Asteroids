@@ -21,8 +21,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static SoundEffect laserShot, asteroidExplosion;
 
         public static List<Texture2D> textures = new List<Texture2D>();
-
-          
+                  
 
         public static void LoadContent(ContentManager Content)
         {

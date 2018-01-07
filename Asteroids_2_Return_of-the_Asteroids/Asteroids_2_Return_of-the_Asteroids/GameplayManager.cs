@@ -22,7 +22,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Ship Ship { get; private set; }
 
         Projectile projectile;
-         public List<Projectile> projectiles = new List<Projectile>();
+        public List<Projectile> projectiles = new List<Projectile>();
 
         Random rnd;
 
@@ -36,7 +36,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         double gunChargeTimer, gunChargeTimerReset;
         float chargeRate;
-        int maxGunCharge;     
+        int maxGunCharge;
         int currentGunCharge;
 
         Vector2 mousePos;
@@ -44,6 +44,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public bool TempInvulnarbility { get; private set; } = false;
         double tempTimer, tempReset = 0;
         float tempTarget = 2;
+
+        ParticleEngine particle;
 
         ParticleEngine asteroidIsHitParticles;
         List<ParticleEngine> asteroidIsHitList; //minnes läcka
@@ -53,6 +55,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         double explosionTimer, explosionReset;
         float explosionTargetLength;
+
+        TypeOfEffect effect;
 
         public GameplayManager(Random rnd, GameWindow window)
         {
@@ -74,6 +78,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             chargeRate = 800f;
             gunChargeTimerReset = 0;
             maxGunCharge = 3;
+
 
             asteroidIsHitList = new List<ParticleEngine>();
             asteroidExplosionList = new List<ParticleEngine>();
@@ -125,19 +130,53 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 tempAsteroid.Update(gt);
             }
 
+            if (particle != null)
+            {
+                particle.Update();
+
+            }
             if (asteroidIsHitList.Count > 0)
             {
-                ExplosionTime(gt);
-                foreach (ParticleEngine explosion in asteroidIsHitList)
+                int iterable = 0;
+                // ExplosionTime(gt);
+                //foreach (ParticleEngine explosion in asteroidIsHitList)
+                //{
+                //    explosion.Update();
+                //   // iterable++;
+                //    Console.WriteLine(asteroidIsHitList.Count);
+                //    if (explosion.particles.Count == 0)
+                //    {
+                //        asteroidIsHitList.RemoveAt(iterable);
+                //        iterable = asteroidIsHitList.Count;
+                //        // asteroidIsHitList.Clear();
+                //    }
+                //}
+                foreach (ParticleEngine hitEffect in asteroidIsHitList)
                 {
-                    explosion.Update();
+                    hitEffect.Update();
+                }
+                for (int i = 0; i < asteroidIsHitList.Count ; i++)
+                {
+                  //  Console.WriteLine(asteroidIsHitList.Count);
+                    if (asteroidIsHitList[i].particles.Count <= 0)
+                    {
+                        asteroidIsHitList.RemoveAt(i);
+                    }
                 }
             }
             if (asteroidExplosionList.Count > 0)
             {
-                foreach (ParticleEngine particle in asteroidExplosionList)
+                foreach (ParticleEngine explosionEffect in asteroidExplosionList)
                 {
-                    particle.Update();
+                    explosionEffect.Update();
+                }
+                for (int i = 0; i < asteroidExplosionList.Count - 1; i++)
+                {
+                  //  Console.WriteLine(asteroidExplosionList.Count); 
+                    if (asteroidExplosionList[i].particles.Count <= 0)
+                    {
+                        asteroidExplosionList.RemoveAt(i);
+                    }
                 }
             }
 
@@ -158,7 +197,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     currentGunCharge++;
                     gunChargeTimer = gunChargeTimerReset;
-                    Console.WriteLine("number of shots " + currentGunCharge);
+                    // Console.WriteLine("number of shots " + currentGunCharge);
                 }
             }
         }
@@ -172,7 +211,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
-                Console.WriteLine("number of shots " + projectiles.Count);                
+                // Console.WriteLine("number of shots " + projectiles.Count);                
                 var instance = AssetsManager.laserShot.CreateInstance();
                 instance.Volume = 0.5f;
                 instance.Play();
@@ -193,7 +232,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 spawnAsteroidsTimer = spawnAsteroidsTimerReset;
             }
 
-            Console.WriteLine(+asteroids.Count);
+            //  Console.WriteLine(+asteroids.Count);
         }
 
         private void CheckIfAsteroidIsHit()
@@ -206,27 +245,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {
                         if (Vector2.Distance(asteroids[i].pos, projectiles[j].projectilePos) < 50)
                         {
-                            asteroidIsHitParticles = new ParticleEngine(AssetsManager.textures, asteroids[i].pos);
-                            asteroidIsHitParticles.isAsteroidHit = true;
-                           // asteroidIsHitParticles.EmitterLocation = asteroids[i].pos;
+                            asteroidIsHitParticles = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidHit);
                             asteroidIsHitList.Add(asteroidIsHitParticles);
-                                                        
                             projectiles.RemoveAt(j);
                             if (CheckIfAsteroidisDead(asteroids[i]))
-                            {                               
-                                asteroidExplosion = new ParticleEngine(AssetsManager.textures, asteroids[i].pos);
-                                asteroidExplosion.isAsteroidExplosion = true;
+                            {
+                                asteroidExplosion = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidExplosion);
                                 asteroidExplosionList.Add(asteroidExplosion);
-                                //asteroidExplosion.EmitterLocation = asteroids[i].pos;
                                 var instance = AssetsManager.asteroidExplosion.CreateInstance();
                                 instance.Volume = 0.1f;
                                 instance.Play();
-
                                 asteroids.RemoveAt(i);
                             }
-                                                     
                             Game1.score += 10;
-
                             break;
                         }
                     }
@@ -244,16 +275,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             return false;
         }
 
-        private void ExplosionTime(GameTime gt)
-        {
-            explosionTimer += gt.ElapsedGameTime.TotalMilliseconds;
+        //private void ExplosionTime(GameTime gt)
+        //{
+        //    explosionTimer += gt.ElapsedGameTime.TotalMilliseconds;
 
-            if (explosionTimer > explosionTargetLength)
-            {               
-                //    explosionList.RemoveAt(0);
-                //    explosionTimer = explosionReset;               
-            }
-        }
+        //    if (explosionTimer > explosionTargetLength)
+        //    {               
+        //        //    explosionList.RemoveAt(0);
+        //        //    explosionTimer = explosionReset;               
+        //    }
+        //  }
         //private void CheckAsteroidCollision()
         //{
         //    for (int i = 0; i < asteroids.Count; i++)
@@ -345,7 +376,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 asteroidExplosion.Draw(sb);
             }
-          
+
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);

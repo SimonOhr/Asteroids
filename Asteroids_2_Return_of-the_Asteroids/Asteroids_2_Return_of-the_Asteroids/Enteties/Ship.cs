@@ -24,6 +24,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         float speed;
 
+        TypeOfEffect effect;
         ParticleEngine shipAfterburnerParticles;
         List<Texture2D> afterBurnerTextures;
 
@@ -45,8 +46,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             afterBurnerTextures.Add(AssetsManager.particleCircleTex);
             afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
 
-            shipAfterburnerParticles = new ParticleEngine(afterBurnerTextures, ShipPos);
-            shipAfterburnerParticles.isAfterBurner = true;
+            shipAfterburnerParticles = new ParticleEngine(afterBurnerTextures, ShipPos, effect = TypeOfEffect.AfterBurner);
+            //shipAfterburnerParticles.isAfterBurner = true;
 
         }
         public void Update(GameTime gt)
