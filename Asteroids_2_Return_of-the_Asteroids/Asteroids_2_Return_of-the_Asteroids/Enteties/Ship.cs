@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class Ship
-    {
+    {        
         Vector2 mousePos;
         Color color;
-        public Texture2D tex { get; private set; }       
-        public Vector2 pos { get; private set; }
+        public Texture2D Tex { get; private set; }       
+        public Vector2 Pos { get; private set; }
         Rectangle hitbox;
 
         public static int hitPoints;
@@ -42,10 +42,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Ship(Vector2 pos, Vector2 mousePos)
         {
-            this.mousePos = mousePos;
+            this.Pos = pos;
+            this.mousePos = mousePos;           
+
             color = Color.White;
-            tex = AssetsManager.shipTex;
-            this.pos = pos;
+            Tex = AssetsManager.shipTex;           
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, 50, 50);
             hitPoints = 2;
             speed = 3;
@@ -58,19 +59,20 @@ namespace Asteroids_2_Return_of_the_Asteroids
             gunChargeTimerReset = 0;
             maxGunCharge = 3;
 
-            afterBurnerTextures = new List<Texture2D>();
-            afterBurnerTextures.Add(AssetsManager.particleCircleTex);
-            afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
+            //afterBurnerTextures = new List<Texture2D>();
+            //afterBurnerTextures.Add(AssetsManager.particleCircleTex);
+            //afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
 
-            afterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);
+            //afterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);
 
             //afterBurnerTextures.Clear();
             //afterBurnerTextures = null;
+            EffectsManager.CreateAfterBurnerEffect(Pos);
         }
         public void Update(GameTime gt)
         {
-            hitbox.X = (int)pos.X;
-            hitbox.Y = (int)pos.Y;
+            hitbox.X = (int)Pos.X;
+            hitbox.Y = (int)Pos.Y;
 
             mousePos.X = Mouse.GetState().X;
             mousePos.Y = Mouse.GetState().Y;
@@ -79,26 +81,28 @@ namespace Asteroids_2_Return_of_the_Asteroids
             ShipRotation();
             GetDirection();
 
-            pos += speed * GetDirection();
+            Pos += speed * GetDirection();
 
             if (hitPoints <= 0)
             {
                 color = Color.Blue;
             }
 
-            afterburnerEffect.EmitterLocation = pos + speed * GetDirection();
-            afterburnerEffect.Update();
+            EffectsManager.UpdateAfterBurnerEffect(Pos);
+            //afterburnerEffect.EmitterLocation = Pos + speed * GetDirection();
+            //afterburnerEffect.Update();
             UpdateGunData(gt);
+
         }
 
         private void MovementInput()
         {
 
-            if (Vector2.Distance(mousePos, pos) < 4)
+            if (Vector2.Distance(mousePos, Pos) < 4)
             {
                 speed = 0;
             }
-            else if (Vector2.Distance(mousePos, pos) >= 4)
+            else if (Vector2.Distance(mousePos, Pos) >= 4)
             {
                 speed = 3;
             }
@@ -115,13 +119,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void ShipRotation()
         {
-            Vector2 directionOfShip = mousePos - (pos);
+            Vector2 directionOfShip = mousePos - (Pos);
             currentRotation = (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);
         }
 
         private Vector2 GetDirection()
         {
-            Vector2 Direction = new Vector2(Mouse.GetState().X - pos.X, Mouse.GetState().Y - pos.Y);
+            Vector2 Direction = new Vector2(Mouse.GetState().X - Pos.X, Mouse.GetState().Y - Pos.Y);
             return Vector2.Normalize(Direction);
         }
 
@@ -162,7 +166,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new Projectile(pos, projectileTargetPos);
+                projectile = new Projectile(Pos, projectileTargetPos);
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;
@@ -185,9 +189,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Draw(SpriteBatch sb)
         {
-            afterburnerEffect.Draw(sb);
+            //afterburnerEffect.Draw(sb);
 
-            sb.Draw(tex, pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(Tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(Tex.Width / 2, Tex.Height / 2), 1, SpriteEffects.None, 1);
 
         }
 

@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssetsManager.cs" />
+    <Compile Include="CollisonManager.cs" />
+    <Compile Include="EffectsManager.cs" />
     <Compile Include="Enteties\Asteroid.cs" />
     <Compile Include="Menu\Button.cs" />
     <Compile Include="Menu\ButtonMenu.cs" />

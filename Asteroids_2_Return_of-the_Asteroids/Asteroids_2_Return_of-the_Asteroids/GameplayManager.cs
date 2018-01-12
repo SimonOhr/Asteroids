@@ -14,6 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         GameWindow window;       
         Rectangle backgroundRec;
+        CollisonManager cm;
 
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
@@ -30,19 +31,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Vector2 mousePos;
 
-        public bool TempInvulnarbility { get; private set; } = false;
-        double tempTimer, tempReset = 0;
-        float tempTarget = 2;
-
-        ParticleEngine particle;
-
-        ParticleEngine asteroidIsHitParticles;
-        List<ParticleEngine> asteroidIsHitList;
-
-        ParticleEngine asteroidExplosion;
-        List<ParticleEngine> asteroidExplosionList;              
-
-        TypeOfEffect effect;
+        ParticleEngine particle;          
 
         public GameplayManager(Random rnd, GameWindow window)
         {
@@ -55,10 +44,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             spawnAsteroidsTimerReset = 0;
             spawnAsteroidsInterval = 2;
-            numberOfAsteroidsPerTimerReset = 3;          
+            numberOfAsteroidsPerTimerReset = 3;
 
-            asteroidIsHitList = new List<ParticleEngine>();
-            asteroidExplosionList = new List<ParticleEngine>();
+            cm = new CollisonManager(this);
                  
             SoundManager.PlayBgMusic();
         }
@@ -87,43 +75,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 particle.Update();
 
             }
-            if (asteroidIsHitList.Count > 0)
-            {
-                int iterable = 0;
-               
-                foreach (ParticleEngine hitEffect in asteroidIsHitList)
-                {
-                    hitEffect.Update();
-                }
-                for (int i = 0; i < asteroidIsHitList.Count ; i++)
-                {
-                  //  Console.WriteLine(asteroidIsHitList.Count);
-                    if (asteroidIsHitList[i].particles.Count <= 0)
-                    {
-                        asteroidIsHitList.RemoveAt(i);
-                    }
-                }
-            }
-            if (asteroidExplosionList.Count > 0)
-            {
-                foreach (ParticleEngine explosionEffect in asteroidExplosionList)
-                {
-                    explosionEffect.Update();
-                }
-                for (int i = 0; i < asteroidExplosionList.Count; i++)
-                {
-                  //  Console.WriteLine(asteroidExplosionList.Count); 
-                    if (asteroidExplosionList[i].particles.Count <= 0)
-                    {
-                        asteroidExplosionList.RemoveAt(i);
-                    }
-                }
-            }
-            //CheckAsteroidCollision();
 
-            CheckIfAsteroidIsHit();
-
-            CheckIfShipIsHit(gt);
+            EffectsManager.UpdateAsteroidIsHitEffect();
+            EffectsManager.UpdateAsteroidExplosionEffect();
+            cm.CheckIfAsteroidIsHit();         
+            cm.CheckIfShipIsHit(gt);         
         }       
 
         private void CreateAsteroids(GameTime gt)
@@ -141,47 +97,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
 
             //  Console.WriteLine(+asteroids.Count);
-        }
-
-        private void CheckIfAsteroidIsHit()
-        {
-            projectiles = Ship.GetProjectileList();
-            for (int j = 0; j < projectiles.Count; j++)
-            {
-                for (int i = 0; i < asteroids.Count; i++)
-                {
-                    if (projectiles.Count > 0)
-                    {
-                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].projectilePos) < 50)
-                        {
-                            asteroidIsHitParticles = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidHit);
-                            asteroidIsHitList.Add(asteroidIsHitParticles);
-                            projectiles.RemoveAt(j);
-                            if (CheckIfAsteroidisDead(asteroids[i]))
-                            {
-                                asteroidExplosion = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidExplosion);
-                                asteroidExplosionList.Add(asteroidExplosion);
-                                SoundManager.PlayExplosion();
-                                asteroids.RemoveAt(i);
-                            }
-                            Game1.score += 10;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private bool CheckIfAsteroidisDead(Asteroid a)
-        {
-            a.hitPoints -= 1;
-            if (a.hitPoints <= 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
+        }       
+       
         //private void ExplosionTime(GameTime gt)
         //{
         //    explosionTimer += gt.ElapsedGameTime.TotalMilliseconds;
@@ -225,6 +142,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //        }
         //    }
         //}
+
         private void CheckIfAsteroidIsInPlay()
         {
             for (int i = 0; i < asteroids.Count; i++)
@@ -234,34 +152,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     asteroids.RemoveAt(i);
                 }
             }
-        }
-
-        private void CheckIfShipIsHit(GameTime gt)
-        {
-            if (TempInvulnarbility)
-            {
-                tempTimer += gt.ElapsedGameTime.TotalSeconds;
-                if (tempTimer >= tempTarget)
-                {
-                    TempInvulnarbility = false;
-                    Ship.isHit = false;
-                    tempTimer = tempReset;
-                }
-            }
-            else if (!TempInvulnarbility)
-            {
-                for (int i = 0; i < asteroids.Count; i++)
-                {
-                    if (Vector2.Distance(asteroids[i].pos, Ship.pos) < asteroids[i].radius + (Ship.tex.Width / 2))
-                    {
-
-                        TempInvulnarbility = true;
-                        Ship.isHit = true;
-                        Ship.hitPoints -= 1;
-                    }
-                }
-            }
-        }
+        }       
 
         public void Draw(SpriteBatch sb)
         {
@@ -269,21 +160,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             sb.Draw(AssetsManager.crosshairTex, new Vector2(mousePos.X - (AssetsManager.crosshairTex.Width / 2), mousePos.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
 
-            foreach (Projectile tempProjectile in projectiles)
+            foreach (Projectile tempProjectile in GetProjectileList())
             {
                 tempProjectile.Draw(sb);
-            }
+            }                        
+            
+            EffectsManager.Draw(sb);
 
             Ship.Draw(sb);
-            if (asteroidIsHitList.Count > 0)
-            {
-                asteroidIsHitParticles.Draw(sb);
-            }
-            if (asteroidExplosionList.Count > 0)
-            {
-                asteroidExplosion.Draw(sb);
-            }
-
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);
@@ -293,6 +177,31 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void ClearShipProjectileList()
         {
             Ship.ClearProjectileList();
+        }
+
+        public ref List<Projectile> GetProjectileList()
+        {            
+            return ref Ship.projectiles;
+        }   
+        
+        public ref List<Asteroid> GetAsteroidList()
+        {
+            return  ref asteroids;
+        }
+
+        public void SetShipStatus(bool isShipHit)
+        {
+            Ship.isHit = isShipHit;
+        }
+
+        public Vector2 GetShipPos()
+        {
+            return Ship.Pos;
+        }
+
+        public Texture2D GetShipTex()
+        {
+            return Ship.Tex;
         }
     }
 }
