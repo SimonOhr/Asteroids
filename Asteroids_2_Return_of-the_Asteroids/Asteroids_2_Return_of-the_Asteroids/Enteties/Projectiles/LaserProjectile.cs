@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             projectileTex = AssetsManager.laserProjectileTex;
 
-            vSpeed = new Vector2(10, 10);
+            vSpeed = new Vector2(30, 30);
 
             gunRange = 800;
 

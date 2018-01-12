@@ -40,7 +40,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mousePos.X = Mouse.GetState().X;
             mousePos.Y = Mouse.GetState().Y;
 
-            MovementInput();
+            SoftInSoftOut();
             ShipRotation();
             GetDirection();
             ShipIsHitColorSwitch();
@@ -55,16 +55,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.UpdateAfterBurnerEffect(Pos);            
         }
 
-        virtual protected void MovementInput() // functions as a default, will refactor away eventually
+        virtual protected void SoftInSoftOut()
         {
-            if (Vector2.Distance(mousePos, Pos) < 4)
-            {
-                speed = 0;
-            }
-            else if (Vector2.Distance(mousePos, Pos) >= 4)
-            {
-                speed = 3;
-            }
+            speed = (Vector2.Distance(mousePos, Pos) * 0.025f);           
         }
 
         virtual protected void ShipIsHitColorSwitch()

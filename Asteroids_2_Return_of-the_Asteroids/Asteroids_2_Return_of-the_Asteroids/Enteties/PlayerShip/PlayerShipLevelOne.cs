@@ -13,7 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {        
         public PlayerShipLevelOne(Vector2 pos, Vector2 mousePos):base(pos, mousePos)
         {
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 50, 50);
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 100, 100);
 
             tex = AssetsManager.shipTex;
 
@@ -21,36 +21,24 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             weapon = new LaserCanon(Pos);
 
-            hitPoints = 2;
-            speed = 3;
+            hitPoints = 3;
+            speed = 4;
             originalSpeed = speed;           
         }
 
         public override void Update(GameTime gt)
         {            
             weapon.SetPos(Pos);
-            weapon.Update(gt);
-            MovementInput();
+            weapon.Update(gt);               
+            Console.WriteLine(speed);
             base.Update(gt);
-        }
-
-        protected override void MovementInput()
-        {
-
-            if (Vector2.Distance(mousePos, Pos) < 4)
-            {
-                speed = 0;
-            }
-            else if (Vector2.Distance(mousePos, Pos) >= 4)
-            {
-                speed = originalSpeed;
-            }           
-        }       
+        }        
 
         public override void Draw(SpriteBatch sb)
         {
             weapon.Draw(sb);
-            base.Draw(sb);
+            sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
+            //base.Draw(sb);
         }
     }
 }

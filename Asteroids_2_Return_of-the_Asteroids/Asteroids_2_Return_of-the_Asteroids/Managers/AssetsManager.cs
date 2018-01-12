@@ -26,7 +26,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static void LoadContent(ContentManager Content)
         {
             backgroundTex = Content.Load<Texture2D>("bakgrund");
-            shipTex = Content.Load<Texture2D>("skepp");
+            shipTex = Content.Load<Texture2D>("ship");
             asteroid1Tex = Content.Load<Texture2D>("asteroid");
             asteroid2Tex = Content.Load<Texture2D>("asteroid2");
             crosshairTex = Content.Load<Texture2D>("sikte");
