@@ -12,7 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     static class AssetsManager
     {
-        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, projectileTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex;
+        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, laserProjectileTex, bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex;
 
         public static SpriteFont text;
 
@@ -30,7 +30,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroid1Tex = Content.Load<Texture2D>("asteroid");
             asteroid2Tex = Content.Load<Texture2D>("asteroid2");
             crosshairTex = Content.Load<Texture2D>("sikte");
-            projectileTex = Content.Load<Texture2D>("laserskott");
+            laserProjectileTex = Content.Load<Texture2D>("laserskott");
+            bulletTex = Content.Load<Texture2D>("Bullet");
             buttonTex = Content.Load<Texture2D>("vitRektangel");
             transBackgroundTex = Content.Load<Texture2D>("TransBackground");
             particleStarTex = Content.Load<Texture2D>("star");

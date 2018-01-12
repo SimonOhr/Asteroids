@@ -10,7 +10,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class CollisonManager
     {
         GameplayManager gm;
-        List<Projectile> projectiles;
+        List<ProjectileBase> projectiles;
         List<Asteroid> asteroids;
 
         public bool TempInvulnarbility { get; private set; } = false;
@@ -20,7 +20,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public CollisonManager(GameplayManager gm)
         {
             this.gm = gm;
-            projectiles = new List<Projectile>();
+            projectiles = new List<ProjectileBase>();
             asteroids = new List<Asteroid>();
         }
 
@@ -34,7 +34,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     if (projectiles.Count > 0)
                     {
-                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].projectilePos) < 50)
+                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) < 50)
                         {
                             //asteroidIsHitParticles = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidHit);
                             //asteroidIsHitList.Add(asteroidIsHitParticles);
@@ -88,7 +88,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         TempInvulnarbility = true;
                       //  Ship.isHit = true;
                         gm.SetShipStatus(true);
-                        Ship.hitPoints -= 1;
+                        PlayerShipBase.hitPoints -= 1;
                     }
                 }
             }

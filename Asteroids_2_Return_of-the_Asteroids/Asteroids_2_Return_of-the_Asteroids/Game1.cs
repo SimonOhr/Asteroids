@@ -107,7 +107,7 @@ namespace Asteroids_2_Return_of_the_Asteroids {
                         PauseMenuButtons();
                     }
 
-                    if (Ship.hitPoints <= 0) {
+                    if (PlayerShipBase.hitPoints <= 0) {
                         currentstate = GameState.EndPhase;
                     }
 
@@ -185,7 +185,7 @@ namespace Asteroids_2_Return_of_the_Asteroids {
         }
 
         private void CleanSlate() {
-            Ship.hitPoints = 3;
+            PlayerShipBase.hitPoints = 3;
             score = 0;
             gm.asteroids.Clear();
             gm.ClearShipProjectileList();
@@ -206,12 +206,12 @@ namespace Asteroids_2_Return_of_the_Asteroids {
                 case GameState.PlayPhase:
                     gm.Draw(spriteBatch);
                     spriteBatch.DrawString(AssetsManager.text, "Score: " + score, new Vector2(10, 10), Color.White);
-                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + Ship.hitPoints, new Vector2(10, 30), Color.White);
+                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + PlayerShipBase.hitPoints, new Vector2(10, 30), Color.White);
                     if (hasPaused) {
                         pauseMenu.Draw(spriteBatch);
                     }
 
-                    if (Ship.hitPoints <= 0) {
+                    if (PlayerShipBase.hitPoints <= 0) {
                         currentstate = GameState.EndPhase;
                     }
                     break;

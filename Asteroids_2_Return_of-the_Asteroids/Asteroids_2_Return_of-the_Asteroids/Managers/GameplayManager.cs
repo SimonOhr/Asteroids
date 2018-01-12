@@ -12,6 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
     {
+        Weapon weapon;
         GameWindow window;       
         Rectangle backgroundRec;
         CollisonManager cm;
@@ -19,9 +20,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
 
-        public Ship Ship { get; private set; }
+        public PlayerShipBase Ship { get; private set; }
        
-        List<Projectile> projectiles = new List<Projectile>();
+        List<ProjectileBase> projectiles = new List<ProjectileBase>();
 
         Random rnd;
 
@@ -53,7 +54,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CreatePlayerShip()
         {
-            Ship = new Ship(new Vector2(50, 50), mousePos);
+            Ship = new PlayerShipLevelOne(new Vector2(50, 50), mousePos);
         }
 
         public void Update(GameTime gt)
@@ -90,7 +91,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 for (int i = 0; i < numberOfAsteroidsPerTimerReset; i++)
                 {
-                    asteroid = new Asteroid(window, rnd);
+                    asteroid = new Asteroid(window, rnd, Vector2.Zero);
                     asteroids.Add(asteroid);
                 }
                 spawnAsteroidsTimer = spawnAsteroidsTimerReset;
@@ -160,7 +161,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             sb.Draw(AssetsManager.crosshairTex, new Vector2(mousePos.X - (AssetsManager.crosshairTex.Width / 2), mousePos.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
 
-            foreach (Projectile tempProjectile in GetProjectileList())
+            foreach (ProjectileBase tempProjectile in GetProjectileList())
             {
                 tempProjectile.Draw(sb);
             }                        
@@ -172,16 +173,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 tempAsteroid.Draw(sb);
             }
-        }       
+        }
 
         public void ClearShipProjectileList()
         {
             Ship.ClearProjectileList();
         }
 
-        public ref List<Projectile> GetProjectileList()
+        public ref List<ProjectileBase> GetProjectileList()
         {            
-            return ref Ship.projectiles;
+            return ref Ship.GetProjectileList();
         }   
         
         public ref List<Asteroid> GetAsteroidList()
@@ -201,7 +202,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Texture2D GetShipTex()
         {
-            return Ship.Tex;
+            return Ship.tex;
         }
     }
 }

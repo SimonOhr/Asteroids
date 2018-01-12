@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Asteroid
+    class Asteroid:MovingObject
     {
         GameWindow window;
 
@@ -18,11 +18,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         List<Vector2> asteroidSpawnPoints;
 
-        Rectangle spawnZoneLeft, spawnZoneRight, spawnZoneUp, hitbox, targetDirection;
+        Rectangle spawnZoneLeft, spawnZoneRight, spawnZoneUp, targetDirection;
 
-        Vector2 posZoneLeft, posZoneRight, posZoneUp, speed;
-        
-        public Vector2 pos, direction;
+        Vector2 posZoneLeft, posZoneRight, posZoneUp, vSpeed;
+
+        public Vector2 pos;
+
+        public Vector2 direction;
 
         Random rnd;
 
@@ -36,11 +38,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         // float rotation;
 
-        public Asteroid(GameWindow window, Random rnd)
+        public Asteroid(GameWindow window, Random rnd, Vector2 pos):base(pos)
         {
             this.window = window;
             this.rnd = rnd;
-
+            
             textures.Add(AssetsManager.asteroid1Tex);
             textures.Add(AssetsManager.asteroid2Tex);
 
@@ -62,7 +64,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroidSpawnPoints.Add(posZoneRight);
             asteroidSpawnPoints.Add(posZoneUp);
 
-            pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
+            this.pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
 
             asteroidSpawnPoints.Clear();
 
@@ -70,20 +72,20 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            speed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+            vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
 
             direction = GetDirection();
 
             radius = 50;
 
-            velocity = speed * direction;
+            velocity = vSpeed * direction;
 
             hitPoints = 2;
 
            // GetAsteroidMass();
         }
 
-        public void Update(GameTime gt)
+        public override void Update(GameTime gt)
         {
             pos += velocity;
             hitbox.X = (int)pos.X;
@@ -115,7 +117,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             Vector2 Direction = new Vector2(targetDirection.X - pos.X, targetDirection.Y - pos.Y);
             return Vector2.Normalize(Direction);
         }
-        public void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
             sb.Draw(tex, new Vector2(hitbox.X, hitbox.Y), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);           
         }
