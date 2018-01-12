@@ -20,14 +20,25 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static int hitPoints;
         public bool isHit;
 
-        public int DamageOutput { get; private set; }
+       // public int DamageOutput { get; private set; }
 
         float speed;
       
-        ParticleEngine AfterburnerEffect;
+        ParticleEngine afterburnerEffect;
         List<Texture2D> afterBurnerTextures;
                 
         float currentRotation;
+
+        Projectile projectile;
+        public List<Projectile> projectiles = new List<Projectile>();
+        Vector2 projectileTargetPos;
+        double gunCooldownTimer, gunCooldownTimerReset;
+        float gunRateOfFire;
+
+        double gunChargeTimer, gunChargeTimerReset;
+        float chargeRate;
+        int maxGunCharge;
+        int currentGunCharge;
 
         public Ship(Vector2 pos, Vector2 mousePos)
         {
@@ -39,12 +50,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
             hitPoints = 2;
             speed = 3;
 
+            gunRateOfFire = 200f;
+            gunCooldownTimer = 0;
+            gunCooldownTimerReset = 0;
+
+            chargeRate = 800f;
+            gunChargeTimerReset = 0;
+            maxGunCharge = 3;
+
             afterBurnerTextures = new List<Texture2D>();
             afterBurnerTextures.Add(AssetsManager.particleCircleTex);
             afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
 
-            AfterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);          
+            afterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);
 
+            //afterBurnerTextures.Clear();
+            //afterBurnerTextures = null;
         }
         public void Update(GameTime gt)
         {
@@ -65,8 +86,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 color = Color.Blue;
             }
 
-            AfterburnerEffect.EmitterLocation = pos + speed * GetDirection();
-            AfterburnerEffect.Update();
+            afterburnerEffect.EmitterLocation = pos + speed * GetDirection();
+            afterburnerEffect.Update();
+            UpdateGunData(gt);
         }
 
         private void MovementInput()
@@ -103,12 +125,80 @@ namespace Asteroids_2_Return_of_the_Asteroids
             return Vector2.Normalize(Direction);
         }
 
+        private void UpdateGunData(GameTime gt)
+        {
+            GunCharging(gt);
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && currentGunCharge > 0)
+            {
+                projectileTargetPos = Mouse.GetState().Position.ToVector2();
+                PlayerIsShooting(gt);
+            }
+            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                gunCooldownTimer = 500f;
+            }
+            UpdateProjectiles(gt);
+        }
+
+        private void GunCharging(GameTime gt)
+        {
+            if (currentGunCharge < 3)
+            {
+                gunChargeTimer += gt.ElapsedGameTime.TotalMilliseconds;
+
+                if (gunChargeTimer > chargeRate)
+                {
+                    currentGunCharge++;
+                    gunChargeTimer = gunChargeTimerReset;
+                    // Console.WriteLine("number of shots " + currentGunCharge);
+                }
+            }
+        }
+
+        private void PlayerIsShooting(GameTime gt)
+        {
+            gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
+
+            if (gunCooldownTimer > gunRateOfFire)
+            {
+                projectile = new Projectile(pos, projectileTargetPos);
+                projectiles.Add(projectile);
+                currentGunCharge--;
+                gunCooldownTimer = gunCooldownTimerReset;
+                // Console.WriteLine("number of shots " + projectiles.Count);                
+                SoundManager.PlayShot();
+            }
+        }
+
+        private void UpdateProjectiles(GameTime gt)
+        {
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                projectiles[i].Update(gt);
+                if (projectiles[i].doRemove)
+                {
+                    projectiles.RemoveAt(i);
+                }
+            }
+        }
+
         public void Draw(SpriteBatch sb)
         {
-            AfterburnerEffect.Draw(sb);
+            afterburnerEffect.Draw(sb);
 
             sb.Draw(tex, pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
 
+        }
+
+        public List<Projectile> GetProjectileList()
+        {
+            return projectiles;
+        }
+
+        public void ClearProjectileList()
+        {
+            projectiles.Clear();
         }
     }
 }

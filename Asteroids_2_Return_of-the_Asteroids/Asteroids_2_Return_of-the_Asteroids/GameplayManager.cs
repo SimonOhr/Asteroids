@@ -12,32 +12,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
     {
-        GameWindow window;
-
+        GameWindow window;       
         Rectangle backgroundRec;
 
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
 
         public Ship Ship { get; private set; }
-
-        Projectile projectile;
-        public List<Projectile> projectiles = new List<Projectile>();
+       
+        List<Projectile> projectiles = new List<Projectile>();
 
         Random rnd;
 
         double spawnAsteroidsTimer, spawnAsteroidsTimerReset;
         float spawnAsteroidsInterval;
-        int numberOfAsteroidsPerTimerReset;
-
-        Vector2 projectileTargetPos;
-        double gunCooldownTimer, gunCooldownTimerReset;
-        float gunRateOfFire;
-
-        double gunChargeTimer, gunChargeTimerReset;
-        float chargeRate;
-        int maxGunCharge;
-        int currentGunCharge;
+        int numberOfAsteroidsPerTimerReset;        
 
         Vector2 mousePos;
 
@@ -48,20 +37,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
         ParticleEngine particle;
 
         ParticleEngine asteroidIsHitParticles;
-        List<ParticleEngine> asteroidIsHitList; //minnes läcka
+        List<ParticleEngine> asteroidIsHitList;
 
         ParticleEngine asteroidExplosion;
-        List<ParticleEngine> asteroidExplosionList;
-
-        double explosionTimer, explosionReset;
-        float explosionTargetLength;
+        List<ParticleEngine> asteroidExplosionList;              
 
         TypeOfEffect effect;
 
         public GameplayManager(Random rnd, GameWindow window)
         {
             this.window = window;
-            this.rnd = rnd;
+            this.rnd = rnd;          
 
             backgroundRec = new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height);
 
@@ -69,25 +55,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             spawnAsteroidsTimerReset = 0;
             spawnAsteroidsInterval = 2;
-            numberOfAsteroidsPerTimerReset = 3;
-
-            gunRateOfFire = 200f;
-            gunCooldownTimer = 0;
-            gunCooldownTimerReset = 0;
-
-            chargeRate = 800f;
-            gunChargeTimerReset = 0;
-            maxGunCharge = 3;
-
+            numberOfAsteroidsPerTimerReset = 3;          
 
             asteroidIsHitList = new List<ParticleEngine>();
             asteroidExplosionList = new List<ParticleEngine>();
-
-            explosionReset = 0;
-            explosionTargetLength = 100f;
-            MediaPlayer.Play(AssetsManager.backgroundMusic);
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.1f;
+                 
+            SoundManager.PlayBgMusic();
         }
 
         private void CreatePlayerShip()
@@ -98,33 +71,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void Update(GameTime gt)
         {
             mousePos.X = Mouse.GetState().Position.X;
-            mousePos.Y = Mouse.GetState().Position.Y;
-
-            GunCharging(gt);
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed && currentGunCharge > 0)
-            {
-                projectileTargetPos = Mouse.GetState().Position.ToVector2();
-                PlayerIsShooting(gt);
-            }
-            if (Mouse.GetState().LeftButton == ButtonState.Released)
-            {
-                gunCooldownTimer = 500f;
-            }
+            mousePos.Y = Mouse.GetState().Position.Y;           
 
             CreateAsteroids(gt);
             CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
-
-
-            for (int i = 0; i < projectiles.Count; i++)
-            {
-                projectiles[i].Update(gt);
-                if (projectiles[i].doRemove)
-                {
-                    projectiles.RemoveAt(i);
-                }
-            }
+           
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Update(gt);
@@ -138,19 +90,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (asteroidIsHitList.Count > 0)
             {
                 int iterable = 0;
-                // ExplosionTime(gt);
-                //foreach (ParticleEngine explosion in asteroidIsHitList)
-                //{
-                //    explosion.Update();
-                //   // iterable++;
-                //    Console.WriteLine(asteroidIsHitList.Count);
-                //    if (explosion.particles.Count == 0)
-                //    {
-                //        asteroidIsHitList.RemoveAt(iterable);
-                //        iterable = asteroidIsHitList.Count;
-                //        // asteroidIsHitList.Clear();
-                //    }
-                //}
+               
                 foreach (ParticleEngine hitEffect in asteroidIsHitList)
                 {
                     hitEffect.Update();
@@ -179,44 +119,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     }
                 }
             }
-
             //CheckAsteroidCollision();
 
             CheckIfAsteroidIsHit();
 
             CheckIfShipIsHit(gt);
-        }
-
-        private void GunCharging(GameTime gt)
-        {
-            if (currentGunCharge < 3)
-            {
-                gunChargeTimer += gt.ElapsedGameTime.TotalMilliseconds;
-
-                if (gunChargeTimer > chargeRate)
-                {
-                    currentGunCharge++;
-                    gunChargeTimer = gunChargeTimerReset;
-                    // Console.WriteLine("number of shots " + currentGunCharge);
-                }
-            }
-        }
-        private void PlayerIsShooting(GameTime gt)
-        {
-            gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
-
-            if (gunCooldownTimer > gunRateOfFire)
-            {
-                projectile = new Projectile(Ship.pos, projectileTargetPos);
-                projectiles.Add(projectile);
-                currentGunCharge--;
-                gunCooldownTimer = gunCooldownTimerReset;
-                // Console.WriteLine("number of shots " + projectiles.Count);                
-                var instance = AssetsManager.laserShot.CreateInstance();
-                instance.Volume = 0.5f;
-                instance.Play();
-            }
-        }
+        }       
 
         private void CreateAsteroids(GameTime gt)
         {
@@ -237,6 +145,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CheckIfAsteroidIsHit()
         {
+            projectiles = Ship.GetProjectileList();
             for (int j = 0; j < projectiles.Count; j++)
             {
                 for (int i = 0; i < asteroids.Count; i++)
@@ -252,9 +161,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                             {
                                 asteroidExplosion = new ParticleEngine(AssetsManager.textures, asteroids[i].pos, effect = TypeOfEffect.AsteroidExplosion);
                                 asteroidExplosionList.Add(asteroidExplosion);
-                                var instance = AssetsManager.asteroidExplosion.CreateInstance();
-                                instance.Volume = 0.1f;
-                                instance.Play();
+                                SoundManager.PlayExplosion();
                                 asteroids.RemoveAt(i);
                             }
                             Game1.score += 10;
@@ -381,6 +288,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 tempAsteroid.Draw(sb);
             }
+        }       
+
+        public void ClearShipProjectileList()
+        {
+            Ship.ClearProjectileList();
         }
     }
 }
