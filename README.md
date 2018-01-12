@@ -9,4 +9,4 @@ I have a vague idea of what I want to create with it. It won't be of AAA standar
 If I ever get around to it I wanna make it an rpg experience, leveling up/ upgrading your ship, new/more guns, bigger ship, some shield effects.
 I would also like to tie up the progression with some kind of economy, I have space stations in mind, and zones of control with turrets and pirate invasions.
 All leading up to beating some boss charater(s)
-Thats the basic idea. I would like to spend some time with the architeture and implementation of the AI(when I get to that point) as I find AI to be both challanging and really interesting, good combo!
+Thats the basic idea. I would like to spend some time with the architeture and implementation of the AI(when I get to that point) as I find AI to be both challanging and really interesting, good combo! 
