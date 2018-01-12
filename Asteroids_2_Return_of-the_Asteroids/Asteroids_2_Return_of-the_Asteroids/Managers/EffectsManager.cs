@@ -32,8 +32,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public static void UpdateAfterBurnerEffect(Vector2 Pos)
         {
-            afterburnerEffect.EmitterLocation = Pos;
-            //afterburnerEffect.EmitterLocation = Pos + speed * GetDirection();
+            afterburnerEffect.EmitterLocation = Pos;           
             afterburnerEffect.Update();
         }
 
@@ -102,6 +101,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 asteroidExplosion.Draw(sb);
             }
+        }
+        
+        public static void SetAfterBurnerIntensity(float speed)
+        {
+            afterburnerEffect.particlesPerTick = speed;
         }
 
     }

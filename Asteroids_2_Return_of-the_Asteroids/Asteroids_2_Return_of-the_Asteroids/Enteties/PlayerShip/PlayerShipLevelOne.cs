@@ -29,7 +29,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Update(GameTime gt)
         {            
             weapon.SetPos(Pos);
-            weapon.Update(gt);               
+            weapon.Update(gt);
+            AfterburnerIntensifier();
             Console.WriteLine(speed);
             base.Update(gt);
         }        
@@ -39,6 +40,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             weapon.Draw(sb);
             sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
             //base.Draw(sb);
+        }
+       
+        private void AfterburnerIntensifier()
+        {
+            EffectsManager.SetAfterBurnerIntensity(speed);
         }
     }
 }

@@ -24,7 +24,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         List<Color> colourPallet = new List<Color>();        
 
         float velMultiplier, angularVelMultiplier, size, angularVelocity, angle;
-        int velSpeed, ttlMaxLength, ttl, particlesPerTick, totalTicks;       
+        int velSpeed, ttlMaxLength, ttl, totalTicks;
+        public float particlesPerTick;
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location, TypeOfEffect effect)
         {
@@ -103,7 +104,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 case TypeOfEffect.AfterBurner:
 
-                    particlesPerTick = 3;
+                    //particlesPerTick = 3;
 
                     for (int i = 0; i < particlesPerTick; i++)
                     {
@@ -162,7 +163,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 particles[index].Draw(sb);
             }
-
         }
     }
 }
