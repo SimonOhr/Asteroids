@@ -11,23 +11,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class PlayerShipBase : MovingObject
     {
-        protected Weapon weapon;
+        protected WeaponBase weapon;
         protected Vector2 mousePos;
         protected Color color;
         public Texture2D tex;
-        virtual public Vector2 Pos { get; private set; }
+        public Vector2 Pos { get; private set; }
         protected float originalSpeed;
 
 
         public static int hitPoints;
-        virtual public bool isHit { get; set; }
-
-        //public List<ProjectileBase> projectiles = new List<ProjectileBase>();
+        virtual public bool isHit { get; set; }     
                 
-        ParticleEngine afterburnerEffect;
-        List<Texture2D> afterBurnerTextures;
-
-        float currentRotation;
+        protected float currentRotation;
         
         public PlayerShipBase(Vector2 pos, Vector2 mousePos) : base(pos)
         {
@@ -94,19 +89,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             Vector2 Direction = new Vector2(Mouse.GetState().X - Pos.X, Mouse.GetState().Y - Pos.Y);
             return Vector2.Normalize(Direction);
-        }       
-
-        //virtual protected void UpdateProjectiles(GameTime gt)
-        //{
-        //    for (int i = 0; i < projectiles.Count; i++)
-        //    {
-        //        projectiles[i].Update(gt);
-        //        if (projectiles[i].doRemove)
-        //        {
-        //            projectiles.RemoveAt(i);
-        //        }
-        //    }
-        //}
+        }     
 
         virtual public void Draw(SpriteBatch sb)
         {           

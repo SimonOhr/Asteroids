@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class ProjectileBase:Weapon
+    class ProjectileBase:MovingObject
     {
         protected Texture2D projectileTex;
 
@@ -24,24 +24,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected float rotation;        
 
         public ProjectileBase(Vector2 pos, Vector2 targetPos):base(pos)
-        {
-            //projectileTex = AssetsManager.laserProjectileTex;
-
+        {           
             this.pos = pos;
 
             originalPos = pos;
 
-            this.targetPos = targetPos;
-
-          //  vSpeed = new Vector2(10, 10);
+            this.targetPos = targetPos;         
 
             direction = GetDirection();
 
             gunRange = 800;
 
-            GetRotation();
-
-          //  hitbox = new Rectangle((int)pos.X, (int)pos.Y, 20, 30);
+            GetRotation();         
         }
 
         virtual protected Vector2 GetDirection()

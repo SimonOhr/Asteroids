@@ -40,7 +40,7 @@
   <ItemGroup>
     <Compile Include="GameObject.cs" />
     <Compile Include="Enteties\Projectiles\LaserProjectile.cs" />
-    <Compile Include="LaserCanon.cs" />
+    <Compile Include="Guns\LaserCanon.cs" />
     <Compile Include="Managers\AssetsManager.cs" />
     <Compile Include="Managers\CollisonManager.cs" />
     <Compile Include="Managers\EffectsManager.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Enteties\PlayerShip\PlayerShipBase.cs" />
     <Compile Include="Menu\Textbox.cs" />
     <Compile Include="Managers\SoundManager.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="Guns\WeaponBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -130,9 +130,7 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Guns\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

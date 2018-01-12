@@ -12,7 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
     {
-        Weapon weapon;
+        WeaponBase weapon;
         GameWindow window;       
         Rectangle backgroundRec;
         CollisonManager cm;

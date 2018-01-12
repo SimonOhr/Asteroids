@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Weapon:GameObject
+    class WeaponBase:GameObject
     {
         protected Vector2 projectileTargetPos;
         protected ProjectileBase projectile;
@@ -21,7 +21,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected int maxGunCharge;
         protected int currentGunCharge;        
 
-        public Weapon(Vector2 pos):base(pos)
+        public WeaponBase(Vector2 pos):base(pos)
         {
             
         }
