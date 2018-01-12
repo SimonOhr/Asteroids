@@ -49,13 +49,9 @@ namespace Asteroids_2_Return_of_the_Asteroids {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             AssetsManager.LoadContent(Content);
-
-
-
+            
             gm = new GameplayManager(rnd, Window);
-
-
-
+                        
             screenRec = Window.ClientBounds;
 
             endgameMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Restart", "Save HighScore", "MainMenu", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.White, false);
