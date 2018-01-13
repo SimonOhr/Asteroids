@@ -23,9 +23,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Color colorStates, color;
         List<Color> colourPallet = new List<Color>();        
 
-        float velMultiplier, angularVelMultiplier, size, angularVelocity, angle;
-        int velSpeed, ttlMaxLength, ttl, totalTicks;
-        public float particlesPerTick;
+        float velMultiplier, angularVelMultiplier, size, angularVelocity, angle, particlesPerTick;
+        public float intensifier;
+        int velSpeed, ttlMaxLength, ttl, totalTicks;     
+       
+        Random rnd = new Random();
 
         public ParticleEngine(List<Texture2D> textures, Vector2 location, TypeOfEffect effect)
         {
@@ -35,8 +37,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.particles = new List<Particle>();
             random = new Random();
 
-            colourPallet.Add(Color.Yellow);
-            colourPallet.Add(Color.OrangeRed);
+            
             this.effect = effect;
         }
 
@@ -48,15 +49,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             switch (effect)
             {
                 case TypeOfEffect.AfterBurner:
-                    velMultiplier = 0.1f;
+                    velMultiplier = 0.5f;
                     velSpeed = 5;
                     angle = 0f;
                     angularVelMultiplier = 0.1f;
-                    ttlMaxLength = 20;
-                    color = new Color(
-                       (float)random.NextDouble(),
-                       (float)random.Next(0, 1),
-                       (float)random.Next(0, 1));
+                    ttlMaxLength = 10;
+
+                    colourPallet.Add(Color.Yellow);
+                    colourPallet.Add(Color.OrangeRed);
+                    colourPallet.Add(Color.Red);                    
+                    color = colourPallet[rnd.Next(0, colourPallet.Count)];                   
                     size = (float)random.NextDouble()/3;
 
                     break;
@@ -86,7 +88,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             velocity = new Vector2(
                        velMultiplier * (float)(random.NextDouble() * velSpeed - 1),
                        velMultiplier * (float)(random.NextDouble() * velSpeed - 1));
-            angle = 0f;
+            //angle = 0f;
             angularVelocity = angularVelMultiplier * (float)(random.NextDouble() * 2 - 1);          
             ttl = 1 + random.Next(ttlMaxLength);
 
@@ -104,7 +106,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 case TypeOfEffect.AfterBurner:
 
-                    //particlesPerTick = 3;
+                    particlesPerTick = 3;
+                    particlesPerTick *= intensifier;
 
                     for (int i = 0; i < particlesPerTick; i++)
                     {

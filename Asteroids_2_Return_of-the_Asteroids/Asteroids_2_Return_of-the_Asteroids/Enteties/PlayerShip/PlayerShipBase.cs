@@ -15,6 +15,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected Vector2 mousePos;
         protected Color color;
         public Texture2D tex;
+        protected Vector2 oldPos;
         public Vector2 Pos { get; private set; }
         protected float originalSpeed;
 
@@ -50,9 +51,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (hitPoints <= 0)
             {
                 color = Color.Blue;
-            }
-
-            EffectsManager.UpdateAfterBurnerEffect(Pos);            
+            }                       
         }
 
         virtual protected void SoftInSoftOut()

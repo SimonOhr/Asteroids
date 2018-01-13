@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class PlayerShipLevelOne:PlayerShipBase
-    {        
+    {       
         public PlayerShipLevelOne(Vector2 pos, Vector2 mousePos):base(pos, mousePos)
-        {
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 100, 100);
-
+        {            
             tex = AssetsManager.shipTex;
+
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             EffectsManager.CreateAfterBurnerEffect(Pos);
 
@@ -27,7 +27,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         public override void Update(GameTime gt)
-        {            
+        {
+            EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection() * 50));
             weapon.SetPos(Pos);
             weapon.Update(gt);
             AfterburnerIntensifier();
