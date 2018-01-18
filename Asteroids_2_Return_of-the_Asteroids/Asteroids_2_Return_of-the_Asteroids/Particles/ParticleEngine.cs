@@ -106,7 +106,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 case TypeOfEffect.AfterBurner:
 
-                    particlesPerTick = 3;
+                    particlesPerTick = 4;
                     particlesPerTick *= intensifier;
 
                     for (int i = 0; i < particlesPerTick; i++)

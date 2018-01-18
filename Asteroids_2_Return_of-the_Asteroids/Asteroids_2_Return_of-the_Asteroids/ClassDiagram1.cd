@@ -1,161 +1,210 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Asteroid" Collapsed="true">
-    <Position X="0.5" Y="3.25" Width="1.5" />
+    <Position X="5.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QAQEAABACGAIIwAQAIgAAIAAAAAAAAAIgBQABEAAAAA=</HashCode>
       <FileName>Enteties\Asteroid.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Asteroids_2_Return_of_the_Asteroids.PlayerShipLevelOne" Collapsed="true">
-    <Position X="2.75" Y="3.25" Width="1.5" />
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.PlayerShipBase" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQgAAgAAACQAhAIAAAoAEAAAAAABIAAgAAAAEAAAAA=</HashCode>
+      <HashCode>AQQAAAAAAAEIAgAAAIAACAAAKAGAAAOAAAwQBAEAAAA=</HashCode>
+      <FileName>Enteties\PlayerShip\PlayerShipBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.PlayerShipLevelOne" Collapsed="true">
+    <Position X="7.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Enteties\PlayerShip\PlayerShipLevelOne.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.LaserProjectile" Collapsed="true">
+    <Position X="9.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enteties\Projectiles\LaserProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.ProjectileBase" Collapsed="true">
-    <Position X="5" Y="3.25" Width="1.5" />
+    <Position X="9.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAiIIhCAAAiAAIAAAAAAAAAAAAAQEQAAAAA=</HashCode>
       <FileName>Enteties\Projectiles\ProjectileBase.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.DefaultSpaceStation" Collapsed="true">
+    <Position X="3" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enteties\SpaceStation\DefaultSpaceStation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Form1" Collapsed="true">
-    <Position X="9.25" Y="1.5" Width="1.5" />
+    <Position X="14" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAEAAAAAACAAABAAAAKAAAACAAAIAAAIEEAAAAAAAAA=</HashCode>
       <FileName>Form1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Game1" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.5" />
+    <Position X="15.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>RwQEEEBgBBAAA0AAgAAIBAEEAAEAEIgAAAAAAACAAAw=</HashCode>
       <FileName>Game1.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.GameObject" Collapsed="true">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+    <Position X="5.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAQAAAAAAgAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.LaserCanon" Collapsed="true">
+    <Position X="0.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAgAIAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guns\LaserCanon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.WeaponBase" Collapsed="true">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgAAgEAACAABAAAAAICEAAAAEABIAAgABAAEAAAAA=</HashCode>
+      <FileName>Guns\WeaponBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.HighScoreItem" Collapsed="true">
-    <Position X="7.5" Y="2.5" Width="1.5" />
+    <Position X="12.25" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAIAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>HighScoreItem.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.KeyMouseReader" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
+    <Position X="14" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BBYCAAAAAAAAAAEAAAAAAAACEAAAAAAAAAAMCBBAAAA=</HashCode>
       <FileName>KeyMouseReader.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.AssetsManager" Collapsed="true">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="12.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AACAAAACAMAAAAAAAMMBAAAAAgAgCAAIAAAAAAAAgAw=</HashCode>
+      <HashCode>AACAAAACAMAAAAAACMMBAAAAAgAoCAAIAAAAAAAAgAw=</HashCode>
       <FileName>Managers\AssetsManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.CollisonManager" Collapsed="true">
-    <Position X="12.75" Y="0.5" Width="1.5" />
+    <Position X="17.5" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAACQAAAAQEAAAgAAAAAABABAAAAAAABAAQAAAAA=</HashCode>
       <FileName>Managers\CollisonManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.EffectsManager" Collapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.5" />
+    <Position X="12.25" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEgAIiIAQAAgAAAAAgAAAAAAICAABAAA=</HashCode>
+      <HashCode>AAAAAAABAAAAEgAIiIAQAAgAAAAAgAAAAAAICAABAAA=</HashCode>
       <FileName>Managers\EffectsManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.GameplayManager" Collapsed="true">
-    <Position X="12.75" Y="1.5" Width="1.5" />
+    <Position X="17.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQECCACAAAAAgQAABkAAAAADAGAAUAIAADAAwEICAA=</HashCode>
+      <HashCode>AAQECCQCAAAAAgwAABkAAAAADAGAAWAIAADAAwEICAA=</HashCode>
       <FileName>Managers\GameplayManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.SoundManager" Collapsed="true">
-    <Position X="9.25" Y="3.5" Width="1.5" />
+    <Position X="14" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAgAA=</HashCode>
       <FileName>Managers\SoundManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Button" Collapsed="true">
-    <Position X="9.25" Y="0.5" Width="1.5" />
+    <Position X="14" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAKAAABAAAAAAgAQAKAACIBAAAAAAAAIAAAAQgAYAAA=</HashCode>
       <FileName>Menu\Button.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.ButtonMenu" Collapsed="true">
-    <Position X="11" Y="0.5" Width="1.5" />
+    <Position X="15.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ACaCIBEAAACAAgAgACAAIAgAAAAAAGAACAAkCQAAgAA=</HashCode>
       <FileName>Menu\ButtonMenu.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Textbox" Collapsed="true">
-    <Position X="11" Y="3.5" Width="1.5" />
+    <Position X="15.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAABAAgAAgAAICAAIAAAAAAAIgAAAAAAAAQAAAA=</HashCode>
       <FileName>Menu\Textbox.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.MovingObject" Collapsed="true">
-    <Position X="2.75" Y="1.75" Width="1.5" />
+    <Position X="7.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
       <FileName>MovingObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Particle" Collapsed="true">
-    <Position X="11" Y="2.5" Width="1.5" />
+    <Position X="15.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAggAgAAAAAAABAAAAAAAAAEIAgAAEAAQ=</HashCode>
       <FileName>Particles\Particle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.ParticleEngine" Collapsed="true">
-    <Position X="12.75" Y="2.5" Width="1.5" />
+    <Position X="17.5" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQACAAAAEAAAgAAAIgBEAAAAAAMBwCkEARAMABAAAA=</HashCode>
+      <HashCode>AAQECAAAAEAAAgAAAIgBEEAAAAAMBwCkEARAMABAAAA=</HashCode>
       <FileName>Particles\ParticleEngine.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Asteroids_2_Return_of_the_Asteroids.Program" Collapsed="true">
-    <Position X="7.5" Y="3.5" Width="1.5" />
+    <Position X="12.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.MiniMissileProjectile" Collapsed="true">
+    <Position X="9.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enteties\Projectiles\MiniMissileProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Asteroids_2_Return_of_the_Asteroids.Guns.MiniMissileLauncher" Collapsed="true">
+    <Position X="2.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQAgAIAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guns\MiniMissileLauncher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Enum Name="Asteroids_2_Return_of_the_Asteroids.GameState" Collapsed="true">
-    <Position X="7.5" Y="4.75" Width="1.5" />
+    <Position X="12.25" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAIIAAA=</HashCode>
       <FileName>Game1.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Asteroids_2_Return_of_the_Asteroids.Layout" Collapsed="true">
-    <Position X="9.25" Y="4.75" Width="1.5" />
+    <Position X="14" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Game1.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="Asteroids_2_Return_of_the_Asteroids.TypeOfEffect" Collapsed="true">
-    <Position X="11" Y="4.75" Width="1.5" />
+    <Position X="15.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAQAAAAAAAAAACAAAAA=</HashCode>
       <FileName>Particles\ParticleEngine.cs</FileName>

@@ -11,44 +11,50 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
-    {
+    {        
         WeaponBase weapon;
-        GameWindow window;       
+        GameWindow window;
         Rectangle backgroundRec;
         CollisonManager cm;
+        DefaultSpaceStation st;
 
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
 
         public PlayerShipBase Ship { get; private set; }
-       
+
         List<ProjectileBase> projectiles = new List<ProjectileBase>();
 
         Random rnd;
 
         double spawnAsteroidsTimer, spawnAsteroidsTimerReset;
         float spawnAsteroidsInterval;
-        int numberOfAsteroidsPerTimerReset;        
+        int numberOfAsteroidsPerTimerReset;
 
         Vector2 mousePos;
 
-        ParticleEngine particle;          
+        ParticleEngine particle;
+
+        Vector2 spaceStationPos;
 
         public GameplayManager(Random rnd, GameWindow window)
         {
             this.window = window;
-            this.rnd = rnd;          
+            this.rnd = rnd;
 
             backgroundRec = new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height);
 
+            spaceStationPos = new Vector2(300, 300);
+
             CreatePlayerShip();
+            CreateSpaceStation(spaceStationPos);
 
             spawnAsteroidsTimerReset = 0;
             spawnAsteroidsInterval = 2;
             numberOfAsteroidsPerTimerReset = 3;
 
             cm = new CollisonManager(this);
-                 
+
             SoundManager.PlayBgMusic();
         }
 
@@ -57,15 +63,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
             Ship = new PlayerShipLevelOne(new Vector2(50, 50), mousePos);
         }
 
+        private void CreateSpaceStation(Vector2 pos)
+        {
+            st = new DefaultSpaceStation(pos);
+        }
+
         public void Update(GameTime gt)
         {
             mousePos.X = Mouse.GetState().Position.X;
-            mousePos.Y = Mouse.GetState().Position.Y;           
+            mousePos.Y = Mouse.GetState().Position.Y;
 
-           // CreateAsteroids(gt);
+            // CreateAsteroids(gt);
             CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
-           
+            st.Update(gt);
+
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Update(gt);
@@ -79,8 +91,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             EffectsManager.UpdateAsteroidIsHitEffect();
             EffectsManager.UpdateAsteroidExplosionEffect();
-            cm.CheckIfAsteroidIsHit();         
-            cm.CheckIfShipIsHit(gt);         
+            cm.CheckIfAsteroidIsHit();
+            cm.CheckIfShipIsHit(gt);
+
         }
 
         private void CreateAsteroids(GameTime gt)
@@ -153,19 +166,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     asteroids.RemoveAt(i);
                 }
             }
-        }       
+        }
 
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(AssetsManager.backgroundTex, backgroundRec, Color.White);
 
+            st.Draw(sb);
+
             sb.Draw(AssetsManager.crosshairTex, new Vector2(mousePos.X - (AssetsManager.crosshairTex.Width / 2), mousePos.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
 
-            foreach (ProjectileBase tempProjectile in GetProjectileList())
-            {
-                tempProjectile.Draw(sb);
-            }
-                       
+            if (GetProjectileList() != null)
+                foreach (ProjectileBase tempProjectile in GetProjectileList())
+                {
+                    tempProjectile.Draw(sb);
+                }
+
             EffectsManager.Draw(sb);
 
             Ship.Draw(sb);
@@ -176,19 +192,28 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
-        public void ClearShipProjectileList()
+        //public void ClearShipProjectileList()
+        //{
+        //    Ship.ClearProjectileList();
+        //}
+
+        public ref List<WeaponBase> GetWeaponeList()
         {
-            Ship.ClearProjectileList();
+            return ref Ship.GetWeaponList();
         }
 
-        public ref List<ProjectileBase> GetProjectileList()
-        {            
-            return ref Ship.GetProjectileList();
-        }   
-        
+        public List<ProjectileBase> GetProjectileList()
+        {
+            return WeaponBase.GetProjectileList();
+        }
+
+        public void ClearProjectileList()
+        {
+            weapon.ClearProjectileList();
+        }
         public ref List<Asteroid> GetAsteroidList()
         {
-            return  ref asteroids;
+            return ref asteroids;
         }
 
         public void SetShipStatus(bool isShipHit)

@@ -8,28 +8,24 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class LaserProjectile: ProjectileBase
+    class DefaultSpaceStation:GameObject
     {
-        
-        public LaserProjectile(Vector2 pos, Vector2 targetPos):base(pos, targetPos)
+        Texture2D tex;
+        public DefaultSpaceStation(Vector2 pos):base(pos)
         {
-            projectileTex = AssetsManager.laserProjectileTex;
-
-            vSpeed = new Vector2(30, 30);
-
-            gunRange = 800;
-
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 20, 30);
-            
-        }       
+            tex = AssetsManager.spaceStationTex;
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 50, 50);
+            this.pos = pos;
+        }
 
         public override void Update(GameTime gt)
-        {                   
+        {
             base.Update(gt);
-        }      
+        }
 
         public override void Draw(SpriteBatch sb)
         {
+            sb.Draw(tex, pos, Color.White);
             base.Draw(sb);
         }
     }

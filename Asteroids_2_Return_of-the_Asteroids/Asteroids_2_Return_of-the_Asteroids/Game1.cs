@@ -188,7 +188,7 @@ namespace Asteroids_2_Return_of_the_Asteroids {
             PlayerShipBase.hitPoints = 3;
             score = 0;
             gm.asteroids.Clear();
-            gm.ClearShipProjectileList();
+            gm.ClearProjectileList();
         }
 
         protected override void Draw(GameTime gameTime) {

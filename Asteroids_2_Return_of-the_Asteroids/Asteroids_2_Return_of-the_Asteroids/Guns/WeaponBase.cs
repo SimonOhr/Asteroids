@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         protected Vector2 projectileTargetPos;
         protected ProjectileBase projectile;
-        public List<ProjectileBase> projectiles = new List<ProjectileBase>();
+        static protected List<ProjectileBase> projectiles = new List<ProjectileBase>();
 
         protected double gunCooldownTimer, gunCooldownTimerReset;
         protected float gunRateOfFire;
@@ -38,9 +38,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
-        virtual protected List<ProjectileBase> GetProjectileList()
-        {
-            return projectiles;
+        public static ref List<ProjectileBase> GetProjectileList()
+        {            
+            return ref projectiles;
         }
 
         public virtual void ClearProjectileList()

@@ -26,7 +26,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void CheckIfAsteroidIsHit()
         {
-            projectiles = gm.GetProjectileList();
+            if (gm.GetProjectileList() != null)
+                projectiles = gm.GetProjectileList();
             asteroids = gm.GetAsteroidList();
             for (int j = 0; j < projectiles.Count; j++)
             {
@@ -35,11 +36,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     if (projectiles.Count > 0)
                     {
                         if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) < 50)
-                        {                            
+                        {
                             EffectsManager.CreateASteroidIsHitEffect(asteroids[i].pos);
                             projectiles.RemoveAt(j);
                             if (CheckIfAsteroidisDead(asteroids[i]))
-                            {                                
+                            {
                                 EffectsManager.CreateAsteroidExplosionEffect(asteroids[i].pos);
                                 SoundManager.PlayExplosion();
                                 asteroids.RemoveAt(i);
@@ -69,7 +70,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 tempTimer += gt.ElapsedGameTime.TotalSeconds;
                 if (tempTimer >= tempTarget)
                 {
-                    TempInvulnarbility = false;                   
+                    TempInvulnarbility = false;
                     gm.SetShipStatus(false);
                     tempTimer = tempReset;
                 }
@@ -80,12 +81,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     if (Vector2.Distance(asteroids[i].pos, gm.GetShipPos()) < asteroids[i].radius + (gm.GetShipTex().Width / 2))
                     {
-                        TempInvulnarbility = true;                     
+                        TempInvulnarbility = true;
                         gm.SetShipStatus(true);
                         PlayerShipBase.hitPoints -= 1;
                     }
                 }
             }
-        }     
+        }
     }
 }

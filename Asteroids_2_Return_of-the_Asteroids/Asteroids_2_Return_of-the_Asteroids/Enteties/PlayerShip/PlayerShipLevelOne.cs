@@ -20,6 +20,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.CreateAfterBurnerEffect(Pos);
 
             weapon = new LaserCanon(Pos);
+            DEBUGGweapon = new MiniMissileLauncher(pos);
+
+            weapons.Add(weapon);
+            weapons.Add(DEBUGGweapon);
 
             hitPoints = 3;
             speed = 4;
@@ -29,8 +33,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Update(GameTime gt)
         {
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection() * 50));
-            weapon.SetPos(Pos);
+
+            weapon.SetPos(Pos); // refactoring
             weapon.Update(gt);
+
+            DEBUGGweapon.SetPos(Pos);
+            DEBUGGweapon.Update(gt);
+
             AfterburnerIntensifier();
             Console.WriteLine(speed);
             base.Update(gt);
@@ -39,8 +48,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Draw(SpriteBatch sb)
         {
             weapon.Draw(sb);
+            DEBUGGweapon.Draw(sb);
             sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
-            //base.Draw(sb);
+           // base.Draw(sb);
         }
        
         private void AfterburnerIntensifier()

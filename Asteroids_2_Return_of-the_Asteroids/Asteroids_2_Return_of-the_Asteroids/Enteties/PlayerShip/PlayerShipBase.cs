@@ -12,6 +12,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class PlayerShipBase : MovingObject
     {
         protected WeaponBase weapon;
+        protected WeaponBase DEBUGGweapon;
+        protected List<WeaponBase> weapons;
         protected Vector2 mousePos;
         protected Color color;
         public Texture2D tex;
@@ -30,8 +32,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.Pos = pos;
             this.mousePos = mousePos;
 
-            color = Color.White;       
-                                       
+            color = Color.White;
+            weapons = new List<WeaponBase>();       
         }
         virtual public void Update(GameTime gt)
         {
@@ -90,14 +92,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         }
 
-        virtual public ref List<ProjectileBase> GetProjectileList()
+        virtual public ref List<WeaponBase> GetWeaponList()
         {
-            return ref weapon.projectiles;
+            return ref weapons;
+                /*weapons.projectiles;*/
         }
 
-        public virtual void ClearProjectileList()
-        {
-            weapon.projectiles.Clear();
-        }
+        //public virtual void ClearProjectileList()
+        //{
+        //    foreach (ProjectileBase p in weapons)
+        //    {
+        //        p.doRemove = true;
+        //    }
+        //    //weapons.projectiles.Clear();
+        //}
     }
 }
