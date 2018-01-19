@@ -11,9 +11,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class PlayerShipBase : MovingObject
     {
-        protected WeaponBase weapon;
-        protected WeaponBase DEBUGGweapon;
-        protected List<WeaponBase> weapons;
+        //protected WeaponBase weapon;
+        //protected WeaponBase DEBUGGweapon;
+        protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry
         protected Vector2 mousePos;
         protected Color color;
         public Texture2D tex;
@@ -26,7 +26,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         virtual public bool isHit { get; set; }     
                 
         protected float currentRotation;
-        
+        /// <summary>
+        ///  Baseclass refactoring -> refactor to apply to all ships, including AI controlled
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="mousePos"></param>
         public PlayerShipBase(Vector2 pos, Vector2 mousePos) : base(pos)
         {
             this.Pos = pos;
@@ -53,12 +57,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (hitPoints <= 0)
             {
                 color = Color.Blue;
-            }                       
+            }
+
+            foreach (WeaponBase w in weapons)
+            {
+                w.Update(gt);
+            }
         }
 
         virtual protected void SoftInSoftOut()
         {
-            speed = (Vector2.Distance(mousePos, Pos) * 0.025f);           
+            speed = (Vector2.Distance(mousePos, Pos) * 0.015f);           
         }
 
         virtual protected void ShipIsHitColorSwitch()
@@ -96,15 +105,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             return ref weapons;
                 /*weapons.projectiles;*/
-        }
-
-        //public virtual void ClearProjectileList()
-        //{
-        //    foreach (ProjectileBase p in weapons)
-        //    {
-        //        p.doRemove = true;
-        //    }
-        //    //weapons.projectiles.Clear();
-        //}
+        }    
     }
 }

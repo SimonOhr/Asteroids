@@ -17,9 +17,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             gunCooldownTimer = 0;
             gunCooldownTimerReset = 0;
 
-            chargeRate = 800f;
+            chargeRate = 100f;
             gunChargeTimerReset = 0;
-            maxGunCharge = 3;
+            maxGunCharge = 10;
         }
 
         public override void Update(GameTime gt)
@@ -46,7 +46,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         virtual protected void GunCharging(GameTime gt)
         {
-            if (currentGunCharge < 3)
+            if (currentGunCharge < maxGunCharge)
             {
                 gunChargeTimer += gt.ElapsedGameTime.TotalMilliseconds;
 

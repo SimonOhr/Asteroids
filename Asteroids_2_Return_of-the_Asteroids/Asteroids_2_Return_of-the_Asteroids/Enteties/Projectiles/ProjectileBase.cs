@@ -15,7 +15,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Vector2 pos;
 
-        protected Vector2 vSpeed, direction, originalPos, targetPos;       
+        protected Vector2 velocity, direction, originalPos, targetPos;       
 
         protected int gunRange;
 
@@ -52,7 +52,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Update(GameTime gt)
         {
-            pos += vSpeed * direction;
+            pos += velocity * direction;
             hitbox.X = (int)pos.X;
             hitbox.Y = (int)pos.Y;
             CheckIfOutOfRange();

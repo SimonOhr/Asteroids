@@ -63,7 +63,7 @@
     <Compile Include="MovingObject.cs" />
     <Compile Include="Particles\Particle.cs" />
     <Compile Include="Particles\ParticleEngine.cs" />
-    <Compile Include="Enteties\PlayerShip\PlayerShipLevelOne.cs" />
+    <Compile Include="Enteties\PlayerShip\PlayerShip.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Enteties\Projectiles\ProjectileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

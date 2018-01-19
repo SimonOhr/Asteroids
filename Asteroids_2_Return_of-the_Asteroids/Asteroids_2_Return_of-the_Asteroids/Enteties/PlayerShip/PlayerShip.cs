@@ -9,21 +9,18 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class PlayerShipLevelOne:PlayerShipBase
-    {       
-        public PlayerShipLevelOne(Vector2 pos, Vector2 mousePos):base(pos, mousePos)
+    class PlayerShip:PlayerShipBase
+    {        
+        public PlayerShip(Vector2 pos, Vector2 mousePos):base(pos, mousePos)
         {            
             tex = AssetsManager.shipTex;
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             EffectsManager.CreateAfterBurnerEffect(Pos);
-
-            weapon = new LaserCanon(Pos);
-            DEBUGGweapon = new MiniMissileLauncher(pos);
-
-            weapons.Add(weapon);
-            weapons.Add(DEBUGGweapon);
+                                  
+            weapons.Add( new LaserCanon(Pos));
+            weapons.Add( new MiniMissileLauncher(pos));
 
             hitPoints = 3;
             speed = 4;
@@ -34,21 +31,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection() * 50));
 
-            weapon.SetPos(Pos); // refactoring
-            weapon.Update(gt);
-
-            DEBUGGweapon.SetPos(Pos);
-            DEBUGGweapon.Update(gt);
+            foreach (WeaponBase w in weapons)
+            {
+                w.SetPos(Pos);
+            }                
 
             AfterburnerIntensifier();
-            Console.WriteLine(speed);
+           
             base.Update(gt);
         }        
 
         public override void Draw(SpriteBatch sb)
         {
-            weapon.Draw(sb);
-            DEBUGGweapon.Draw(sb);
+            foreach (WeaponBase w in weapons)
+            {
+                w.Draw(sb);
+            }           
             sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
            // base.Draw(sb);
         }
@@ -56,6 +54,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         private void AfterburnerIntensifier()
         {
             EffectsManager.SetAfterBurnerIntensity(speed);
-        }
+        }        
     }
 }

@@ -35,7 +35,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     projectiles.RemoveAt(i);
                 }
-            }
+            }            
         }
 
         public static ref List<ProjectileBase> GetProjectileList()
@@ -43,7 +43,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             return ref projectiles;
         }
 
-        public virtual void ClearProjectileList()
+        public static void ClearProjectileList()
         {
             projectiles.Clear();
         }

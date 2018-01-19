@@ -16,7 +16,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         GameWindow window;
         Rectangle backgroundRec;
         CollisonManager cm;
-        DefaultSpaceStation st;
+        DefaultSpaceStation st;        
 
         Asteroid asteroid;
         public List<Asteroid> asteroids = new List<Asteroid>();
@@ -54,13 +54,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
             numberOfAsteroidsPerTimerReset = 3;
 
             cm = new CollisonManager(this);
-
+           
             SoundManager.PlayBgMusic();
         }
 
         private void CreatePlayerShip()
         {
-            Ship = new PlayerShipLevelOne(new Vector2(50, 50), mousePos);
+            Ship = new PlayerShip(new Vector2(50, 50), mousePos);
         }
 
         private void CreateSpaceStation(Vector2 pos)
@@ -209,7 +209,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void ClearProjectileList()
         {
-            weapon.ClearProjectileList();
+            WeaponBase.ClearProjectileList();
         }
         public ref List<Asteroid> GetAsteroidList()
         {
