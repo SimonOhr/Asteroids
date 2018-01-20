@@ -13,6 +13,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         //protected WeaponBase weapon;
         //protected WeaponBase DEBUGGweapon;
+        protected Texture2D healthbarTex = AssetsManager.healthBarTex;
+        protected Rectangle srcHealthbarTex;
+        protected int currentHealth;
+
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry
         protected Vector2 mousePos;
         protected Color color;
@@ -37,7 +41,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.mousePos = mousePos;
 
             color = Color.White;
-            weapons = new List<WeaponBase>();       
+            weapons = new List<WeaponBase>();                  
         }
         virtual public void Update(GameTime gt)
         {

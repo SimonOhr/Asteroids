@@ -57,7 +57,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         
             CreatePath();
             
-            Console.WriteLine(curvePath.Count);
+           // Console.WriteLine(curvePath.Count);
         }
 
         public override void Update(GameTime gt)

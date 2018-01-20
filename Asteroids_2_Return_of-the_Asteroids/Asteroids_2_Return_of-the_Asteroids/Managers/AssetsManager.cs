@@ -13,8 +13,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
     static class AssetsManager
     {
         public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, laserProjectileTex, 
-            bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex,
-            spaceStationTex, missileTex;
+            bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex, particleNewCircleTestTex,
+            spaceStationTex, missileTex, healthBarTex;
 
         public static SpriteFont text;
 
@@ -39,8 +39,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             particleStarTex = Content.Load<Texture2D>("star");
             particleCircleTex = Content.Load<Texture2D>("circle");
             particleDiamondTex = Content.Load<Texture2D>("diamond");
+            particleNewCircleTestTex = Content.Load<Texture2D>("particleCircleTESTsmallv2"); //small
             spaceStationTex = Content.Load<Texture2D>("Space_Station_v0.1.2");
             missileTex = Content.Load<Texture2D>("missileTex_v1");
+            healthBarTex = Content.Load<Texture2D>("Healthbar_v3");
 
             text = Content.Load<SpriteFont>(@"text");
 
@@ -49,9 +51,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             laserShot = Content.Load<SoundEffect>(@"laser9");
             asteroidExplosion = Content.Load<SoundEffect>(@"Depth_Charge");
 
-            textures.Add(particleCircleTex);
-            textures.Add(particleStarTex);
-            textures.Add(particleDiamondTex);
+            //textures.Add(particleCircleTex);
+            //textures.Add(particleStarTex);
+           // textures.Add(particleDiamondTex);
+            textures.Add(particleNewCircleTestTex);
         }
     }
 }

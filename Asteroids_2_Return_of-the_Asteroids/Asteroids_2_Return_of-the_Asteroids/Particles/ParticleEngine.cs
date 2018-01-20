@@ -63,13 +63,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                     break;
                 case TypeOfEffect.AsteroidExplosion:
-                    velMultiplier = 10f;
+                    velMultiplier = 4f;
                     velSpeed = 2;
-                    angle = 90f;
-                    angularVelMultiplier = 20f;
-                    ttlMaxLength = 25;
-                    this.color = color; // colorpallet
-                    size = (float)random.NextDouble()/2;
+                    angle = 0;
+                    angularVelMultiplier = 0f;
+                    ttlMaxLength = 50;
+                    /* this.color = color; */// colorpallet
+                    this.color = Color.White;
+                    int temp = random.Next(3,5);
+                    size = temp;
+                   // size = (float)random.NextDouble()*8;
                     break;
                 case TypeOfEffect.AsteroidHit:
                     velMultiplier = 10f;
@@ -115,21 +118,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     }
                     break;
                 case TypeOfEffect.AsteroidExplosion:
-                    while (totalTicks < 50)
+                    while (totalTicks < 15)
                     {
+                        colorStates = Color.White;
                         particlesPerTick = 2;
 
-                        if (totalTicks <= 20)
-                        {
-                            colorStates = Color.Gray;                            
-                        }
-                        else if (totalTicks > 20 )
-                        {
-                            colourPallet.Add(Color.Yellow);
-                            colourPallet.Add(Color.OrangeRed);
-                            colourPallet.Add(Color.Red);
-                            colorStates = colourPallet[random.Next(0, colourPallet.Count)];
-                        }                       
+                        //if (totalTicks <= 20)
+                        //{
+                        //    //colorStates = Color.Gray;                            
+                        //}
+                        //else if (totalTicks > 20 )
+                        //{
+                        //    //colourPallet.Add(Color.Yellow);
+                        //    //colourPallet.Add(Color.OrangeRed);
+                        //    //colourPallet.Add(Color.Red);
+                        //    //colorStates = colourPallet[random.Next(0, colourPallet.Count)];
+                        //}                       
 
                         for (int i = 0; i < particlesPerTick; i++)
                         {
