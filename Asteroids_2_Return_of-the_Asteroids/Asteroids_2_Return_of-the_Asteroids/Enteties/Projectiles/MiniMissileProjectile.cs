@@ -46,9 +46,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             aimAssist = targetPos + (velocity) * (GetDirection() * aimAssistMultiplier);
             originalPos = pos;
 
-            projectileTex = AssetsManager.missileDebuggTex;
+            projectileTex = AssetsManager.missileTex;
                       
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 20, 20);
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 40, 30);
            
             rnd = new Random();
           
@@ -99,7 +99,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CreatePath()
         {
-            for (double t = 0; t <= 1; t += 0.005)
+            for (double t = 0; t <= 1; t += 0.01)
             {
                 CalcQuadBezierPath(originalPos, curvePoint, targetPos, (float)t);
             }

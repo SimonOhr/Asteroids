@@ -17,9 +17,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             gunCooldownTimer = 0;
             gunCooldownTimerReset = 0;
 
-            chargeRate = 800f;
+            chargeRate = 700f;
             gunChargeTimerReset = 0;
-            maxGunCharge = 3;
+            maxGunCharge = 5;
         }
 
         public override void Update(GameTime gt)
