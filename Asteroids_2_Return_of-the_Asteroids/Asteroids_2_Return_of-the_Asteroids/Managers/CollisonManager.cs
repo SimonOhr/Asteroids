@@ -26,8 +26,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void CheckIfAsteroidIsHit()
         {
-            if (gm.GetProjectileList() != null)
-                projectiles = gm.GetProjectileList();
+            //if (gm.GetProjectileList() != null)
+            projectiles = gm.GetProjectileList();           
+            
             asteroids = gm.GetAsteroidList();
             for (int j = 0; j < projectiles.Count; j++)
             {
@@ -50,7 +51,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         }
                     }
                 }
-            }
+            }            
         }
 
         private bool CheckIfAsteroidisDead(Asteroid a)

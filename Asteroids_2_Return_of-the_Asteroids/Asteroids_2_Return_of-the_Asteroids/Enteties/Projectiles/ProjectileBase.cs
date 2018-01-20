@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         protected Vector2 velocity, direction, originalPos, targetPos;       
 
-        protected int gunRange;
+        protected int projectileRange;
 
         public bool doRemove;               
       
@@ -31,9 +31,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             this.targetPos = targetPos;         
 
-            direction = GetDirection();
-
-            gunRange = 800;
+            direction = GetDirection();          
 
             GetRotation();         
         }
@@ -60,7 +58,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         virtual protected void CheckIfOutOfRange()
         {
-            if (Vector2.Distance(pos, originalPos) >= gunRange)
+            if (Vector2.Distance(pos, originalPos) >= projectileRange)
             {
                 doRemove = true;
             }

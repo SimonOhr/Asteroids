@@ -33,7 +33,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             velocity = new Vector2(1, 1);
 
             aimAssistMultiplier = 250;
-            gunRange = 1200;
+            projectileRange = 1500;
             rotation = 90;
             timer = 0;
             timerMax = 0.005f;
@@ -41,7 +41,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             curvePointMultiplier = 500;
             it = 1;
             accelerationMultiplier = 1.02f;
-            curveLocationMultipler = 200;
+            curveLocationMultipler = 150;
 
             aimAssist = targetPos + (velocity) * (GetDirection() * aimAssistMultiplier);
             originalPos = pos;
@@ -62,7 +62,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Update(GameTime gt)
         {
-            GetRotation();
+            
 
             pos += velocity * direction;
             hitbox.X = (int)pos.X;
@@ -82,8 +82,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         private Vector2 CurveLocation()
-        {                     
-            return pos - (AngleToVector(MathHelper.ToDegrees(rotation)) * curveLocationMultipler); 
+        {
+            List<Vector2> rndMissildeEject = new List<Vector2>();
+            for (int i = 0; i < 5; i++)
+            {
+                rndMissildeEject.Add(pos - (AngleToVector(MathHelper.ToDegrees(rotation + rnd.Next(0, 90))) * curveLocationMultipler));
+            }            
+           
+            return rndMissildeEject[rnd.Next(0,5)];
         }
         
         private Vector2 AngleToVector(float angle)
@@ -113,7 +119,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (it == (listCount / 2))
             {
                 it = listCount;
-                targetPos = aimAssist;               
+                targetPos = aimAssist;
+                GetRotation();
             }
             else targetPos = curvePath[it];
 

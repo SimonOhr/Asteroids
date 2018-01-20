@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             velocity = new Vector2(15, 15);
 
-            gunRange = 800;
+            projectileRange = 800;
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, 20, 30);
             

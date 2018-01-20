@@ -124,7 +124,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
                             colorStates = Color.Gray;                            
                         }
                         else if (totalTicks > 20 )
-                        {                           
+                        {
+                            colourPallet.Add(Color.Yellow);
+                            colourPallet.Add(Color.OrangeRed);
+                            colourPallet.Add(Color.Red);
                             colorStates = colourPallet[random.Next(0, colourPallet.Count)];
                         }                       
 

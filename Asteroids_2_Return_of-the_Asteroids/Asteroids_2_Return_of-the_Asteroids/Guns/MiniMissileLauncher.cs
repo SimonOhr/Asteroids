@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class MiniMissileLauncher:WeaponBase
+    class MiniMissileLauncher : WeaponBase
     {
         public MiniMissileLauncher(Vector2 pos) : base(pos)
         {
-            gunRateOfFire = 200f;
+            gunRateOfFire = 0.15f;
             gunCooldownTimer = 0;
             gunCooldownTimerReset = 0;
 
-            chargeRate = 100f;
+            chargeRate = 1000f;
             gunChargeTimerReset = 0;
-            maxGunCharge = 10;
+            maxGunCharge = 5;
         }
 
         public override void Update(GameTime gt)
@@ -52,7 +52,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                 if (gunChargeTimer > chargeRate)
                 {
-                    currentGunCharge++;
+                    while (currentGunCharge < maxGunCharge)
+                        currentGunCharge++;
                     gunChargeTimer = gunChargeTimerReset;
                     // Console.WriteLine("number of shots " + currentGunCharge);
                 }

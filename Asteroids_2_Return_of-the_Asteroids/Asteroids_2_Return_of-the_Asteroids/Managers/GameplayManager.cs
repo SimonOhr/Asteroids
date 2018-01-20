@@ -73,7 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mousePos.X = Mouse.GetState().Position.X;
             mousePos.Y = Mouse.GetState().Position.Y;
 
-            // CreateAsteroids(gt);
+            CreateAsteroids(gt);
             CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
             st.Update(gt);
@@ -190,27 +190,23 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 tempAsteroid.Draw(sb);
             }
-        }
-
-        //public void ClearShipProjectileList()
-        //{
-        //    Ship.ClearProjectileList();
-        //}
+        }       
 
         public ref List<WeaponBase> GetWeaponeList()
         {
             return ref Ship.GetWeaponList();
         }
 
-        public List<ProjectileBase> GetProjectileList()
+        public ref List<ProjectileBase> GetProjectileList()
         {
-            return WeaponBase.GetProjectileList();
+            return ref WeaponBase.GetProjectileList();
         }
 
         public void ClearProjectileList()
         {
             WeaponBase.ClearProjectileList();
         }
+
         public ref List<Asteroid> GetAsteroidList()
         {
             return ref asteroids;
