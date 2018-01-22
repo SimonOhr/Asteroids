@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Asteroids_2_Return_of_the_Asteroids.Enteties.Drone;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -30,13 +31,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
            
             speed = 4;
             originalSpeed = speed;
-           
+            drone = new Drone(Pos, this); // for test purposes
         }
 
         public override void Update(GameTime gt)
         {
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection() * 50));
-
+            drone.Update(gt);
             foreach (WeaponBase w in weapons)
             {
                 w.SetPos(Pos);
@@ -58,6 +59,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 w.Draw(sb);
             }
+            drone.Draw(sb);
             sb.Draw(healthbarTex, Vector2.Zero, srcHealthbarTex, Color.White);
             sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
             // base.Draw(sb);

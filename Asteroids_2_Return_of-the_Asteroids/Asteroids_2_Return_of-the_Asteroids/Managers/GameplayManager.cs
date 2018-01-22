@@ -19,7 +19,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         DefaultSpaceStation st;        
 
         Asteroid asteroid;
-        public List<Asteroid> asteroids = new List<Asteroid>();
+        public static List<Asteroid> asteroids = new List<Asteroid>();
 
         public PlayerShipBase Ship { get; private set; }
 

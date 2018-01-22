@@ -10,7 +10,9 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class LaserCanon:WeaponBase
-    {        
+    {
+        private bool inRange;
+        private Vector2 targetPos;
         public LaserCanon(Vector2 pos):base(pos)
         {            
             gunRateOfFire = 200f;
@@ -35,11 +37,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && currentGunCharge > 0)
             {
                 projectileTargetPos = Mouse.GetState().Position.ToVector2();
-                PlayerIsShooting(gt);
+                isShooting(gt);
             }
-            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            else if (Mouse.GetState().LeftButton == ButtonState.Released)
             {
                 gunCooldownTimer = 500f;
+            }
+
+            if(inRange && currentGunCharge > 0)
+            {
+                projectileTargetPos = targetPos;
+                isShooting(gt);
             }
             UpdateProjectiles(gt);
         }
@@ -59,7 +67,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
-        virtual protected void PlayerIsShooting(GameTime gt)
+        virtual protected void isShooting(GameTime gt)
         {
             gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
 
@@ -72,6 +80,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 // Console.WriteLine("number of shots " + projectiles.Count);                
                 SoundManager.PlayShot();
             }
+        }
+
+        public void TargetPos(Vector2 target)
+        {
+            targetPos = target;
+        }
+
+        public void IsInRange(bool temp)
+        {
+            inRange = temp;
         }
 
         public override void Draw(SpriteBatch sb)

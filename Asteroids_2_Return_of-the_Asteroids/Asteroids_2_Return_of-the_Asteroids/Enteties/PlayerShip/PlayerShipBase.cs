@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Asteroids_2_Return_of_the_Asteroids.Enteties.Drone;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -17,6 +18,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected Rectangle srcHealthbarTex;
         protected int currentHealth;
 
+        protected Drone drone;
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry
         protected Vector2 mousePos;
         protected Color color;

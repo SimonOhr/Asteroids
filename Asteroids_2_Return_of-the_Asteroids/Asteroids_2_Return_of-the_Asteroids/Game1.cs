@@ -187,7 +187,7 @@ namespace Asteroids_2_Return_of_the_Asteroids {
         private void CleanSlate() {
             PlayerShipBase.hitPoints = 3;
             score = 0;
-            gm.asteroids.Clear();
+            GameplayManager.asteroids.Clear();
             gm.ClearProjectileList();
         }
 
