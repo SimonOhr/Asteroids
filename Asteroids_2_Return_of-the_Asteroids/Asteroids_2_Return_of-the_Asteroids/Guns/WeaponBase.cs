@@ -13,13 +13,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected ProjectileBase projectile;
         static protected List<ProjectileBase> projectiles = new List<ProjectileBase>();
 
-        protected double gunCooldownTimer, gunCooldownTimerReset;
+        protected double gunCooldownTimerReset;
         protected float gunRateOfFire;
+        public double gunCooldownTimer;
 
-        protected double gunChargeTimer, gunChargeTimerReset;
+        protected double gunChargeTimer;
+        protected double gunChargeTimerReset;
         protected float chargeRate;
         protected int maxGunCharge;
-        protected int currentGunCharge;        
+        protected int currentGunCharge;  
 
         public WeaponBase(Vector2 pos):base(pos)
         {
@@ -38,6 +40,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }            
         }
 
+        public virtual void isShooting(GameTime gt)
+        { }
+
         public static ref List<ProjectileBase> GetProjectileList()
         {            
             return ref projectiles;
@@ -51,6 +56,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public virtual void SetPos(Vector2 newPos)
         {
             pos = newPos;
+        }
+
+        public virtual void SetTargetPos(Vector2 t)
+        {
+            projectileTargetPos = t;
+        }
+
+        public virtual int GetGuncharge()
+        {
+            return currentGunCharge;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Asteroids_2_Return_of_the_Asteroids.Enteties.Drone;
+﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;

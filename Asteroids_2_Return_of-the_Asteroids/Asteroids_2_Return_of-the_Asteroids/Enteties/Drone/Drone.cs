@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Asteroids_2_Return_of_the_Asteroids.Enteties.Drone
+namespace Asteroids_2_Return_of_the_Asteroids
 {
     class Drone : MovingObject
     {
@@ -37,10 +37,10 @@ namespace Asteroids_2_Return_of_the_Asteroids.Enteties.Drone
         {
             weapon.SetPos(pos);
             weapon.Update(gt);
+            pos = SetPos(gt);
             switch (currentState)
             {
-                case droneState.patrol:
-                    pos = SetPos(gt);
+                case droneState.patrol:                    
                     Rotation(gt);
                     UpdateTargetList();
                     break;
@@ -78,14 +78,6 @@ namespace Asteroids_2_Return_of_the_Asteroids.Enteties.Drone
         private void UpdateTargetList()
         {
             List<Asteroid> asteroidList = GameplayManager.asteroids;
-            //foreach (Asteroid a in asteroidList)
-            //{
-            //    if (Vector2.Distance(pos, a.pos) < attackRadius)
-            //    {
-            //        enemyTarget = a;
-            //        currentState = droneState.attack;                  
-            //    }
-            //}
             for (int i = 0; i < asteroidList.Count - 1; i++)
             {
                 if (Vector2.Distance(pos, asteroidList[i].pos) < attackRadius)
@@ -99,10 +91,11 @@ namespace Asteroids_2_Return_of_the_Asteroids.Enteties.Drone
 
         private void EngageTarget(Asteroid a)
         {
-            if (GameplayManager.asteroids[id] != null)
-                enemyTarget.pos = GameplayManager.asteroids[id].pos;
+            if (id < GameplayManager.asteroids.Count)
+                if (GameplayManager.asteroids[id] != null)
+                    enemyTarget.pos = GameplayManager.asteroids[id].pos;
 
-            pos += speed * GetDirection(enemyTarget.pos);
+          //  pos += speed * GetDirection(enemyTarget.pos);
 
             weapon.TargetPos(enemyTarget.pos);
             weapon.IsInRange(true);
@@ -111,6 +104,8 @@ namespace Asteroids_2_Return_of_the_Asteroids.Enteties.Drone
                 weapon.IsInRange(false);
                 currentState = droneState.patrol;
             }
+            if (enemyTarget.isOutOfPlay)
+                currentState = droneState.patrol;
         }
 
         virtual protected Vector2 GetDirection(Vector2 targetPos)

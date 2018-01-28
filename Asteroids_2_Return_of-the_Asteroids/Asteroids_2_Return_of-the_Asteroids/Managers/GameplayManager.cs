@@ -74,7 +74,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mousePos.Y = Mouse.GetState().Position.Y;
 
             CreateAsteroids(gt);
-            CheckIfAsteroidIsInPlay();
+            //CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
             st.Update(gt);
 
@@ -93,7 +93,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.UpdateAsteroidExplosionEffect();
             cm.CheckIfAsteroidIsHit();
             cm.CheckIfShipIsHit(gt);
-
         }
 
         private void CreateAsteroids(GameTime gt)
@@ -109,7 +108,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 }
                 spawnAsteroidsTimer = spawnAsteroidsTimerReset;
             }
-
             //  Console.WriteLine(+asteroids.Count);
         }
 
@@ -157,16 +155,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //    }
         //}
 
-        private void CheckIfAsteroidIsInPlay()
-        {
-            for (int i = 0; i < asteroids.Count; i++)
-            {
-                if (asteroids[i].isOutOfPlay)
-                {
-                    asteroids.RemoveAt(i);
-                }
-            }
-        }
+        //private void CheckIfAsteroidIsInPlay()
+        //{
+        //    for (int i = 0; i < asteroids.Count; i++)
+        //    {
+        //        if (asteroids[i].isOutOfPlay)
+        //        {
+        //            asteroids.RemoveAt(i);
+        //        }
+        //    }
+        //}
 
         public void Draw(SpriteBatch sb)
         {

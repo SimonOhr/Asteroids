@@ -33,9 +33,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             for (int j = 0; j < projectiles.Count; j++)
             {
                 for (int i = 0; i < asteroids.Count; i++)
-                {
+                {                  
                     if (projectiles.Count > 0)
-                    {
+                    {                        
                         if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) < 50)
                         {
                             EffectsManager.CreateASteroidIsHitEffect(asteroids[i].pos);
@@ -49,6 +49,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
                             Game1.score += 10;
                             break;
                         }
+                    }
+                    if (asteroids[i].isOutOfPlay)
+                    {
+                        asteroids.RemoveAt(i);
                     }
                 }
             }            

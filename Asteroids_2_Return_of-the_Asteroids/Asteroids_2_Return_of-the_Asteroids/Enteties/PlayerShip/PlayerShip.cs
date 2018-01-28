@@ -1,4 +1,4 @@
-﻿using Asteroids_2_Return_of_the_Asteroids.Enteties.Drone;
+﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -48,6 +48,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (srcHealthbarTex.Width != hitPoints * healthmultiplier)
             {
                 srcHealthbarTex.Width = hitPoints * healthmultiplier;
+            }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed && weapons[0].GetGuncharge() > 0)
+            {
+                weapons[0].SetTargetPos(Mouse.GetState().Position.ToVector2());
+                weapons[0].isShooting(gt);
+            }
+            else if (Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                weapons[0].gunCooldownTimer = 200f;
             }
 
             base.Update(gt);
