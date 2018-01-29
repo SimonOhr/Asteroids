@@ -21,12 +21,12 @@ namespace Asteroids_2_Return_of_the_Asteroids {
 
         GameState currentstate;
 
-        new Rectangle screenRec;
+        Rectangle screenRec;
 
         ButtonMenu startMenu, hiScMenu, endgameMenu, pauseMenu;
 
         HighScoreItem hiSc;
-        string[] hiScNames;
+       // string[] hiScNames;
         bool hasPaused;
 
         List<HighScoreItem> hsArray;

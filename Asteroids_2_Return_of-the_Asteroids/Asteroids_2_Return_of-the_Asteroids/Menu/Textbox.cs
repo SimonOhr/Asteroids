@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Texture2D texture;
         Vector2 position;
 
-        KeyboardState currentState, oldState;
+      //  KeyboardState currentState, oldState;
         String GUIEnterName;
         String GUIInputName;
         Rectangle textBoxArea;

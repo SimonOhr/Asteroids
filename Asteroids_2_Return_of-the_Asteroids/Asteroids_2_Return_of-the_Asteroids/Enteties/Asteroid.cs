@@ -22,7 +22,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Vector2 posZoneLeft, posZoneRight, posZoneUp, vSpeed;
 
-        public Vector2 pos;
+        public new Vector2 pos;
 
         public Vector2 direction;
 

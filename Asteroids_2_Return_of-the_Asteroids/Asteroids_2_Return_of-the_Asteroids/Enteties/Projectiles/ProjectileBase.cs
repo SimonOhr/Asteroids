@@ -13,7 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         protected Texture2D projectileTex;
 
-        public Vector2 pos;
+        public new Vector2 pos;
 
         protected Vector2 velocity, direction, originalPos, targetPos;       
 

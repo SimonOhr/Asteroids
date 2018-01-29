@@ -16,14 +16,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //protected WeaponBase DEBUGGweapon;
         protected Texture2D healthbarTex = AssetsManager.healthBarTex;
         protected Rectangle srcHealthbarTex;
-        protected int currentHealth;
+       // protected int currentHealth;
 
         protected Drone drone;
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry
         protected Vector2 mousePos;
         protected Color color;
         public Texture2D tex;
-        protected Vector2 oldPos;
+      //  protected Vector2 oldPos;
         public Vector2 Pos { get; private set; }
         protected float originalSpeed;
 

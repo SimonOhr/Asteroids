@@ -20,7 +20,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Texture2D tex;
         int patrolRadius, attackRadius;
         double time;
-        float currentRotation, speed;
+        float currentRotation;
         public Drone(Vector2 pos, PlayerShipBase ship) : base(pos)
         {
             this.ship = ship;
@@ -40,12 +40,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
             pos = SetPos(gt);
             switch (currentState)
             {
-                case droneState.patrol:                    
+                case droneState.patrol:
                     Rotation(gt);
                     UpdateTargetList();
                     break;
                 case droneState.attack:
-                    EngageTarget(enemyTarget);
+                    EngageTarget(ref enemyTarget);
                     break;
                 case droneState.evade:
                     break;
@@ -77,35 +77,31 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void UpdateTargetList()
         {
-            List<Asteroid> asteroidList = GameplayManager.asteroids;
-            for (int i = 0; i < asteroidList.Count - 1; i++)
+            for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
             {
-                if (Vector2.Distance(pos, asteroidList[i].pos) < attackRadius)
+                if (Vector2.Distance(pos, GameplayManager.asteroids[i].pos) < attackRadius)
                 {
-                    enemyTarget = asteroidList[i];
+                    enemyTarget = GameplayManager.asteroids[i];
                     id = i;
                     currentState = droneState.attack;
                 }
             }
         }
 
-        private void EngageTarget(Asteroid a)
+        private void EngageTarget(ref Asteroid a)
         {
-            if (id < GameplayManager.asteroids.Count)
-                if (GameplayManager.asteroids[id] != null)
-                    enemyTarget.pos = GameplayManager.asteroids[id].pos;
-
-          //  pos += speed * GetDirection(enemyTarget.pos);
-
-            weapon.TargetPos(enemyTarget.pos);
-            weapon.IsInRange(true);
-            if (Vector2.Distance(enemyTarget.pos, pos) > attackRadius)
+            //  pos += speed * GetDirection(enemyTarget.pos);
+                       
+            if (Vector2.Distance(a.pos, pos) > attackRadius || a.hitPoints == 0)
             {
                 weapon.IsInRange(false);
                 currentState = droneState.patrol;
             }
-            if (enemyTarget.isOutOfPlay)
-                currentState = droneState.patrol;
+            else
+            {
+                weapon.TargetPos(a.pos);
+                weapon.IsInRange(true);
+            }
         }
 
         virtual protected Vector2 GetDirection(Vector2 targetPos)

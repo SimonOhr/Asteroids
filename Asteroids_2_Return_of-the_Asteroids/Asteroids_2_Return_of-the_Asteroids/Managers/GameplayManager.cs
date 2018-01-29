@@ -12,7 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
     {        
-        WeaponBase weapon;
+       // WeaponBase weapon;
         GameWindow window;
         Rectangle backgroundRec;
         CollisonManager cm;
@@ -33,7 +33,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Vector2 mousePos;
 
-        ParticleEngine particle;
+        //ParticleEngine particle;
 
         Vector2 spaceStationPos;
 
@@ -83,11 +83,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 tempAsteroid.Update(gt);
             }
 
-            if (particle != null)
-            {
-                particle.Update();
+            //if (particle != null)
+            //{
+            //    particle.Update();
 
-            }
+            //}
 
             EffectsManager.UpdateAsteroidIsHitEffect();
             EffectsManager.UpdateAsteroidExplosionEffect();

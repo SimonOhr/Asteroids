@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         SpriteFont spriteFont;
 
         public bool selectable = true;
-        bool selected;
+       // bool selected;
         protected bool border;
 
         readonly int offset;
@@ -44,7 +44,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Select()
         {
-            selected = true;
+          //  selected = true;
             if (selectable)
             {
                 recColor = Color.RosyBrown;
@@ -57,7 +57,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void UnSelect()
         {
-            selected = false;
+           // selected = false;
             if (selectable)
             {
                 recColor = Color.LightSlateGray;

@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         double timer;
         float timerMax, reset, accelerationMultiplier;
 
-        int curvePointMultiplier;
+       // int curvePointMultiplier;
         Vector2 curvePoint;        
         
         Vector2 wayPoint = new Vector2(0, 0);
@@ -38,7 +38,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             timer = 0;
             timerMax = 0.005f;
             reset = 0;
-            curvePointMultiplier = 500;
+            //curvePointMultiplier = 500;
             it = 1;
             accelerationMultiplier = 1.02f;
             curveLocationMultipler = 150;
