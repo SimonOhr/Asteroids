@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="Enteties\Drone\Drone.cs" />
     <Compile Include="Enteties\SpaceStation\DefaultSpaceStation.cs" />
     <Compile Include="GameObject.cs" />

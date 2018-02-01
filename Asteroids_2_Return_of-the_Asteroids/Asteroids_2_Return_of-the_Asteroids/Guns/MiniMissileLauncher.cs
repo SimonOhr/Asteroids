@@ -34,7 +34,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed && currentGunCharge > 0)
             {
-                projectileTargetPos = Mouse.GetState().Position.ToVector2();
+                projectileTargetPos = KeyMouseReader.cursorViewToWorldPosition;
                 PlayerIsShooting(gt);
             }
             if (Mouse.GetState().RightButton == ButtonState.Released)

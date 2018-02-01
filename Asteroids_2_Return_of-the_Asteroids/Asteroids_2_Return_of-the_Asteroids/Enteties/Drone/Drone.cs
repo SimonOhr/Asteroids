@@ -10,7 +10,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class Drone : ShipBase
     {
-        enum droneState { patrol, attack, evade, save /*, chase*/ }
+        enum droneState { Idle, Follow, Attack, Evade, Save /*, chase*/ }
         droneState currentState;
         int id;
         Asteroid enemyTarget, scanTarget;
@@ -28,6 +28,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         int radius = 50;
         Vector2 ahead;
         Vector2 ahead2;
+        Vector2 right;
+        Vector2 left;
+        Vector2 back;
         public Drone(Vector2 pos, PlayerShip ship) : base(pos)
         {
             this.ship = ship;
@@ -42,7 +45,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             collisionRadius = 100;
             scanRadius = 300;
             velocity = new Vector2(5, 5);
-            currentState = droneState.patrol;
+            currentState = droneState.Idle;
         }
 
         public override void Update(GameTime gt)
@@ -53,38 +56,49 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             switch (currentState)
             {
-                case droneState.patrol:
+                case droneState.Idle:
+                    Console.WriteLine("Idle");
+                    direction = GetDirection(SetPos(gt), pos);
+                    Rotation(gt);
+                    UpdatePosition(gt);
+                    UpdateTargetList(gt);
+                    if (Vector2.Distance(ship.Pos, pos) > 250)
+                        currentState = droneState.Follow;
+                    break;
+                case droneState.Follow:
                     Rotation(gt);
                     UpdateTargetList(gt);
-                    direction = GetDirection(SetPos(gt), pos);
+                    direction = GetDirection(ship.Pos, pos);
                     UpdatePosition(gt);
-                  //  if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);
+                    //  if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);
                     //if (save) currentState = droneState.save;
-                    if (evade)
-                    {
-                        currentState = droneState.evade;
-                    }
+                    //if (evade)
+                    //{
+                    //    currentState = droneState.Evade;
+                    //}
+                    if (Vector2.Distance(ship.Pos, pos) <= 100)
+                        currentState = droneState.Idle;
                     break;
-                case droneState.attack:
+                case droneState.Attack:
                     //CheckIfCollisionImminent(gt, ref enemyTarget); 
                     UpdatePosition(gt);
                     EngageTarget(ref enemyTarget);
                     break;
-                case droneState.evade:
+                case droneState.Evade:
                     //if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);                    
                     //EvadeCollision();
                     UpdatePosition(gt);
                     if (Vector2.Distance(enemyTarget.pos, pos) > collisionRadius)
                     {
-                        currentState = droneState.patrol;
+                        currentState = droneState.Follow;
                         Console.WriteLine("Evasive Action Done");
                     }
                     //currentState = droneState.patrol;
                     break;
-                case droneState.save:
+                case droneState.Save:
                     // if (enemyTarget != null) CheckIfCollisionImminent(ref enemyTarget);
                     // ProtectMaster();
-                    currentState = droneState.patrol;
+                    currentState = droneState.Follow;
                     break;
             }
             base.Update(gt);
@@ -92,12 +106,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void UpdatePosition(GameTime gt)
         {
-            var steering = CollisionAvoidance(gt);
-            //if (steering.X > 0 || steering.Y > 0)
-            //    direction = Vector2.Normalize(steering);
-            pos += velocity * direction + steering;
-            //else
-            //    pos = SetPos(gt);
+          //  var steering = CollisionAvoidance(gt, ref direction);
+                       
+            pos += velocity * direction /*+ steering*/;
+          
         }
         private Vector2 SetPos(GameTime gt)
         {
@@ -111,7 +123,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         virtual protected void Rotation(GameTime gt)
         {
             Vector2 nextPos;
-            if (currentState == droneState.patrol)
+            if (currentState == droneState.Follow)
                 moveTo = SetPos(gt);
             else nextPos = Vector2.Zero;
 
@@ -128,12 +140,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     enemyTarget = GameplayManager.asteroids[i];
                     id = i;
                     // if (Vector2.Distance(pos, enemyTarget.pos) < 100) currentState = droneState.evade;
-                    currentState = droneState.attack;
+                    currentState = droneState.Attack;
                 }
                 if (Vector2.Distance(ship.Pos, GameplayManager.asteroids[i].pos) < scanRadius)
                 {
                     scanTarget = GameplayManager.asteroids[i];
-                  //  CheckIfCollisionImminent(gt, ref scanTarget);
+                    //  CheckIfCollisionImminent(gt, ref scanTarget);
                 }
             }
         }
@@ -145,7 +157,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             if (Vector2.Distance(a.pos, pos) > attackRadius || a.hitPoints == 0)
             {
                 weapon.IsInRange(false);
-                currentState = droneState.patrol;
+                currentState = droneState.Follow;
             }
             else
             {
@@ -184,46 +196,49 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //}
 
         // asteroids[i].radius + (gm.GetShipTex().Width / 2
-        private Vector2 CollisionAvoidance(GameTime gt)
-        {
-            ahead = pos + GetDirection(SetPos(gt), pos) * 30; // max_see_ahead
-            ahead2 = pos + GetDirection(SetPos(gt), pos) * 30 * 0.5f;
-            var mostThreatening = FindMTO();
-            var avoidance = new Vector2(0, 0);
-            if (mostThreatening != null)
-            {
-                avoidance.X = ahead.X - mostThreatening.pos.X;
-                avoidance.Y = ahead.Y - mostThreatening.pos.Y;
+        //private Vector2 CollisionAvoidance(GameTime gt, ref Vector2 direction)
+        //{
+        //    ahead = pos + direction * 15; // max_see_ahead
+        //    ahead2 = pos + direction * 15 * 0.5f;
+        //    //ahead = pos + GetDirection(SetPos(gt), pos) * 30; // max_see_ahead
+        //    //ahead2 = pos + GetDirection(SetPos(gt), pos) * 30 * 0.5f;
 
-                avoidance.Normalize();
-                avoidance *= 3; // max_avoid_force
-            }
-            else
-                avoidance *= 0;
-            return avoidance;
-        }
+        //    var mostThreatening = FindMTO();
+        //    var avoidance = new Vector2(0, 0);
+        //    if (mostThreatening != null)
+        //    {
+        //        avoidance.X = ahead.X - mostThreatening.pos.X;
+        //        avoidance.Y = ahead.Y - mostThreatening.pos.Y;
 
-        private Asteroid FindMTO()
-        {
-            Asteroid mostThreatening = null;
-            for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
-            {
-                Asteroid obstacle = GameplayManager.asteroids[i];
-                bool collision = LineIntersectsCircle(ahead, ahead2, obstacle);
-                if (collision && (mostThreatening == null ||
-                    Vector2.Distance(pos, obstacle.pos) < Vector2.Distance(pos, mostThreatening.pos)))
-                {
-                    mostThreatening = obstacle;
-                }
-            }
-            return mostThreatening;
-        }
+        //        avoidance.Normalize();
+        //        avoidance *= mostThreatening.velocity * 2; // max_avoid_force
+        //    }
+        //    else
+        //        avoidance *= 0;
+        //    return avoidance;
+        //}
 
-        private bool LineIntersectsCircle(Vector2 ahead, Vector2 ahead2, Asteroid obstacle)
-        {
-            return Vector2.Distance(obstacle.pos, ahead) <= obstacle.radius + radius ||
-               Vector2.Distance(obstacle.pos, ahead2) <= obstacle.radius + radius;
-        }
+        //private Asteroid FindMTO()
+        //{
+        //    Asteroid mostThreatening = null;
+        //    for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
+        //    {
+        //        Asteroid obstacle = GameplayManager.asteroids[i];
+        //        bool collision = LineIntersectsCircle(ahead, ahead2, obstacle);
+        //        if (collision && (mostThreatening == null ||
+        //            Vector2.Distance(pos, obstacle.pos) < Vector2.Distance(pos, mostThreatening.pos)))
+        //        {
+        //            mostThreatening = obstacle;
+        //        }
+        //    }
+        //    return mostThreatening;
+        //}
+
+        //private bool LineIntersectsCircle(Vector2 ahead, Vector2 ahead2, Asteroid obstacle)
+        //{
+        //    return Vector2.Distance(obstacle.pos, ahead) <= obstacle.radius + radius ||
+        //   Vector2.Distance(obstacle.pos, ahead2) <= obstacle.radius + radius;
+        //}
 
         //private void EvadeCollision()
         //{

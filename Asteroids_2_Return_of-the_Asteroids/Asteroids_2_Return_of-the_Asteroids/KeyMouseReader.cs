@@ -13,8 +13,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static KeyboardState keyState, oldKeyState = Keyboard.GetState();
         public static MouseState mouseState, oldMouseState = Mouse.GetState();
         public static Vector2 mousePosition;
+        public static Vector2 cursorViewToWorldPosition;
 
-        public static void Update()
+        public static void Update(Camera camera)
         {
             oldKeyState = keyState;
             keyState = Keyboard.GetState();
@@ -23,6 +24,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mouseState = Mouse.GetState();
 
             mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            cursorViewToWorldPosition = Vector2.Transform(Mouse.GetState().Position.ToVector2(), Matrix.Invert(camera.GetTransform()));
         }
 
         public static bool KeyPressed(Keys key)

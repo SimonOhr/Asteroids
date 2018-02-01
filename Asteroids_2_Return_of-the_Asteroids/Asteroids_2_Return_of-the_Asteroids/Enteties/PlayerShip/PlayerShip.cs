@@ -11,9 +11,10 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class PlayerShip : ShipBase
-    {
+    {        
         int healthmultiplier = (AssetsManager.healthBarTex.Width / 10);
-        Vector2 mousePos;
+        Vector2 mousePos, oldMousePos;
+        
         public Vector2 Pos { get; private set; }
         public PlayerShip(Vector2 pos) : base(pos)
         {            
@@ -21,7 +22,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            hitPoints = 10000;
+            hitPoints = 10;
 
             srcHealthbarTex = new Rectangle(0, 0, hitPoints * healthmultiplier, AssetsManager.healthBarTex.Height);
 
@@ -39,17 +40,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Update(GameTime gt)
         {
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection(mousePos, Pos) * 50));
-            drone.Update(gt);
+            drone.Update(gt);            
+            mousePos = KeyMouseReader.cursorViewToWorldPosition;
+            //oldMousePos = mousePos;
+            //mousePos.X = Mouse.GetState().X;
+            //mousePos.Y = Mouse.GetState().Y;
+           // var deltaMouse = mousePos - oldMousePos;
 
-            mousePos.X = Mouse.GetState().X;
-            mousePos.Y = Mouse.GetState().Y;
             Pos += speed * GetDirection(mousePos, Pos);
             SoftInSoftOut();
             ShipRotation(mousePos, Pos);
             //GetDirection(mousePos);
-            ShipIsHitColorSwitch();
-
-           
+            ShipIsHitColorSwitch();                                 
 
             foreach (WeaponBase w in weapons)
             {
@@ -65,7 +67,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (Mouse.GetState().LeftButton == ButtonState.Pressed && weapons[0].GetGuncharge() > 0)
             {
-                weapons[0].SetTargetPos(Mouse.GetState().Position.ToVector2());
+                weapons[0].SetTargetPos(mousePos);
                 weapons[0].isShooting(gt);
             }
             else if (Mouse.GetState().LeftButton == ButtonState.Released)
@@ -107,6 +109,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         private void AfterburnerIntensifier()
         {
             EffectsManager.SetAfterBurnerIntensity(speed);
-        }
+        }        
     }
 }

@@ -34,23 +34,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             GunCharging(gt);
 
-            //if (Mouse.GetState().LeftButton == ButtonState.Pressed && currentGunCharge > 0)
-            //{
-            //    projectileTargetPos = Mouse.GetState().Position.ToVector2();
-            //    isShooting(gt);
-            //}
-            //else if (Mouse.GetState().LeftButton == ButtonState.Released)
-            //{
-            //    gunCooldownTimer = 200f;
-            //}
-
             if (inRange && currentGunCharge > 0)
             {
                 projectileTargetPos = targetPos;
                 isShooting(gt);
             }
-            //else
-            //    gunCooldownTimer = 200f;
+            
             UpdateProjectiles(gt);
         }
 

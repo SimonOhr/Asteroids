@@ -45,7 +45,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {                    
                     if (projectiles.Count > 0)
                     {                        
-                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) < 50)
+                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) <= 50)
                         {
                             EffectsManager.CreateASteroidIsHitEffect(asteroids[i].pos);
                             projectiles.RemoveAt(j);

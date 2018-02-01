@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Asteroid:MovingObject
+    class Asteroid : MovingObject
     {
         GameWindow window;
 
@@ -39,11 +39,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Color color = new Color(); // test
         // float rotation;
 
-        public Asteroid(GameWindow window, Random rnd, Vector2 pos):base(pos)
+        public Asteroid(GameWindow window, Random rnd, Vector2 pos) : base(pos)
         {
             this.window = window;
             this.rnd = rnd;
-            
+
             textures.Add(AssetsManager.asteroid1Tex);
             textures.Add(AssetsManager.asteroid2Tex);
 
@@ -73,8 +73,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            //  vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
-            vSpeed = new Vector2(1, 1);
+            vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+
             direction = GetDirection();
 
             radius = 50;
@@ -84,7 +84,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             hitPoints = 2;
 
             color = Color.White;
-           // GetAsteroidMass();
+            // GetAsteroidMass();
         }
 
         public override void Update(GameTime gt)
@@ -123,7 +123,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, new Vector2(hitbox.X, hitbox.Y), null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);           
+            sb.Draw(tex, new Vector2(hitbox.X, hitbox.Y), null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         virtual protected void GetRotation()
         {
-            Vector2 directionOfProjectile = Mouse.GetState().Position.ToVector2() - pos;
+            Vector2 directionOfProjectile = KeyMouseReader.cursorViewToWorldPosition - pos;
             rotation = (float)Math.Atan2(directionOfProjectile.Y, directionOfProjectile.X);
         }
 

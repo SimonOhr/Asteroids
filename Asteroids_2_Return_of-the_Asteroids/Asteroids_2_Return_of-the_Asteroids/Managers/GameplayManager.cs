@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameplayManager
-    {        
-       // WeaponBase weapon;
+    {
+        // WeaponBase weapon;
         GameWindow window;
-        Rectangle backgroundRec;
+        
         CollisonManager cm;
-        DefaultSpaceStation st;        
+        DefaultSpaceStation st;
 
         Asteroid asteroid;
         public static List<Asteroid> asteroids = new List<Asteroid>();
@@ -31,7 +31,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         float spawnAsteroidsInterval;
         int numberOfAsteroidsPerTimerReset;
 
-        Vector2 mousePos;
+        Vector2 cursorPosition;       
 
         //ParticleEngine particle;
 
@@ -41,11 +41,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             this.window = window;
             this.rnd = rnd;
-
-            backgroundRec = new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height);
+            
 
             spaceStationPos = new Vector2(300, 300);
-
+                              
             CreatePlayerShip();
             CreateSpaceStation(spaceStationPos);
 
@@ -54,9 +53,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             numberOfAsteroidsPerTimerReset = 3;
 
             cm = new CollisonManager(this);
-           
+
             SoundManager.PlayBgMusic();
         }
+
+        
 
         private void CreatePlayerShip()
         {
@@ -69,19 +70,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         public void Update(GameTime gt)
-        {
-            mousePos.X = Mouse.GetState().Position.X;
-            mousePos.Y = Mouse.GetState().Position.Y;
-
-             CreateAsteroids(gt);
+        {               
+            
+            cursorPosition = KeyMouseReader.cursorViewToWorldPosition;
+          
+            CreateAsteroids(gt);
             //CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
-            st.Update(gt);
-
+            st.Update(gt);           
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Update(gt);
-            }            
+            }
 
             EffectsManager.UpdateAsteroidIsHitEffect();
             EffectsManager.UpdateAsteroidExplosionEffect();
@@ -89,7 +89,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             cm.CheckIfAsteroidInPlay();
             cm.CheckIfShipIsHit(gt);
         }
-
+        
         private void CreateAsteroids(GameTime gt)
         {
             spawnAsteroidsTimer += gt.ElapsedGameTime.TotalSeconds;
@@ -163,11 +163,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(AssetsManager.backgroundTex, backgroundRec, Color.White);
 
             st.Draw(sb);
 
-            sb.Draw(AssetsManager.crosshairTex, new Vector2(mousePos.X - (AssetsManager.crosshairTex.Width / 2), mousePos.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
+            sb.Draw(AssetsManager.crosshairTex, new Vector2(cursorPosition.X - (AssetsManager.crosshairTex.Width / 2), cursorPosition.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
 
             if (GetProjectileList() != null)
                 foreach (ProjectileBase tempProjectile in GetProjectileList())
@@ -183,7 +182,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 tempAsteroid.Draw(sb);
             }
-        }       
+        }
 
         public ref List<WeaponBase> GetWeaponeList()
         {
@@ -218,6 +217,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Texture2D GetShipTex()
         {
             return Ship.tex;
-        }
+        }        
     }
 }
