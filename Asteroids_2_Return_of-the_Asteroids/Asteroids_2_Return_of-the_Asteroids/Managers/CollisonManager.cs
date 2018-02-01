@@ -24,6 +24,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroids = new List<Asteroid>();
         }
 
+        public void CheckIfAsteroidInPlay()
+        {
+            asteroids = gm.GetAsteroidList();
+            for (int i = 0; i < asteroids.Count -1; i++)
+            {
+                if (asteroids[i].isOutOfPlay) asteroids.RemoveAt(i);
+            }
+        }
+
         public void CheckIfAsteroidIsHit()
         {
             //if (gm.GetProjectileList() != null)
@@ -33,7 +42,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             for (int j = 0; j < projectiles.Count; j++)
             {
                 for (int i = 0; i < asteroids.Count; i++)
-                {                  
+                {                    
                     if (projectiles.Count > 0)
                     {                        
                         if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) < 50)
@@ -49,11 +58,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                             Game1.score += 10;
                             break;
                         }
-                    }
-                    if (asteroids[i].isOutOfPlay)
-                    {
-                        asteroids.RemoveAt(i);
-                    }
+                    }                   
                 }
             }            
         }
@@ -88,7 +93,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {
                         TempInvulnarbility = true;
                         gm.SetShipStatus(true);
-                        PlayerShipBase.hitPoints -= 1;
+                        ShipBase.hitPoints -= 1;
                     }
                 }
             }

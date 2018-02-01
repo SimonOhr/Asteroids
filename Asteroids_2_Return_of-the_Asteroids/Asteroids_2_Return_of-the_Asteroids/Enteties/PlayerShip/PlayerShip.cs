@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class PlayerShip : PlayerShipBase
+    class PlayerShip : ShipBase
     {
         int healthmultiplier = (AssetsManager.healthBarTex.Width / 10);
-        public PlayerShip(Vector2 pos, Vector2 mousePos) : base(pos, mousePos)
-        {
+        Vector2 mousePos;
+        public Vector2 Pos { get; private set; }
+        public PlayerShip(Vector2 pos) : base(pos)
+        {            
             tex = AssetsManager.shipTex;
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            hitPoints = 10;
+            hitPoints = 10000;
 
             srcHealthbarTex = new Rectangle(0, 0, hitPoints * healthmultiplier, AssetsManager.healthBarTex.Height);
 
@@ -36,8 +38,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Update(GameTime gt)
         {
-            EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection() * 50));
+            EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection(mousePos, Pos) * 50));
             drone.Update(gt);
+
+            mousePos.X = Mouse.GetState().X;
+            mousePos.Y = Mouse.GetState().Y;
+            Pos += speed * GetDirection(mousePos, Pos);
+            SoftInSoftOut();
+            ShipRotation(mousePos, Pos);
+            //GetDirection(mousePos);
+            ShipIsHitColorSwitch();
+
+           
+
             foreach (WeaponBase w in weapons)
             {
                 w.SetPos(Pos);
@@ -59,8 +72,24 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 weapons[0].gunCooldownTimer = 200f;
             }
-
             base.Update(gt);
+        }      
+
+        private void SoftInSoftOut()
+        {
+            speed = (Vector2.Distance(mousePos, Pos) * 0.015f);
+        }
+
+        private void ShipIsHitColorSwitch()
+        {
+            if (isHit)
+            {
+                color = Color.Red;
+            }
+            else
+            {
+                color = Color.White;
+            }
         }
 
         public override void Draw(SpriteBatch sb)

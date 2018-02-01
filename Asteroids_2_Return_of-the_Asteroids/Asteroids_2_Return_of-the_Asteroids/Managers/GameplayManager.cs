@@ -21,7 +21,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Asteroid asteroid;
         public static List<Asteroid> asteroids = new List<Asteroid>();
 
-        public PlayerShipBase Ship { get; private set; }
+        public PlayerShip Ship { get; private set; }
 
         List<ProjectileBase> projectiles = new List<ProjectileBase>();
 
@@ -60,7 +60,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CreatePlayerShip()
         {
-            Ship = new PlayerShip(new Vector2(50, 50), mousePos);
+            Ship = new PlayerShip(new Vector2(50, 50));
         }
 
         private void CreateSpaceStation(Vector2 pos)
@@ -73,7 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             mousePos.X = Mouse.GetState().Position.X;
             mousePos.Y = Mouse.GetState().Position.Y;
 
-            CreateAsteroids(gt);
+             CreateAsteroids(gt);
             //CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
             st.Update(gt);
@@ -81,17 +81,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Update(gt);
-            }
-
-            //if (particle != null)
-            //{
-            //    particle.Update();
-
-            //}
+            }            
 
             EffectsManager.UpdateAsteroidIsHitEffect();
             EffectsManager.UpdateAsteroidExplosionEffect();
             cm.CheckIfAsteroidIsHit();
+            cm.CheckIfAsteroidInPlay();
             cm.CheckIfShipIsHit(gt);
         }
 

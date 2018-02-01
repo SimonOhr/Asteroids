@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asteroids_2_Return_of-the_Asteroids", "Asteroids_2_Return_of-the_Asteroids\Asteroids_2_Return_of-the_Asteroids.csproj", "{8365ECBC-D467-4B8F-B297-6983FBE48526}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{C01785CC-1CE6-4242-AF47-5751B414ABEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,13 @@ Global
 		{8365ECBC-D467-4B8F-B297-6983FBE48526}.Debug|x86.Build.0 = Debug|x86
 		{8365ECBC-D467-4B8F-B297-6983FBE48526}.Release|x86.ActiveCfg = Release|x86
 		{8365ECBC-D467-4B8F-B297-6983FBE48526}.Release|x86.Build.0 = Release|x86
+		{C01785CC-1CE6-4242-AF47-5751B414ABEE}.Debug|x86.ActiveCfg = Debug
+		{C01785CC-1CE6-4242-AF47-5751B414ABEE}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9AEAFE6-84E8-4481-823C-427D70E409D7}
 	EndGlobalSection
 EndGlobal

@@ -68,7 +68,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Enteties\Projectiles\ProjectileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Enteties\PlayerShip\PlayerShipBase.cs" />
+    <Compile Include="Enteties\PlayerShip\ShipBase.cs" />
     <Compile Include="Menu\Textbox.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Guns\WeaponBase.cs" />
