@@ -14,9 +14,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static MouseState mouseState, oldMouseState = Mouse.GetState();
         public static Vector2 mousePosition;
         public static Vector2 cursorViewToWorldPosition;
+        public static Camera camera;
 
-        public static void Update(Camera camera)
+        public static void Update(Camera cam)
         {
+            camera = cam;
             oldKeyState = keyState;
             keyState = Keyboard.GetState();
 
@@ -58,6 +60,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static bool ScrollDown()
         {
             return mouseState.ScrollWheelValue < oldMouseState.ScrollWheelValue;
+        }
+
+        public static ref Camera PassCameraInformation()
+        {
+            return ref camera;
         }
     }
 }

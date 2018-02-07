@@ -326,3 +326,10 @@
 /processorParam:TextureFormat=Color
 /build:DroneTEST.png
 
+#begin Score.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Score.spritefont
+

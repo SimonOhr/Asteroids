@@ -29,7 +29,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         double spawnAsteroidsTimer, spawnAsteroidsTimerReset;
         float spawnAsteroidsInterval;
-        int numberOfAsteroidsPerTimerReset;
+        int numberOfAsteroidsPerTick;
 
         Vector2 cursorPosition;       
 
@@ -50,7 +50,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             spawnAsteroidsTimerReset = 0;
             spawnAsteroidsInterval = 2;
-            numberOfAsteroidsPerTimerReset = 3;
+            numberOfAsteroidsPerTick = 3;
 
             cm = new CollisonManager(this);
 
@@ -70,10 +70,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
         public void Update(GameTime gt)
-        {               
-            
+        {                        
             cursorPosition = KeyMouseReader.cursorViewToWorldPosition;
-          
+            GUI.UpdateGUIMatrix();
             CreateAsteroids(gt);
             //CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
@@ -87,16 +86,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.UpdateAsteroidExplosionEffect();
             cm.CheckIfAsteroidIsHit();
             cm.CheckIfAsteroidInPlay();
-            cm.CheckIfShipIsHit(gt);
-        }
+            cm.CheckIfShipIsHit(gt);            
+        }       
         
         private void CreateAsteroids(GameTime gt)
         {
             spawnAsteroidsTimer += gt.ElapsedGameTime.TotalSeconds;
 
-            if (spawnAsteroidsTimer > spawnAsteroidsInterval)
+            if (spawnAsteroidsTimer > spawnAsteroidsInterval && asteroids.Count < 30)
             {
-                for (int i = 0; i < numberOfAsteroidsPerTimerReset; i++)
+                for (int i = 0; i < numberOfAsteroidsPerTick; i++)
                 {
                     asteroid = new Asteroid(window, rnd, Vector2.Zero);
                     asteroids.Add(asteroid);
@@ -163,7 +162,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Draw(SpriteBatch sb)
         {
-
             st.Draw(sb);
 
             sb.Draw(AssetsManager.crosshairTex, new Vector2(cursorPosition.X - (AssetsManager.crosshairTex.Width / 2), cursorPosition.Y - (AssetsManager.crosshairTex.Height / 2)), Color.White);
@@ -177,7 +175,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.Draw(sb);
 
             Ship.Draw(sb);
-
+            GUI.DrawHealthBar(sb);
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);

@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    enum GameState { MenuPhase, DisplayHiSc, PlayPhase, EndPhase, SaveHighScorePhase }
+    enum GameState { MenuPhase, DisplayHiSc, PlayPhase, EndPhase, SaveHighScorePhase, Exit, EndPause }
     enum Layout { Horizontal, Vertical }
 
     public class Game1 : Game
@@ -28,7 +28,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Rectangle screenRec;
 
-        ButtonMenu startMenu, hiScMenu, endgameMenu, pauseMenu;
+       
 
         HighScoreItem hiSc;
         // string[] hiScNames;
@@ -59,25 +59,20 @@ namespace Asteroids_2_Return_of_the_Asteroids
             AssetsManager.LoadContent(Content);
             view = GraphicsDevice.Viewport;
             CreateCamera();
-            backgroundRec = new Rectangle(view.X, view.Y, view.Width, view.Height);
+            backgroundRec = new Rectangle(view.X-30, view.Y-30, view.Width+30, view.Height+30);
 
             gm = new GameplayManager(rnd, Window);
 
             screenRec = Window.ClientBounds;
-
-            endgameMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Restart", "Save HighScore", "MainMenu", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.White, false);
-
-            startMenu = new ButtonMenu(true, new string[5] { "Asteroids", "Start Game", "HighScore", "Instructions", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
-
-            pauseMenu = new ButtonMenu(false, new string[3] { "Resume Game", "HighScore", "Exit" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.transBackgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
-
-            hiScMenu = new ButtonMenu(true, new string[3] { "HighScore", "Search", "Back" }, new Rectangle(0, 0, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
+                        
 
             score = 10;
 
             form = new Form1(this);
 
             hsArray = new List<HighScoreItem>();
+
+            GUI.Load(screenRec);
 
             currentstate = GameState.MenuPhase;
 
@@ -105,14 +100,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 case GameState.MenuPhase:
                     IsMouseVisible = true;
 
-                    startMenu.Update();
-                    StartMenuButtons();
+                    currentstate = GUI.UpdateStartMenu(currentstate);                    
+                   
                     camera.SetPosition(new Vector2(Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2));
                     break;
                 case GameState.DisplayHiSc:
-                    hiScMenu.Update();
-                    HiScMenuButtons();
-
+                    currentstate = GUI.UpdateHighScoreMenu(currentstate);                                 
                     break;
                 case GameState.PlayPhase:
                     IsMouseVisible = false;
@@ -130,22 +123,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     if (hasPaused)
                     {
                         IsMouseVisible = true;
-                        pauseMenu.Update();
-                        PauseMenuButtons();
+                        currentstate = GUI.UpdatePauseMenu(currentstate);                
                     }
 
                     if (ShipBase.hitPoints <= 0)
                     {
-                        currentstate = GameState.EndPhase;
+                        currentstate = GUI.UpdateEndGameMenu(currentstate);
                     }
-
                     break;
                 case GameState.EndPhase:
+                    currentstate = GUI.UpdateEndGameMenu(currentstate);
                     IsMouseVisible = true;
-
-                    endgameMenu.Update();
-                    EndgameMenuButtons();
-
+                    CleanSlate();  
                     break;
                 case GameState.SaveHighScorePhase:
 
@@ -160,76 +149,20 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         form = new Form1(this);
                     }
                     break;
+                case GameState.Exit:
+                    Exit();
+                    break;
+                case GameState.EndPause:
+                    hasPaused = false;
+                    currentstate = GameState.PlayPhase;
+                    break;
             }
             base.Update(gameTime);
-        }
-
-        private void StartMenuButtons()
-        {
-            if (startMenu.ClickedName() == "Start Game")
-            {
-                currentstate = GameState.PlayPhase;
-            }
-
-            if (startMenu.ClickedName() == "HighScore")
-            {
-                currentstate = GameState.DisplayHiSc;
-            }
-
-            if (startMenu.ClickedName() == "Exit")
-            {
-                Exit();
-            }
-        }
-
-        private void HiScMenuButtons()
-        {
-            if (hiScMenu.ClickedName() == "Back")
-            {
-                currentstate = GameState.MenuPhase;
-            }
-        }
-        private void PauseMenuButtons()
-        {
-            if (pauseMenu.ClickedName() == "Resume Game")
-            {
-                hasPaused = false;
-            }
-
-            if (pauseMenu.ClickedName() == "Exit")
-            {
-                Exit();
-            }
-        }
-
-        private void EndgameMenuButtons()
-        {
-            if (endgameMenu.ClickedName() == "Restart")
-            {
-                CleanSlate();
-                currentstate = GameState.PlayPhase;
-            }
-
-            if (endgameMenu.ClickedName() == "Save HighScore")
-            {
-                currentstate = GameState.SaveHighScorePhase;
-            }
-
-            if (endgameMenu.ClickedName() == "MainMenu")
-            {
-                CleanSlate();
-                currentstate = GameState.MenuPhase;
-            }
-
-            if (endgameMenu.ClickedName() == "Exit")
-            {
-                Exit();
-            }
-        }
+        }        
 
         private void CleanSlate()
         {
-            ShipBase.hitPoints = 3;
+            ShipBase.hitPoints = PlayerShip.maxHealth;
             score = 0;
             GameplayManager.asteroids.Clear();
             gm.ClearProjectileList();
@@ -244,28 +177,26 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             switch (currentstate)
             {
-                case GameState.MenuPhase:
-                    startMenu.Draw(spriteBatch);
+                case GameState.MenuPhase:                   
+                    GUI.DrawStartMenu(spriteBatch);
                     break;
-                case GameState.DisplayHiSc:
-                    hiScMenu.Draw(spriteBatch);
+                case GameState.DisplayHiSc:                  
+                    GUI.DrawHighScoreMenu(spriteBatch);
                     break;
                 case GameState.PlayPhase:
                     gm.Draw(spriteBatch);
-                    spriteBatch.DrawString(AssetsManager.text, "Score: " + score, new Vector2(10, 10), Color.White);
-                    spriteBatch.DrawString(AssetsManager.text, "Hull Hitpoints: " + ShipBase.hitPoints, new Vector2(10, 30), Color.White);
+                    GUI.DrawInGameText(spriteBatch);
                     if (hasPaused)
-                    {
-                        pauseMenu.Draw(spriteBatch);
+                    {                     
+                        GUI.DrawPauseMenu(spriteBatch);
                     }
-
                     if (ShipBase.hitPoints <= 0)
                     {
                         currentstate = GameState.EndPhase;
                     }
                     break;
-                case GameState.EndPhase:
-                    endgameMenu.Draw(spriteBatch);
+                case GameState.EndPhase:                   
+                    GUI.endgameMenu.Draw(spriteBatch);
                     if (Keyboard.GetState().IsKeyDown(Keys.Enter))
                     {
                         currentstate = GameState.MenuPhase;
@@ -319,6 +250,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //        hiScNames[it] = h.name;
         //        it++;
         //    }
-        //}
+        //}        
     }
 }

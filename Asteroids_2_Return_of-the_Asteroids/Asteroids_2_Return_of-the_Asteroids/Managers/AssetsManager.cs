@@ -16,7 +16,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex, particleNewCircleTestTex,
             spaceStationTex, missileTex, droneTex, healthBarTex;
 
-        public static SpriteFont text;
+        public static SpriteFont text, Score;
 
         public static Song backgroundMusic;
 
@@ -46,6 +46,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             healthBarTex = Content.Load<Texture2D>("Healthbar_v3");
 
             text = Content.Load<SpriteFont>(@"text");
+            Score = Content.Load<SpriteFont>(@"Score");
 
             backgroundMusic = Content.Load<Song>(@"Steamtech-Mayhem");
 

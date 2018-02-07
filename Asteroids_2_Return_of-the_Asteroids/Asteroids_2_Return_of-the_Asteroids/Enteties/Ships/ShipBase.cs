@@ -15,7 +15,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected Texture2D healthbarTex = AssetsManager.healthBarTex;
         protected Rectangle srcHealthbarTex;
        
-
+        
         protected Drone drone;
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry        
         protected Color color;
@@ -25,7 +25,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected float originalSpeed;
 
 
-        public static int hitPoints;
+        public static int hitPoints, maxHealth;
         virtual public bool isHit { get; set; }
 
         protected float currentRotation;

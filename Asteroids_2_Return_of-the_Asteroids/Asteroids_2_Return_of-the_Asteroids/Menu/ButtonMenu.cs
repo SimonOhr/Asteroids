@@ -16,7 +16,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Texture2D buttonTex;
         Texture2D backgroundTex;
         protected Texture2D borderTex;
-        Rectangle menuRec;
+        public Rectangle menuRec;
 
         Layout layout;
 
@@ -101,7 +101,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             for (int i = (hasTitle ? 1 : 0); i < menuButtons.Count; i++)
             {
-                if (menuButtons[i].destinationRec.Contains(KeyMouseReader.mousePosition))
+                if (menuButtons[i].destinationRec.Contains(KeyMouseReader.cursorViewToWorldPosition))
                 {
                     selectedbutton = i;
                 }
@@ -167,7 +167,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     return true;
                 }
-                else if (menuButtons[selectedbutton].destinationRec.Contains(KeyMouseReader.mousePosition) && KeyMouseReader.LeftClick())
+                else if (menuButtons[selectedbutton].destinationRec.Contains(KeyMouseReader.cursorViewToWorldPosition) && KeyMouseReader.LeftClick())
                 {
                     return true;
                 }

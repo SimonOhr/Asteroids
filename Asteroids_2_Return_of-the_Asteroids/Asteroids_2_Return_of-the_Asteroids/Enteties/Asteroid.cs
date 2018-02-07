@@ -73,7 +73,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+            // vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+            vSpeed = Vector2.Zero;
 
             direction = GetDirection();
 
