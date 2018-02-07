@@ -76,6 +76,7 @@
     <Compile Include="Menu\Textbox.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Guns\WeaponBase.cs" />
+    <Compile Include="StateHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
