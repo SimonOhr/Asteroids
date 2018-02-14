@@ -52,7 +52,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
            
             rnd = new Random();
           
-            GetRotation();
+            GetRotation(targetPos, pos);
             curvePoint = CurveLocation();
                         
             CreatePath();
@@ -120,18 +120,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 it = listCount;
                 targetPos = aimAssist;
-                GetRotation();
+                GetRotation(targetPos, pos);
             }
             else targetPos = curvePath[it];
 
             direction = GetDirection();
         }      
 
-        override protected void GetRotation()
-        {
-            Vector2 directionOfProjectile = targetPos - pos;
-            rotation = (float)Math.Atan2(directionOfProjectile.Y, directionOfProjectile.X);
-        }
+        //override protected void GetRotation(Vector2 targetPos, pos)
+        //{
+        //    Vector2 directionOfProjectile = targetPos - pos;
+        //    rotation = (float)Math.Atan2(directionOfProjectile.Y, directionOfProjectile.X);
+        //}
 
         public override void Draw(SpriteBatch sb)
         {

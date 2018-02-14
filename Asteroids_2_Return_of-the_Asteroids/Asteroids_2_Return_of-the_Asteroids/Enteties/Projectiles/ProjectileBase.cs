@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class ProjectileBase:MovingObject
+    class ProjectileBase:GameObject
     {
         protected Texture2D projectileTex;
 
@@ -33,7 +33,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             direction = GetDirection();          
 
-            GetRotation();         
+            GetRotation(targetPos, pos);         
         }
 
         virtual protected Vector2 GetDirection()
@@ -41,10 +41,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             Vector2 Direction = new Vector2(targetPos.X - pos.X, targetPos.Y - pos.Y);
             return Vector2.Normalize(Direction);
         }
-
-        virtual protected void GetRotation()
+        //KeyMouseReader.cursorViewToWorldPosition
+        virtual protected void GetRotation(Vector2 targetPos, Vector2 pos)
         {
-            Vector2 directionOfProjectile = KeyMouseReader.cursorViewToWorldPosition - pos;
+            Vector2 directionOfProjectile = targetPos - pos;
             rotation = (float)Math.Atan2(directionOfProjectile.Y, directionOfProjectile.X);
         }
 
@@ -66,7 +66,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(projectileTex, pos, null, Color.White,rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(projectileTex, pos, null, Color.White, rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }

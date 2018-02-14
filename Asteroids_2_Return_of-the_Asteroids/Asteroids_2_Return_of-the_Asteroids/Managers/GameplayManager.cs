@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         
         CollisonManager cm;
         DefaultSpaceStation st;
-
+        Pirate pirateTEST;
         Asteroid asteroid;
         public static List<Asteroid> asteroids = new List<Asteroid>();
 
@@ -55,6 +55,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             cm = new CollisonManager(this);
 
             SoundManager.PlayBgMusic();
+
+            pirateTEST = new Pirate(new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height / 2), Ship);
         }
 
         
@@ -86,7 +88,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.UpdateAsteroidExplosionEffect();
             cm.CheckIfAsteroidIsHit();
             cm.CheckIfAsteroidInPlay();
-            cm.CheckIfShipIsHit(gt);            
+            cm.CheckIfShipIsHit(gt);
+            pirateTEST.Update(gt);
         }       
         
         private void CreateAsteroids(GameTime gt)
@@ -174,6 +177,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             EffectsManager.Draw(sb);
 
+            pirateTEST.Draw(sb);
             Ship.Draw(sb);
             GUI.DrawHealthBar(sb);
             foreach (Asteroid tempAsteroid in asteroids)

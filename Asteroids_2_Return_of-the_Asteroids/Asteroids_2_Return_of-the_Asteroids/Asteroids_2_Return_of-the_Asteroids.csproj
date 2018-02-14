@@ -38,14 +38,24 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AIBehaviour\State_AttackPlayer.cs" />
+    <Compile Include="AIBehaviour\State_AvoidIncomingObject.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Enteties\Drone\Drone.cs" />
     <Compile Include="Enteties\SpaceStation\DefaultSpaceStation.cs" />
+    <Compile Include="AIBehaviour\FSM.cs" />
+    <Compile Include="FusmMachine.cs" />
+    <Compile Include="Fusm_RuleBook.cs" />
+    <Compile Include="Fuzzy_StateAttack.cs" />
+    <Compile Include="Fuzzy_StateChase.cs" />
+    <Compile Include="Fuzzy_StateEscape.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enteties\Projectiles\LaserProjectile.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="Guns\LaserCanon.cs" />
     <Compile Include="Guns\MiniMissileLauncher.cs" />
+    <Compile Include="AIBehaviour\IState.cs" />
+    <Compile Include="IFusmState.cs" />
     <Compile Include="Managers\AssetsManager.cs" />
     <Compile Include="Managers\CollisonManager.cs" />
     <Compile Include="Managers\EffectsManager.cs" />
@@ -68,7 +78,7 @@
     <Compile Include="Particles\ParticleEngine.cs" />
     <Compile Include="Enteties\Ships\PlayerShip.cs" />
     <Compile Include="Enteties\Ships\PirateBase.cs" />
-    <Compile Include="Pirate.cs" />
+    <Compile Include="Enteties\Ships\Pirate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Enteties\Projectiles\ProjectileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -76,7 +86,9 @@
     <Compile Include="Menu\Textbox.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Guns\WeaponBase.cs" />
-    <Compile Include="StateHandler.cs" />
+    <Compile Include="AIBehaviour\State_SearchForTarget.cs" />
+    <Compile Include="AIBehaviour\State_FollowPlayer.cs" />
+    <Compile Include="AIBehaviour\State_Base.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
@@ -137,6 +149,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

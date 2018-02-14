@@ -105,6 +105,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         private void AfterburnerIntensifier()
         {
             EffectsManager.SetAfterBurnerIntensity(speed);
-        }        
+        }      
     }
 }

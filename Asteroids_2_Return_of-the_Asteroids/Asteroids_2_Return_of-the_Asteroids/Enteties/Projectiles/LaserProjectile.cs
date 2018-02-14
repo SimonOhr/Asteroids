@@ -19,11 +19,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             projectileRange = 800;
 
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 20, 30);            
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 30, 30);            
         }       
 
         public override void Update(GameTime gt)
-        {                   
+        {          
             base.Update(gt);
         }      
 

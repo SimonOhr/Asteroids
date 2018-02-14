@@ -13,7 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         enum droneState { Idle, Follow, Attack, Evade, Save /*, chase*/ }
         droneState currentState;
         int id;
-        Asteroid enemyTarget, scanTarget;
+        Asteroid enemyTarget;
         // Vector2 targetPos;
         PlayerShip ship;
         LaserCanon weapon;
@@ -38,7 +38,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             tex = AssetsManager.droneTex;
             patrolRadius = 200;
             attackRadius = 150;
-            speed = 0.5f;
+            speed = 1f;
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             rnd = new Random();
@@ -52,22 +52,24 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             weapon.SetPos(pos);
             weapon.Update(gt);
-
+            UpdatePosition(gt);
 
             switch (currentState)
             {
-                case droneState.Idle:
-                    Console.WriteLine("Idle");
+                case droneState.Idle:                   
                     direction = GetDirection(SetPos(gt), pos);
+                    velocity = new Vector2(3, 3);
                     Rotation(gt);
-                    UpdatePosition(gt);
-                    UpdateTargetList(gt);
+                    
+                    enemyTarget = UpdateTargetList(gt, attackRadius);
+                    if (enemyTarget != null)
+                        currentState = droneState.Attack;
                     if (Vector2.Distance(ship.Pos, pos) > 250)
                         currentState = droneState.Follow;
                     break;
                 case droneState.Follow:
                     Rotation(gt);
-                    UpdateTargetList(gt);
+                    velocity = new Vector2(5, 5);
                     direction = GetDirection(ship.Pos, pos);
                     UpdatePosition(gt);
                     //  if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);
@@ -81,13 +83,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     break;
                 case droneState.Attack:
                     //CheckIfCollisionImminent(gt, ref enemyTarget); 
-                    UpdatePosition(gt);
-                    EngageTarget(ref enemyTarget);
+                   // UpdatePosition(gt);
+                    //EngageTarget(ref enemyTarget);
                     break;
                 case droneState.Evade:
                     //if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);                    
-                    //EvadeCollision();
-                    UpdatePosition(gt);
+                    //EvadeCollision();                    
                     if (Vector2.Distance(enemyTarget.pos, pos) > collisionRadius)
                     {
                         currentState = droneState.Follow;
@@ -131,38 +132,36 @@ namespace Asteroids_2_Return_of_the_Asteroids
             currentRotation = (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);
         }
 
-        private void UpdateTargetList(GameTime gt)
-        {
-            for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
-            {
-                if (Vector2.Distance(pos, GameplayManager.asteroids[i].pos) < attackRadius)
-                {
-                    enemyTarget = GameplayManager.asteroids[i];
-                    id = i;
-                    // if (Vector2.Distance(pos, enemyTarget.pos) < 100) currentState = droneState.evade;
-                    currentState = droneState.Attack;
-                }
-                if (Vector2.Distance(ship.Pos, GameplayManager.asteroids[i].pos) < scanRadius)
-                {
-                    scanTarget = GameplayManager.asteroids[i];
-                    //  CheckIfCollisionImminent(gt, ref scanTarget);
-                }
-            }
-        }
+        //private void UpdateTargetList(GameTime gt)
+        //{
+        //    for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
+        //    {
+        //        if (Vector2.Distance(pos, GameplayManager.asteroids[i].pos) < attackRadius)
+        //        {
+        //            enemyTarget = GameplayManager.asteroids[i];
+        //            id = i;
+        //            // if (Vector2.Distance(pos, enemyTarget.pos) < 100) currentState = droneState.evade;
+        //            currentState = droneState.Attack;
+        //        }
+        //        //if (Vector2.Distance(ship.Pos, GameplayManager.asteroids[i].pos) < scanRadius)
+        //        //{
+        //        //    scanTarget = GameplayManager.asteroids[i];
+        //        //    //  CheckIfCollisionImminent(gt, ref scanTarget);
+        //        //}
+        //    }
+        //}
 
         private void EngageTarget(ref Asteroid a)
-        {
-            //  pos += speed * GetDirection(enemyTarget.pos);
-
+        {          
             if (Vector2.Distance(a.pos, pos) > attackRadius || a.hitPoints == 0)
             {
-                weapon.IsInRange(false);
+                weapon.Shoot(false);
                 currentState = droneState.Follow;
             }
             else
             {
-                weapon.TargetPos(a.pos);
-                weapon.IsInRange(true);
+                weapon.SetTargetPos(a.pos);
+                weapon.Shoot(true);
             }
         }
         //private void CheckIfCollisionImminent(GameTime gt, ref Asteroid collidingObj)

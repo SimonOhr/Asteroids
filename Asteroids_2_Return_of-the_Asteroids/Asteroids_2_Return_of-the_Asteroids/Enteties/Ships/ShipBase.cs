@@ -13,8 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class ShipBase : MovingObject
     {        
         protected Texture2D healthbarTex = AssetsManager.healthBarTex;
-        protected Rectangle srcHealthbarTex;
-       
+        protected Rectangle srcHealthbarTex;        
         
         protected Drone drone;
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry        
@@ -63,5 +62,34 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             return ref weapons;           
         }
+
+        virtual public Asteroid UpdateTargetList(GameTime gt, int attackRadius)
+        {
+            for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
+            {
+                Asteroid a;
+                if (Vector2.Distance(pos, GameplayManager.asteroids[i].pos) < attackRadius)
+                {
+                    a = GameplayManager.asteroids[i];
+                    //id = i;
+                    // if (Vector2.Distance(pos, enemyTarget.pos) < 100) currentState = droneState.evade;
+                    //currentState = droneState.Attack;
+                    return a;
+                }
+                //if (Vector2.Distance(ship.Pos, GameplayManager.asteroids[i].pos) < scanRadius)
+                //{
+                //    scanTarget = GameplayManager.asteroids[i];
+                //    //  CheckIfCollisionImminent(gt, ref scanTarget);
+                //}
+               
+            }
+            return null;
+        }
+        public int GetHealth()
+        {
+            return hitPoints;
+        }
     }
+
+    
 }

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class StateHandler
-    {
+    public interface IState
+    {       
+        void Enter();
+
+        void Execute();       
+
+        void Exit();
     }
 }

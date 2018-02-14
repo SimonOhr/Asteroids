@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Asteroid : MovingObject
+    class Asteroid : GameObject
     {
         GameWindow window;
 
@@ -73,8 +73,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
-            // vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
-            vSpeed = Vector2.Zero;
+             vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
+            //vSpeed = Vector2.Zero;
 
             direction = GetDirection();
 
@@ -124,7 +124,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, new Vector2(hitbox.X, hitbox.Y), null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(tex, pos, null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }
