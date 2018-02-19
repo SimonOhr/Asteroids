@@ -23,7 +23,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
 
             maxHealth = 3;
-            hitPoints = 3;
+            currentHealth = 3;
             
             //srcHealthbarTex = new Rectangle(0, 0, hitPoints * healthmultiplier, AssetsManager.healthBarTex.Height);
 
@@ -105,6 +105,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
         private void AfterburnerIntensifier()
         {
             EffectsManager.SetAfterBurnerIntensity(speed);
-        }      
+        }
+
+        public override int GetHealth()
+        {
+            return currentHealth;
+        }
+
+        public void SetHealth(int deltaHealth)
+        {
+            currentHealth += deltaHealth;
+        }
     }
 }

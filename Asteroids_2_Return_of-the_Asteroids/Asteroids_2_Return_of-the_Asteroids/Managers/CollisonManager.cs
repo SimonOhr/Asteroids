@@ -12,6 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         GameplayManager gm;
         List<ProjectileBase> projectiles;
         List<Asteroid> asteroids;
+        int shipHealth, pirateHealth;
 
         public bool TempInvulnarbility { get; private set; } = false;
         double tempTimer, tempReset = 0;
@@ -22,7 +23,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.gm = gm;
             projectiles = new List<ProjectileBase>();
             asteroids = new List<Asteroid>();
-        }
+        }        
 
         public void CheckIfAsteroidInPlay()
         {
@@ -93,7 +94,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {
                         TempInvulnarbility = true;
                         gm.SetShipStatus(true);
-                        ShipBase.hitPoints -= 1;
+                        gm.UpdatePlayerHealth(-1);
                     }
                 }
             }

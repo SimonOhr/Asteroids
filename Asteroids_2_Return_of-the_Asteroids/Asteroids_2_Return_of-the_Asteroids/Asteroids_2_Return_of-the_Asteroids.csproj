@@ -38,24 +38,31 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AIBehaviour\DecisionTree.cs" />
+    <Compile Include="AIBehaviour\Fusm\DecisionNode.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_High.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Low.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Med.cs" />
     <Compile Include="AIBehaviour\State_AttackPlayer.cs" />
     <Compile Include="AIBehaviour\State_AvoidIncomingObject.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Enteties\Drone\Drone.cs" />
     <Compile Include="Enteties\SpaceStation\DefaultSpaceStation.cs" />
     <Compile Include="AIBehaviour\FSM.cs" />
-    <Compile Include="FusmMachine.cs" />
-    <Compile Include="Fusm_RuleBook.cs" />
-    <Compile Include="Fuzzy_StateAttack.cs" />
-    <Compile Include="Fuzzy_StateChase.cs" />
-    <Compile Include="Fuzzy_StateEscape.cs" />
+    <Compile Include="AIBehaviour\Fusm\FusmMachine.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fusm_RuleBook.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_StateIdle.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_Med.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_High.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_StateEscape.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_Low.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enteties\Projectiles\LaserProjectile.cs" />
     <Compile Include="GUI.cs" />
     <Compile Include="Guns\LaserCanon.cs" />
     <Compile Include="Guns\MiniMissileLauncher.cs" />
     <Compile Include="AIBehaviour\IState.cs" />
-    <Compile Include="IFusmState.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\IFusmState.cs" />
     <Compile Include="Managers\AssetsManager.cs" />
     <Compile Include="Managers\CollisonManager.cs" />
     <Compile Include="Managers\EffectsManager.cs" />
@@ -88,7 +95,7 @@
     <Compile Include="Guns\WeaponBase.cs" />
     <Compile Include="AIBehaviour\State_SearchForTarget.cs" />
     <Compile Include="AIBehaviour\State_FollowPlayer.cs" />
-    <Compile Include="AIBehaviour\State_Base.cs" />
+    <Compile Include="AIBehaviour\State_Idle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

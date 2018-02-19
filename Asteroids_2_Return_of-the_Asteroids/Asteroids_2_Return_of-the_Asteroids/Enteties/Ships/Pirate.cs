@@ -12,19 +12,23 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         PlayerShip playerShip;
 
-        Vector2 velocity;
+        Vector2 velocity, newDirection;
         public Vector2 direction;
         public Vector2 Pos { get; private set; }
         private Vector2 avoidance;
-        int radius = 50, attackRange = 400;
+        int radius = 50, attackRange = 600, searchRadius = 600;
        
-        public LaserCanon canon;
-        int searchRadius = 800;
-        
-        FSM pirateFSM;
+        public LaserCanon canon;        
+        float rotationSpeed;
+
+        //FSM test-------------------------------
+         FSM pirateFSM;
 
         //Fuzzy test ----------------------------
-        FusmMachine fusm;
+        // FusmMachine fusm;
+
+        //Decisiontree test----------------------
+        DecisionTree dt;
 
         private Vector2 foundTargetPos;
 
@@ -34,11 +38,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
             velocity = new Vector2(3, 3);
             canon = new LaserCanon(pos);
             weapons.Add(canon);
-            hitPoints = 3;
-            fusm = new FusmMachine(this, playerShip);
+            currentHealth = 3;
+            // fusm = new FusmMachine(this, playerShip);
             //fusm.AddState(new Fuzzy_StateChase(this, playerShip));
-            //  pirateFSM = new FSM();
+              pirateFSM = new FSM();
             // pirateFSM.ChangeState(new State_SearchForTarget(this, playerShip, pirateFSM));
+            dt = new DecisionTree(this, playerShip);
 
         }
 
@@ -46,12 +51,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             Pos = pos;
             canon.SetPos(pos);
-            canon.Update(gt);
+            canon.Update(gt);            
             pos += velocity * direction + avoidance;
             ShipRotation(pos + (direction + avoidance), pos);
-            var a = UpdateTargetList(gt, attackRange);
-            //  pirateFSM.UpdateState();   
-            fusm.Update();
+            pirateFSM.ChangeState(dt.CommenceIfStatements());
+          //  var a = UpdateTargetList(gt, attackRange);
+              pirateFSM.UpdateState();   
+           // fusm.Update();
         }
 
         public override void Draw(SpriteBatch sb)
@@ -61,11 +67,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
             base.Draw(sb);
         }
 
-        public void SetNewState(IState newState)
+        public override int GetHealth()
         {
-            pirateFSM.ChangeState(newState);
+            return currentHealth;
         }
 
+        public void SetHealth(int deltaHealth)
+        {
+            currentHealth += deltaHealth;
+        }
+
+        //public void SetNewState(IState newState)
+        //{
+        //    pirateFSM.ChangeState(newState);
+        //}
+    
         public WeaponBase GetWeapon()
         {
             return canon;
@@ -97,9 +113,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             foundTargetPos = pos;
         }
 
-        public void SetDirection(Vector2 direction)
+        public void SetNewDirection(Vector2 direction)
         {
-            this.direction = direction;
+           this.direction = direction;
         }
 
         public int GetAmmoCount()

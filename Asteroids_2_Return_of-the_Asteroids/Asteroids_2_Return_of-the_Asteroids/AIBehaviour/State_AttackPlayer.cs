@@ -12,11 +12,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         PlayerShip target;
         FSM fsm;
         WeaponBase weapon;
-        public State_AttackPlayer(Pirate actor, PlayerShip target, FSM fsm)
+        public State_AttackPlayer(Pirate actor, PlayerShip target/*, FSM fsm*/)
         {
             this.actor = actor;
             this.target = target;
-            this.fsm = fsm;
+         //   this.fsm = fsm;
         }
         public void Enter()
         {
@@ -27,7 +27,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             weapon.SetTargetPos(target.Pos);
             weapon.Shoot(true);            
-            fsm.RevertToPreviousState();           
+          //  fsm.RevertToPreviousState();           
         }
 
         public void Exit()

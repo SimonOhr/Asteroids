@@ -25,6 +25,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
 
         public static int hitPoints, maxHealth;
+        protected int currentHealth;
         virtual public bool isHit { get; set; }
 
         protected float currentRotation;
@@ -85,9 +86,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
             return null;
         }
-        public int GetHealth()
+        public virtual int GetHealth()
         {
-            return hitPoints;
+            return currentHealth;
         }
     }
 

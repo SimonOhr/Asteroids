@@ -126,7 +126,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         currentstate = GUI.UpdatePauseMenu(currentstate);                
                     }
 
-                    if (ShipBase.hitPoints <= 0)
+                    if (gm.GetPlayerShipHealth() <= 0)
                     {
                         currentstate = GUI.UpdateEndGameMenu(currentstate);
                     }

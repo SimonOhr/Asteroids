@@ -8,6 +8,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     public interface IFusmState
     {
+        bool canActivate();
+
         void Init();
 
         void Enter();       

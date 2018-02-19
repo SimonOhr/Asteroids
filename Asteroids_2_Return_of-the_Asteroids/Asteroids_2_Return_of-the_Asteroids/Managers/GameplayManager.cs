@@ -219,6 +219,26 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Texture2D GetShipTex()
         {
             return Ship.tex;
-        }        
+        } 
+        
+        public int GetPlayerShipHealth()
+        {
+            return Ship.GetHealth();
+        }
+
+        public int GetPirateHealth()
+        {
+            return pirateTEST.GetHealth();
+        }
+
+        public void UpdatePlayerHealth(int deltaHealth)
+        {
+            Ship.SetHealth(deltaHealth);
+        }
+
+        public void UpdatePirateHealth(int deltaHealth)
+        {
+            pirateTEST.SetHealth(deltaHealth);
+        }
     }
 }

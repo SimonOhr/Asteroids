@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,23 +7,41 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Fuzzy_StateEscape : IFusmState
+    class Fuzzy_StateAttack_Low : IFusmState
     {
         string name;
         Pirate actor;
         PlayerShip target;
         float activationLevel;
+        WeaponBase weapon;
 
-        public Fuzzy_StateEscape(Pirate actor, PlayerShip target)
+        public Fuzzy_StateAttack_Low()
+        {
+        }
+
+        public Fuzzy_StateAttack_Low(Pirate actor, PlayerShip target)
         {
             this.actor = actor;
             this.target = target;
-            name = "Escape";
+            name = "Attack";
+            Init();
         }
+
         public float CalculateActivation()
         {
+            float dist = Vector2.Distance(actor.Pos, target.Pos);
+            activationLevel = (actor.GetAttackRadius() / 3) / ((dist - actor.GetObjectRadius()));
+            CheckBounds();
 
             return activationLevel;
+        }
+
+        public bool canActivate()
+        {
+            if (CalculateActivation() == 1)
+                if (actor.GetHealth() < target.GetHealth())
+                    return true;
+            return false;
         }
 
         public void CheckBounds(float lb = 0, float ub = 1)
@@ -45,12 +64,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Enter()
         {
-          
+
         }
 
         public void Exit()
         {
-           
+
         }
 
         public string GetName()
@@ -60,12 +79,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Init()
         {
-           
+            weapon = actor.GetWeapon();
         }
 
         public void Update()
         {
-            actor.direction *= -1;
+            weapon.SetTargetPos(target.Pos);
+            weapon.Shoot(true);
         }
     }
 }

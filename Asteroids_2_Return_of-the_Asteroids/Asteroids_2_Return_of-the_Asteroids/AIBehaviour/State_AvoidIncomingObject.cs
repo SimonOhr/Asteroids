@@ -12,11 +12,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Pirate actor;       
         int actorRadius;
         FSM fsm;
-        public State_AvoidIncomingObject(Pirate actor, FSM fsm)
+        public State_AvoidIncomingObject(Pirate actor/*, FSM fsm*/)
         {
             this.actor = actor;
-            this.actorRadius = actorRadius;
-            this.fsm = fsm;            
+          //  this.actorRadius = actorRadius;
+          //  this.fsm = fsm;            
         }
         public void Enter()
         {
@@ -26,7 +26,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void Execute()
         {
             actor.SetAvoidance(CollisionAvoidance(actor.Pos, actor.direction));
-            fsm.RevertToPreviousState();
+           // fsm.RevertToPreviousState();
         }
 
         private Vector2 CollisionAvoidance(Vector2 pos, Vector2 direction)

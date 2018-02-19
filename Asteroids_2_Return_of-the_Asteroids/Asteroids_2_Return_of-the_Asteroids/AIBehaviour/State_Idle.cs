@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class State_Base : IState
+    class State_Idle : IState
     {
         Pirate actor;
         PlayerShip target;
         int searchRadius;
         FSM fsm;
-        public State_Base(Pirate actor, PlayerShip target, int searchRadius, FSM fsm)
+        public State_Idle(Pirate actor/*, FSM fsm*/)
         {
             this.actor = actor;
-            this.target = target;
-            this.searchRadius = searchRadius;
-            this.fsm = fsm;
+            //this.target = target;
+            this.searchRadius = actor.GetSearchRadius();
+          //  this.fsm = fsm;
         }
         public void Enter()
         {
@@ -28,8 +28,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Execute()
         {
-            actor.direction = Vector2.Zero;
-            fsm.ChangeState(new State_SearchForTarget(actor, target, fsm));
+           // actor.direction = Vector2.Zero;
+            actor.SetNewDirection(Vector2.Zero);
+          //  fsm.ChangeState(new State_SearchForTarget(actor, target, fsm));
         }
        
 

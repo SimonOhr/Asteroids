@@ -7,33 +7,44 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Fuzzy_StateChase : IFusmState
+    class Fuzzy_StateChase_Med : IFusmState
     {
         string name;
         Pirate actor;
         PlayerShip target;
         float activationLevel;
-       
 
-        public Fuzzy_StateChase(Pirate actor, PlayerShip target)
+
+        public Fuzzy_StateChase_Med(Pirate actor, PlayerShip target)
         {
             this.actor = actor;
             this.target = target;
             name = "Chase";
-        }       
+        }
 
         public void Init()
         {
 
-        }       
+        }
 
         public float CalculateActivation()
         {
             //threat based on variable
             float dist = Vector2.Distance(actor.Pos, target.Pos);
-            Console.WriteLine(actor.GetSearchRadius() / (dist - actor.GetObjectRadius()));
-           
-            return  actor.GetSearchRadius() / ((dist - actor.GetObjectRadius()));   // if closer than searchRadius activation > 1, add to activatedStates        
+
+            activationLevel = (actor.GetSearchRadius() / 2) / ((dist - actor.GetObjectRadius()));
+            CheckBounds();
+
+            // Console.WriteLine(activationLevel);
+            return activationLevel;    // if closer than searchRadius activation > 1, add to activatedStates        
+        }
+
+        public bool canActivate()
+        {
+            if (CalculateActivation() == 1)
+                if (actor.GetHealth() >= target.GetHealth())
+                    return true;
+            return false;
         }
 
         public void CheckBounds(float lb = 0.0f, float ub = 1.0f)
@@ -45,7 +56,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void CheckLowerBound(float lbound = 0.0f)
         {
             if (activationLevel < lbound)
-                 activationLevel = lbound;
+                activationLevel = lbound;
         }
 
         public void CheckUpperBound(float ubound = 1.0f)
@@ -56,18 +67,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Enter()
         {
-           
+
         }
 
         public void Exit()
         {
-          
-        }        
+
+        }
 
         public void Update()
         {
             Vector2 tempDir = new Vector2(target.Pos.X - actor.Pos.X, target.Pos.Y - actor.Pos.Y);
-            actor.SetDirection(Vector2.Normalize(tempDir));
+            actor.SetNewDirection(Vector2.Normalize(tempDir));
         }
 
         public string GetName()

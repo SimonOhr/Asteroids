@@ -10,15 +10,14 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class LaserCanon : WeaponBase
-    {
-        bool shoot;
+    {       
         public LaserCanon(Vector2 pos) : base(pos)
         {
             gunRateOfFire = 300f;
             gunCooldownTimer = 300;
             gunCooldownTimerReset = 0;
 
-            chargeRate = 700f;
+            chargeRate = 1000f;
             gunChargeTimerReset = 0;
             maxGunCharge = 3;
         }
@@ -31,13 +30,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void UpdateGunData(GameTime gt)
         {
-            GunCharging(gt);
+            if (!shoot)
+                GunCharging(gt);
 
             if (currentGunCharge > 0 && shoot)
-            {               
+            {
                 isShooting(gt);
             }
-            
+
             UpdateProjectiles(gt);
         }
 
@@ -49,15 +49,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
                 if (gunChargeTimer > chargeRate)
                 {
-                    currentGunCharge++;
-                    gunChargeTimer = gunChargeTimerReset;
-                    // Console.WriteLine("number of shots " + currentGunCharge);
+                    currentGunCharge = 3;
+                    gunChargeTimer = gunChargeTimerReset;                 
                 }
             }
         }
 
         public override void isShooting(GameTime gt)
         {
+            
             gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
 
             if (gunCooldownTimer > gunRateOfFire)
@@ -65,10 +65,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 projectile = new LaserProjectile(pos, projectileTargetPos); // create weapon
                 projectiles.Add(projectile);
                 currentGunCharge--;
-                gunCooldownTimer = gunCooldownTimerReset;
-                // Console.WriteLine("number of shots " + projectiles.Count);                
+                gunCooldownTimer = gunCooldownTimerReset;                            
                 SoundManager.PlayShot();
-                shoot = false;
+                shoot = false;                                   
             }
         }
 
@@ -79,7 +78,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Shoot(bool temp)
         {
-            shoot = temp;
+            if(currentGunCharge > 0)
+            shoot = temp;        
         }
 
         public override void Draw(SpriteBatch sb)
