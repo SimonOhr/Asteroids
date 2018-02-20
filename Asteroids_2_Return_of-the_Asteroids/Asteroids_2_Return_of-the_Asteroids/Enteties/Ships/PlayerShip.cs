@@ -116,5 +116,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             currentHealth += deltaHealth;
         }
+
+        public override int GetMaxHealth()
+        {
+            return maxHealth;
+        }
     }
 }

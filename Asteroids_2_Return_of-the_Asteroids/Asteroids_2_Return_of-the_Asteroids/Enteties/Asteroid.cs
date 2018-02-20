@@ -32,7 +32,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Vector2 Velocity { get; private set; }
 
-        public int HitPoints { get; set; }
+        public int Health { get; set; }
 
         public int Radius { get; private set; }
 
@@ -82,7 +82,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             Velocity = vSpeed * Direction;
 
-            HitPoints = 2;
+            Health = 2;
 
             color = Color.White;
             // GetAsteroidMass();

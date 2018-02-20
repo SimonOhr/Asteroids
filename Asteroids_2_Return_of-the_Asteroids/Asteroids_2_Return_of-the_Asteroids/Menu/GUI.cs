@@ -17,11 +17,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public static Vector2 defaultPositionWorldToView, defaultPositionViewToWorld, healthbarPositionWorldToView, healthBarPositionViewToWorld, scoreFontPositionWorldToView, scoreFontPositionViewToWorld;
         private static Rectangle screenRec;
 
-        public static void Load(Rectangle screenRec)
+        public static void Load(Rectangle screenRec, int playerHealth)
         {
             GUI.screenRec = screenRec;
             defaultPositionWorldToView = Vector2.Zero;
-            srcHealthbarTex = new Rectangle(0, 0, ShipBase.hitPoints * healthmultiplier, AssetsManager.healthBarTex.Height);
+            srcHealthbarTex = new Rectangle(0, 0, playerHealth * healthmultiplier, AssetsManager.healthBarTex.Height);
             healthbarPositionWorldToView = Vector2.Zero;
             scoreFontPositionWorldToView = new Vector2(0, 50);
         }
@@ -32,16 +32,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             defaultPositionViewToWorld = Vector2.Transform(defaultPositionWorldToView, Matrix.Invert(KeyMouseReader.PassCameraInformation().GetTransform()));
         }
 
-        public static void DrawHealthBar(SpriteBatch sb)
+        public static void DrawHealthBar(SpriteBatch sb, int playerHealth)
         {
-            TrackPlayerHealth();
+            TrackPlayerHealth(playerHealth);
             sb.Draw(healthbarTex, healthBarPositionViewToWorld, srcHealthbarTex, Color.White);
         }
-        private static void TrackPlayerHealth()
+        private static void TrackPlayerHealth(int playerHealth)
         {
-            if (srcHealthbarTex.Width != ShipBase.hitPoints * healthmultiplier)
+            if (srcHealthbarTex.Width != playerHealth * healthmultiplier)
             {
-                srcHealthbarTex.Width = ShipBase.hitPoints * healthmultiplier;
+                srcHealthbarTex.Width = playerHealth * healthmultiplier;
             }
         }
 

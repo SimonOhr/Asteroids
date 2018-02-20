@@ -121,7 +121,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public int GetAmmoCount()
         {
             return GetWeapon().GetGuncharge();
-        }      
+        }
+
+        public override int GetMaxHealth()
+        {
+            return maxHealth;
+        }
     }
 }
    

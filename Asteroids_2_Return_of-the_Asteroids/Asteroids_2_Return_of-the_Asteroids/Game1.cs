@@ -72,7 +72,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hsArray = new List<HighScoreItem>();
 
-            GUI.Load(screenRec);
+            GUI.Load(screenRec, gm.GetPlayerShipHealth());
 
             currentstate = GameState.MenuPhase;
 
@@ -162,7 +162,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void CleanSlate()
         {
-            ShipBase.hitPoints = PlayerShip.maxHealth;
+            gm.UpdatePlayerHealth(gm.GetPlayerShipMaxHealth());
             score = 0;
             GameplayManager.asteroids.Clear();
             gm.ClearProjectileList();
@@ -190,7 +190,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {                     
                         GUI.DrawPauseMenu(spriteBatch);
                     }
-                    if (ShipBase.hitPoints <= 0)
+                    if (gm.GetPlayerShipHealth() <= 0)
                     {
                         currentstate = GameState.EndPhase;
                     }

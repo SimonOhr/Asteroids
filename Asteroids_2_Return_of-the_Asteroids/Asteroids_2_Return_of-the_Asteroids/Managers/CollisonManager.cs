@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         GameplayManager gm;
         List<ProjectileBase> projectiles;
-        List<Asteroid> asteroids;       
+        List<Asteroid> asteroids;
 
         public bool TempInvulnarbility { get; private set; } = false;
         double tempTimer, tempReset = 0;
@@ -22,55 +22,93 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.gm = gm;
             projectiles = new List<ProjectileBase>();
             asteroids = new List<Asteroid>();
-        }        
+        }
 
         public void CheckIfAsteroidInPlay()
         {
             asteroids = gm.GetAsteroidList();
-            for (int i = 0; i < asteroids.Count -1; i++)
+            for (int i = 0; i < asteroids.Count - 1; i++)
             {
                 if (asteroids[i].IsOutOfPlay) asteroids.RemoveAt(i);
             }
         }
-
+        /// <summary>
+        /// also handles projectiles colliding with asteroids
+        /// </summary>
         public void CheckIfAsteroidIsHit()
         {
             //if (gm.GetProjectileList() != null)
-            projectiles = gm.GetProjectileList();           
-            
+            projectiles = gm.GetProjectileList();
+
             asteroids = gm.GetAsteroidList();
-            for (int j = 0; j < projectiles.Count; j++)
+
+            if (projectiles.Count > 0 && projectiles.Count > 0)
             {
-                for (int i = 0; i < asteroids.Count; i++)
-                {                    
-                    if (projectiles.Count > 0)
-                    {                        
+                for (int j = 0; j < projectiles.Count; j++)
+                {
+                    for (int i = 0; i < asteroids.Count; i++)
+                    {
                         if (Vector2.Distance(asteroids[i].Pos, projectiles[j].Pos) <= 50)
                         {
-                            EffectsManager.CreateAsteroidIsHitEffect(asteroids[i].Pos);
-                            projectiles.RemoveAt(j);
-                            if (CheckIfAsteroidisDead(asteroids[i]))
-                            {
-                                EffectsManager.CreateAsteroidExplosionEffect(asteroids[i].Pos);
-                                SoundManager.PlayExplosion();
-                                asteroids.RemoveAt(i);
-                            }
-                            Game1.score += 10;
+                            AsteroidIsHitCollisionhandler(asteroids[i], projectiles[j],i, j);
                             break;
                         }
-                    }                   
+                    }
                 }
-            }            
+            }
+        }
+        private void AsteroidIsHitCollisionhandler(Asteroid asteroid, ProjectileBase projectile,int collidingAsteroidId, int collidingProjectileId)
+        {
+            CreateHitEffect(asteroid.Pos);
+
+            RemoveCollidedProjectile(collidingProjectileId);
+
+            if (CheckIfAsteroidisDead(asteroid))
+            {
+                CreateAsteroidExplosionEffect(asteroid.Pos);
+
+                PlayerAsteroidExplosionSound();
+
+                RemoveDeadAsteroid(collidingAsteroidId);                
+            }           
+        }
+        private void CreateHitEffect(Vector2 targetPos)
+        {
+            EffectsManager.CreateAsteroidIsHitEffect(targetPos);
+        }
+        private void RemoveCollidedProjectile(int projectileId)
+        {
+            projectiles.RemoveAt(projectileId);
         }
 
         private bool CheckIfAsteroidisDead(Asteroid a)
         {
-            a.HitPoints -= 1;
-            if (a.HitPoints <= 0)
+            a.Health -= 1;
+            if (a.Health <= 0)
             {
                 return true;
             }
             return false;
+        }
+
+        private void CreateAsteroidExplosionEffect(Vector2 targetPos)
+        {
+            EffectsManager.CreateAsteroidExplosionEffect(targetPos);
+        }       
+
+        private void PlayerAsteroidExplosionSound()
+        {
+            SoundManager.PlayExplosion();
+        }
+
+        private void RemoveDeadAsteroid(int asteroidId)
+        {
+            asteroids.RemoveAt(asteroidId);
+        }
+
+        private void AddToScore()
+        {
+            Game1.score += 10;
         }
 
         public void CheckIfShipIsHit(GameTime gt)

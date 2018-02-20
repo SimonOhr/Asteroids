@@ -24,8 +24,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected float originalSpeed;
 
 
-        public static int hitPoints, maxHealth;
-        protected int currentHealth;
+        //public static int health, maxHealth;
+        protected int currentHealth, maxHealth;
         virtual public bool isHit { get; set; }
 
         protected float currentRotation;
@@ -33,14 +33,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public ShipBase(Vector2 pos) : base(pos)
         {
             this.Pos = pos;
-
+           
             color = Color.White;
             weapons = new List<WeaponBase>();
         }
        new virtual public void Update(GameTime gt) // unsure if I should have new here, nothing breaks, but if I collect all gameobjects into a collection and try to update them all in a bulk, then it might.
         {
             hitbox.X = (int)Pos.X;
-            hitbox.Y = (int)Pos.Y;
+            hitbox.Y = (int)Pos.Y;          
 
             foreach (WeaponBase w in weapons)
             {
@@ -89,6 +89,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public virtual int GetHealth()
         {
             return currentHealth;
+        }
+
+        public virtual int GetMaxHealth()
+        {
+            return maxHealth;
         }
     }
 

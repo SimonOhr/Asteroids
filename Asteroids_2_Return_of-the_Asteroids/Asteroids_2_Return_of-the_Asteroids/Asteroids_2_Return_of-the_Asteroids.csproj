@@ -57,7 +57,7 @@
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_Low.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enteties\Projectiles\LaserProjectile.cs" />
-    <Compile Include="GUI.cs" />
+    <Compile Include="Menu\GUI.cs" />
     <Compile Include="Guns\LaserCanon.cs" />
     <Compile Include="Guns\MiniMissileLauncher.cs" />
     <Compile Include="AIBehaviour\IState.cs" />
@@ -94,6 +94,7 @@
     <Compile Include="AIBehaviour\State_SearchForTarget.cs" />
     <Compile Include="AIBehaviour\State_FollowPlayer.cs" />
     <Compile Include="AIBehaviour\State_Idle.cs" />
+    <Compile Include="State_EscapePlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

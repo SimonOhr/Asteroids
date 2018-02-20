@@ -153,7 +153,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void EngageTarget(ref Asteroid a)
         {          
-            if (Vector2.Distance(a.Pos, Pos) > attackRadius || a.HitPoints == 0)
+            if (Vector2.Distance(a.Pos, Pos) > attackRadius || a.Health == 0)
             {
                 weapon.Shoot(false);
                 currentState = droneState.Follow;

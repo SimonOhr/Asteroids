@@ -57,9 +57,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             SoundManager.PlayBgMusic();
 
             pirateTEST = new Pirate(new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height / 2), Ship);
-        }
-
-        
+        }        
 
         private void CreatePlayerShip()
         {
@@ -179,7 +177,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             pirateTEST.Draw(sb);
             Ship.Draw(sb);
-            GUI.DrawHealthBar(sb);
+            GUI.DrawHealthBar(sb, GetPlayerShipHealth());
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);
@@ -224,6 +222,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public int GetPlayerShipHealth()
         {
             return Ship.GetHealth();
+        }
+
+        public int GetPlayerShipMaxHealth()
+        {
+            return Ship.GetMaxHealth();
         }
 
         public int GetPirateHealth()
