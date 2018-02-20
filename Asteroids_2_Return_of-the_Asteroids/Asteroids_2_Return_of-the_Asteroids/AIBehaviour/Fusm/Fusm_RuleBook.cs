@@ -12,23 +12,23 @@ namespace Asteroids_2_Return_of_the_Asteroids
         FusmMachine fusm;
         Pirate actor;
         PlayerShip target;
-        Fuzzy_StateAttack_Low stateAttackLow;
-        Fuzzy_StateAttack_Med stateAttackMed;
-        Fuzzy_StateAttack_High stateAttackHigh;
-        Fuzzy_StateChase_High stateChase;
-        Fuzzy_StateIdle stateidle;
+        //Fuzzy_StateAttack_Low stateAttackLow;
+        //Fuzzy_StateAttack_Med stateAttackMed;
+        //Fuzzy_StateAttack_High stateAttackHigh;
+        //Fuzzy_StateChase_High stateChase;
+        //Fuzzy_StateIdle stateidle;
 
-        List<IFusmState> states;
-        public enum LikelyhoodToAttack { low, medium, high }
-        LikelyhoodToAttack likelyhoodToAttack;
-        public enum LikelyhoodToChase { low, medium, high }
-        LikelyhoodToChase likelyhoodToChase;
-        public enum LikelyhoodToEscape { low, medium, high }
-        LikelyhoodToEscape likelyhoodToEscape;
-        public enum LikelyhoodToIdle { low, medium, high }
-        LikelyhoodToIdle likelyhoodToIdle;
+        //List<IFusmState> states;
+        //public enum LikelyhoodToAttack { low, medium, high }
+        //LikelyhoodToAttack likelyhoodToAttack;
+        //public enum LikelyhoodToChase { low, medium, high }
+        //LikelyhoodToChase likelyhoodToChase;
+        //public enum LikelyhoodToEscape { low, medium, high }
+        //LikelyhoodToEscape likelyhoodToEscape;
+        //public enum LikelyhoodToIdle { low, medium, high }
+        //LikelyhoodToIdle likelyhoodToIdle;
 
-        float dist;
+        //float dist;
 
 
         public Fusm_RuleBook(FusmMachine fusm, Pirate actor, PlayerShip target)

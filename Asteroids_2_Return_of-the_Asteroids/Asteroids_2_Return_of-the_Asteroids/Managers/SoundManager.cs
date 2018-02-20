@@ -18,14 +18,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public static void PlayExplosion()
         {
-            var instance = AssetsManager.asteroidExplosion.CreateInstance();
+            var instance = AssetsManager.AsteroidExplosion.CreateInstance();
             instance.Volume = 0.1f;
             instance.Play();
         }
 
         public static void PlayShot()
         {
-            var instance = AssetsManager.laserShot.CreateInstance(); // Send to soundClass
+            var instance = AssetsManager.LaserShot.CreateInstance(); // Send to soundClass
             instance.Volume = 0.5f;// Send to soundClass
             instance.Play();// Send to soundClass
         }

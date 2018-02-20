@@ -34,7 +34,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (Mouse.GetState().RightButton == ButtonState.Pressed && currentGunCharge > 0)
             {
-                projectileTargetPos = KeyMouseReader.cursorViewToWorldPosition;
+                projectileTargetPos = KeyMouseReader.CursorViewToWorldPosition;
                 PlayerIsShooting(gt);
             }
             if (Mouse.GetState().RightButton == ButtonState.Released)
@@ -66,7 +66,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new MiniMissileProjectile(pos, projectileTargetPos); // create weapon
+                projectile = new MiniMissileProjectile(Pos, projectileTargetPos); // create weapon
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;

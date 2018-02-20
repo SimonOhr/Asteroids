@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Asteroids_2_Return_of_the_Asteroids
 {
-    class Asteroid : GameObject
+    class Asteroid : MovingObject
     {
         GameWindow window;
 
@@ -22,19 +22,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Vector2 posZoneLeft, posZoneRight, posZoneUp, vSpeed;
 
-        public new Vector2 pos;
+        //public Vector2 Pos { get; set; }
 
-        public Vector2 direction;
+        //public Vector2 Direction { get; private set; }
 
         Random rnd;
 
-        public bool isOutOfPlay;
+        public bool IsOutOfPlay { get; private set; }
 
-        public Vector2 velocity;
+        public Vector2 Velocity { get; private set; }
 
-        public int hitPoints/*, mass*/;
+        public int HitPoints { get; set; }
 
-        public int radius { get; private set; }
+        public int Radius { get; private set; }
 
         Color color = new Color(); // test
         // float rotation;
@@ -65,7 +65,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroidSpawnPoints.Add(posZoneRight);
             asteroidSpawnPoints.Add(posZoneUp);
 
-            this.pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
+            Pos = asteroidSpawnPoints[rnd.Next(asteroidSpawnPoints.Count)];
 
             asteroidSpawnPoints.Clear();
 
@@ -76,13 +76,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
              vSpeed = new Vector2(rnd.Next(1, 10), rnd.Next(1, 10));
             //vSpeed = Vector2.Zero;
 
-            direction = GetDirection();
+            Direction = GetDirection();
 
-            radius = 50;
+            Radius = 50;
 
-            velocity = vSpeed * direction;
+            Velocity = vSpeed * Direction;
 
-            hitPoints = 2;
+            HitPoints = 2;
 
             color = Color.White;
             // GetAsteroidMass();
@@ -90,16 +90,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Update(GameTime gt)
         {
-            pos += velocity;
-            hitbox.X = (int)pos.X;
-            hitbox.Y = (int)pos.Y;
+            Pos += Velocity;
+            hitbox.X = (int)Pos.X;
+            hitbox.Y = (int)Pos.Y;
 
-            if (pos.X < -spawnZoneLeft.Width || pos.X > window.ClientBounds.Width + spawnZoneRight.Width
-                || pos.Y < -spawnZoneUp.Height || pos.Y > window.ClientBounds.Height)
+            if (Pos.X < -spawnZoneLeft.Width || Pos.X > window.ClientBounds.Width + spawnZoneRight.Width
+                || Pos.Y < -spawnZoneUp.Height || Pos.Y > window.ClientBounds.Height)
             {
                 color = Color.Red;
-                velocity = new Vector2(0, 0);
-                isOutOfPlay = true;
+                Velocity = new Vector2(0, 0);
+                IsOutOfPlay = true;
             }
         }
         /// <summary>
@@ -119,12 +119,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //}
         private Vector2 GetDirection()
         {
-            Vector2 Direction = new Vector2(targetDirection.X - pos.X, targetDirection.Y - pos.Y);
+            Vector2 Direction = new Vector2(targetDirection.X - Pos.X, targetDirection.Y - Pos.Y);
             return Vector2.Normalize(Direction);
         }
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, pos, null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(tex, Pos, null, color, 0, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }

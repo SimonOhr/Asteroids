@@ -79,7 +79,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void Update()
         {
             Vector2 tempDir = new Vector2(target.Pos.X - actor.Pos.X, target.Pos.Y - actor.Pos.Y);
-            actor.SetNewDirection(Vector2.Normalize(tempDir));
+            actor.Direction = Vector2.Normalize(tempDir);
         }
 
         public string GetName()

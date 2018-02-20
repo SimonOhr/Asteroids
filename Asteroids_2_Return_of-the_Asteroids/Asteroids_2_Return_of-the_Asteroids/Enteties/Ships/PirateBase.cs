@@ -31,8 +31,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
             var avoidance = new Vector2(0, 0);
             if (mostThreatening != null)
             {
-                avoidance.X = ahead.X - mostThreatening.pos.X;
-                avoidance.Y = ahead.Y - mostThreatening.pos.Y;
+                avoidance.X = ahead.X - mostThreatening.Pos.X;
+                avoidance.Y = ahead.Y - mostThreatening.Pos.Y;
 
                 avoidance.Normalize();
                 avoidance *= 2f; // max_avoid_force
@@ -52,7 +52,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
               //  {
                     bool collision = LineIntersectsCircle(ahead, ahead2, obstacle, radius);
                     if (collision && (mostThreatening == null ||
-                        Vector2.Distance(pos, obstacle.pos) < Vector2.Distance(pos, mostThreatening.pos)))
+                        Vector2.Distance(pos, obstacle.Pos) < Vector2.Distance(pos, mostThreatening.Pos)))
                     {
                         mostThreatening = obstacle;
                     }
@@ -63,8 +63,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private bool LineIntersectsCircle(Vector2 ahead, Vector2 ahead2, Asteroid obstacle, int radius)
         {
-            return Vector2.Distance(obstacle.pos, ahead) <= obstacle.radius + radius ||
-           Vector2.Distance(obstacle.pos, ahead2) <= obstacle.radius + radius;          
+            return Vector2.Distance(obstacle.Pos, ahead) <= obstacle.Radius + radius ||
+           Vector2.Distance(obstacle.Pos, ahead2) <= obstacle.Radius + radius;          
         }
     }
 }

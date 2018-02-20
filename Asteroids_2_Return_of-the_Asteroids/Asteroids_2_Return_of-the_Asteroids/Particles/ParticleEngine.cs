@@ -24,7 +24,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         List<Color> colourPallet = new List<Color>();        
 
         float velMultiplier, angularVelMultiplier, size, angularVelocity, angle, particlesPerTick;
-        public float intensifier;
+        public float Intensifier { get; set; }
         int velSpeed, ttlMaxLength, ttl, totalTicks;     
        
         Random rnd = new Random();
@@ -110,7 +110,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 case TypeOfEffect.AfterBurner:
 
                     particlesPerTick = 4;
-                    particlesPerTick *= intensifier;
+                    particlesPerTick *= Intensifier;
 
                     for (int i = 0; i < particlesPerTick; i++)
                     {

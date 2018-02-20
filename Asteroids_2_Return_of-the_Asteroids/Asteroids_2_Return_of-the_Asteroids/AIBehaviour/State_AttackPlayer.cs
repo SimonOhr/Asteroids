@@ -10,7 +10,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         Pirate actor;
         PlayerShip target;
-        FSM fsm;
+       // FSM fsm;
         WeaponBase weapon;
         public State_AttackPlayer(Pirate actor, PlayerShip target/*, FSM fsm*/)
         {

@@ -18,7 +18,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Viewport view;
         Rectangle backgroundRec;
         GameplayManager gm;
-        private IntPtr intPtr;
+       // private IntPtr intPtr;
 
         Random rnd = new Random();
 

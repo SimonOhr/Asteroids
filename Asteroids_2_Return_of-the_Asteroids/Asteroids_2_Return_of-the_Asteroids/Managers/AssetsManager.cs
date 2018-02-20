@@ -12,17 +12,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     static class AssetsManager
     {
-        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, laserProjectileTex, 
+        public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, laserProjectileTex,
             bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex, particleNewCircleTestTex,
             spaceStationTex, missileTex, droneTex, healthBarTex;
 
-        public static SpriteFont text, Score;
+        public static SpriteFont Text { get; set; }
+        public static SpriteFont Score { get; set; }
 
-        public static Song backgroundMusic;
+        public static Song backgroundMusic { get; set; }
 
-        public static SoundEffect laserShot, asteroidExplosion;
+        public static SoundEffect LaserShot { get; set; }
+        public static SoundEffect AsteroidExplosion { get; set; }
 
-        public static List<Texture2D> textures = new List<Texture2D>();
+        public static List<Texture2D> textures{ get; set; } = new List<Texture2D>();
                   
 
         public static void LoadContent(ContentManager Content)
@@ -45,13 +47,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
             droneTex = Content.Load<Texture2D>("DroneTEST");
             healthBarTex = Content.Load<Texture2D>("Healthbar_v3");
 
-            text = Content.Load<SpriteFont>(@"text");
+            Text = Content.Load<SpriteFont>(@"text");
             Score = Content.Load<SpriteFont>(@"Score");
 
             backgroundMusic = Content.Load<Song>(@"Steamtech-Mayhem");
 
-            laserShot = Content.Load<SoundEffect>(@"laser9");
-            asteroidExplosion = Content.Load<SoundEffect>(@"Depth_Charge");
+            LaserShot = Content.Load<SoundEffect>(@"laser9");
+            AsteroidExplosion = Content.Load<SoundEffect>(@"Depth_Charge");
 
             //textures.Add(particleCircleTex);
             //textures.Add(particleStarTex);

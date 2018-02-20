@@ -10,7 +10,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class GameObject
     {       
-        protected Vector2 pos;
+        public Vector2 Pos { get; set; }
         protected Rectangle hitbox;
         public GameObject(Vector2 pos)
         {          

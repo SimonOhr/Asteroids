@@ -73,7 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update(GameTime gt)
         {                        
-            cursorPosition = KeyMouseReader.cursorViewToWorldPosition;
+            cursorPosition = KeyMouseReader.CursorViewToWorldPosition;
             GUI.UpdateGUIMatrix();
             CreateAsteroids(gt);
             //CheckIfAsteroidIsInPlay();
@@ -218,7 +218,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public Texture2D GetShipTex()
         {
-            return Ship.tex;
+            return Ship.Tex;
         } 
         
         public int GetPlayerShipHealth()

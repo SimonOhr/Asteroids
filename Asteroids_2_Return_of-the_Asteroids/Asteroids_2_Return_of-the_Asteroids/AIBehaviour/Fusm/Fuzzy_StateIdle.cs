@@ -74,7 +74,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update()
         {
-            actor.SetNewDirection(Vector2.Zero);
+            actor.Direction = Vector2.Zero;
         }
     }
 }

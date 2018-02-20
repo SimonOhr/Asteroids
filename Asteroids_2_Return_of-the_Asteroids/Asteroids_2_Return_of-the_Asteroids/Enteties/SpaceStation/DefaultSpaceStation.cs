@@ -15,7 +15,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             tex = AssetsManager.spaceStationTex;
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, 50, 50);
-            this.pos = pos;
+            this.Pos = pos;
         }
 
         public override void Update(GameTime gt)
@@ -25,7 +25,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(tex, pos, Color.White);
+            sb.Draw(tex, Pos, Color.White);
             base.Draw(sb);
         }
     }

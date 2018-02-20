@@ -10,61 +10,63 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     static class KeyMouseReader
     {
-        public static KeyboardState keyState, oldKeyState = Keyboard.GetState();
-        public static MouseState mouseState, oldMouseState = Mouse.GetState();
-        public static Vector2 mousePosition;
-        public static Vector2 cursorViewToWorldPosition;
-        public static Camera camera;
+        public static KeyboardState KeyState { get; set; } = Keyboard.GetState();
+        public static KeyboardState OldKeyState { get; set; } = Keyboard.GetState();
+        public static MouseState MouseState { get; set; } = Mouse.GetState();
+        public static MouseState OldMouseState { get; set; } = Mouse.GetState();
+        public static Vector2 MousePosition { get; set; }
+        public static Vector2 CursorViewToWorldPosition { get; private set; }
+        public static Camera Camera { get; set; }
 
         public static void Update(Camera cam)
         {
-            camera = cam;
-            oldKeyState = keyState;
-            keyState = Keyboard.GetState();
+            Camera = cam;
+            OldKeyState = KeyState;
+            KeyState = Keyboard.GetState();
 
-            oldMouseState = mouseState;
-            mouseState = Mouse.GetState();
+            OldMouseState = MouseState;
+            MouseState = Mouse.GetState();
 
-            mousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            MousePosition = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-            cursorViewToWorldPosition = Vector2.Transform(Mouse.GetState().Position.ToVector2(), Matrix.Invert(camera.GetTransform()));
+            CursorViewToWorldPosition = Vector2.Transform(Mouse.GetState().Position.ToVector2(), Matrix.Invert(Camera.GetTransform()));
         }
 
         public static bool KeyPressed(Keys key)
         {
-            return keyState.IsKeyDown(key) && oldKeyState.IsKeyUp(key);
+            return KeyState.IsKeyDown(key) && OldKeyState.IsKeyUp(key);
         }
         public static bool KeyHeld(Keys key)
         {
-            return keyState.IsKeyDown(key) && oldKeyState.IsKeyDown(key);
+            return KeyState.IsKeyDown(key) && OldKeyState.IsKeyDown(key);
         }
         public static bool KeyReleased(Keys key)
         {
-            return keyState.IsKeyUp(key) && oldKeyState.IsKeyDown(key);
+            return KeyState.IsKeyUp(key) && OldKeyState.IsKeyDown(key);
         }
 
         public static bool LeftClick()
         {
-            return mouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
+            return MouseState.LeftButton == ButtonState.Pressed && OldMouseState.LeftButton == ButtonState.Released;
         }
         public static bool RightClick()
         {
-            return mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;
+            return MouseState.RightButton == ButtonState.Pressed && OldMouseState.RightButton == ButtonState.Released;
         }
 
         public static bool ScrollUp()
         {
-            return mouseState.ScrollWheelValue > oldMouseState.ScrollWheelValue;
+            return MouseState.ScrollWheelValue > OldMouseState.ScrollWheelValue;
         }
 
         public static bool ScrollDown()
         {
-            return mouseState.ScrollWheelValue < oldMouseState.ScrollWheelValue;
+            return MouseState.ScrollWheelValue < OldMouseState.ScrollWheelValue;
         }
 
-        public static ref Camera PassCameraInformation()
+        public static Camera PassCameraInformation() //ref?
         {
-            return ref camera;
+            return  Camera;
         }
     }
 }

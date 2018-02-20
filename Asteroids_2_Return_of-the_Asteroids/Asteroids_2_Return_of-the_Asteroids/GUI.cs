@@ -66,22 +66,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
         /// <returns></returns>
         private static ButtonMenu CreateStartMenu(ButtonMenu menu)
         {
-            return menu = new ButtonMenu(true, new string[5] { "Asteroids", "Start Game", "HighScore", "Instructions", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
+            return menu = new ButtonMenu(true, new string[5] { "Asteroids", "Start Game", "HighScore", "Instructions", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.Text, Color.Wheat, false);
         }
 
         private static ButtonMenu CreatePauseMenu(ButtonMenu menu)
         {
-            return menu = new ButtonMenu(false, new string[3] { "Resume Game", "HighScore", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.transBackgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
+            return menu = new ButtonMenu(false, new string[3] { "Resume Game", "HighScore", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.transBackgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.Text, Color.Wheat, false);
         }
 
         private static ButtonMenu CreateEndMenu(ButtonMenu menu)
         {
-            return menu = new ButtonMenu(true, new string[5] { "Asteroids", "Restart", "Save HighScore", "MainMenu", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.White, false);
+            return menu = new ButtonMenu(true, new string[5] { "Asteroids", "Restart", "Save HighScore", "MainMenu", "Exit" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.Text, Color.White, false);
         }
 
         private static ButtonMenu CreateHiScMenu(ButtonMenu menu)
         {
-            return menu = new ButtonMenu(true, new string[3] { "HighScore", "Search", "Back" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.text, Color.Wheat, false);
+            return menu = new ButtonMenu(true, new string[3] { "HighScore", "Search", "Back" }, new Rectangle((int)defaultPositionViewToWorld.X, (int)defaultPositionViewToWorld.Y, screenRec.Width, screenRec.Height), Layout.Vertical, AssetsManager.backgroundTex, AssetsManager.buttonTex, AssetsManager.buttonTex, AssetsManager.Text, Color.Wheat, false);
         }
         public static GameState UpdateStartMenu(GameState currentState)
         {

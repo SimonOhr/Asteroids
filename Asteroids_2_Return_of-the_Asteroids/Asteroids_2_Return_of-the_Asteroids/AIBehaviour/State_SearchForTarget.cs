@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         Pirate actor;
         PlayerShip target;
-        FSM fsm;
+     //   FSM fsm;
         int searchRadius, attackRadius;        
        
         public State_SearchForTarget(Pirate actor, PlayerShip target/*, FSM fsm*/)

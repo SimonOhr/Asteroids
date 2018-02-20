@@ -23,7 +23,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected int maxGunCharge;
         protected int currentGunCharge;
         protected bool shoot;
-        public Vector2 targetPos;
+        public Vector2 targetPos { get; set; }
 
         public WeaponBase(Vector2 pos):base(pos)
         {
@@ -57,7 +57,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public virtual void SetPos(Vector2 newPos)
         {
-            pos = newPos;
+            Pos = newPos;
         }
 
         public virtual void SetTargetPos(Vector2 t)

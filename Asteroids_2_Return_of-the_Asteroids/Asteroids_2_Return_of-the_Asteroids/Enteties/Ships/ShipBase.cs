@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 namespace Asteroids_2_Return_of_the_Asteroids
 {
     class ShipBase : MovingObject
-    {        
+    {
         protected Texture2D healthbarTex = AssetsManager.healthBarTex;
-        protected Rectangle srcHealthbarTex;        
-        
+      //  protected Rectangle srcHealthbarTex; // will be used as hoovering healthbar for each object instance
+
         protected Drone drone;
         protected List<WeaponBase> weapons; //Note* might need a list of lists? to make it possible for multiple ships with different weaponry        
         protected Color color;
-        public Texture2D tex;
+        public Texture2D Tex { get; set; }
        // protected Vector2 oldPos;
 
         protected float originalSpeed;
@@ -32,15 +32,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
        
         public ShipBase(Vector2 pos) : base(pos)
         {
-            this.pos = pos;
+            this.Pos = pos;
 
             color = Color.White;
             weapons = new List<WeaponBase>();
         }
-        virtual public void Update(GameTime gt)
+       new virtual public void Update(GameTime gt) // unsure if I should have new here, nothing breaks, but if I collect all gameobjects into a collection and try to update them all in a bulk, then it might.
         {
-            hitbox.X = (int)pos.X;
-            hitbox.Y = (int)pos.Y;
+            hitbox.X = (int)Pos.X;
+            hitbox.Y = (int)Pos.Y;
 
             foreach (WeaponBase w in weapons)
             {
@@ -69,7 +69,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             for (int i = 0; i < GameplayManager.asteroids.Count - 1; i++)
             {
                 Asteroid a;
-                if (Vector2.Distance(pos, GameplayManager.asteroids[i].pos) < attackRadius)
+                if (Vector2.Distance(Pos, GameplayManager.asteroids[i].Pos) < attackRadius)
                 {
                     a = GameplayManager.asteroids[i];
                     //id = i;

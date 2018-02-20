@@ -62,7 +62,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new LaserProjectile(pos, projectileTargetPos); // create weapon
+                projectile = new LaserProjectile(Pos, projectileTargetPos); // create weapon
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;                            

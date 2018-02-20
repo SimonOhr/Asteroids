@@ -13,14 +13,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class PlayerShip : ShipBase
     {        
        // int healthmultiplier = (AssetsManager.healthBarTex.Width / 10);
-        Vector2 mousePos, oldMousePos;
+        Vector2 mousePos/*, oldMousePos*/;
         
-        public Vector2 Pos { get; private set; }
+      //  public Vector2 Pos { get; private set; }
         public PlayerShip(Vector2 pos) : base(pos)
         {            
-            tex = AssetsManager.shipTex;
+            Tex = AssetsManager.shipTex;
 
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, tex.Width, tex.Height);
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, Tex.Width, Tex.Height);
 
             maxHealth = 3;
             currentHealth = 3;
@@ -42,7 +42,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection(mousePos, Pos) * 50));
             drone.Update(gt);            
-            mousePos = KeyMouseReader.cursorViewToWorldPosition;
+            mousePos = KeyMouseReader.CursorViewToWorldPosition;
             //oldMousePos = mousePos;
             //mousePos.X = Mouse.GetState().X;
             //mousePos.Y = Mouse.GetState().Y;
@@ -98,7 +98,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
             drone.Draw(sb);
            
-            sb.Draw(tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
+            sb.Draw(Tex, Pos, null, color, currentRotation + MathHelper.ToRadians(90), new Vector2(Tex.Width / 2, Tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
             // base.Draw(sb);
         }
 

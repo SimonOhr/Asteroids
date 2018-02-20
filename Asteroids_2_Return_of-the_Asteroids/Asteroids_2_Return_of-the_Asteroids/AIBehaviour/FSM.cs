@@ -9,7 +9,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     public class FSM
     {
         private IState currentState, previousState;
-        private bool stateDone;
+       // private bool stateDone;
 
         public void ChangeState(IState activeState)
         {

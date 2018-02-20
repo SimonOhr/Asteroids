@@ -39,7 +39,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AIBehaviour\DecisionTree.cs" />
-    <Compile Include="AIBehaviour\Fusm\DecisionNode.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_High.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Low.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Med.cs" />
@@ -90,7 +89,6 @@
     <Compile Include="Enteties\Projectiles\ProjectileBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enteties\Ships\ShipBase.cs" />
-    <Compile Include="Menu\Textbox.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Guns\WeaponBase.cs" />
     <Compile Include="AIBehaviour\State_SearchForTarget.cs" />

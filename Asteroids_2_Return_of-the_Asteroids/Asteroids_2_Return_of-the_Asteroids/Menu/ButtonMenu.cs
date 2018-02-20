@@ -101,7 +101,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             for (int i = (hasTitle ? 1 : 0); i < menuButtons.Count; i++)
             {
-                if (menuButtons[i].destinationRec.Contains(KeyMouseReader.cursorViewToWorldPosition))
+                if (menuButtons[i].destinationRec.Contains(KeyMouseReader.CursorViewToWorldPosition))
                 {
                     selectedbutton = i;
                 }
@@ -167,7 +167,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     return true;
                 }
-                else if (menuButtons[selectedbutton].destinationRec.Contains(KeyMouseReader.cursorViewToWorldPosition) && KeyMouseReader.LeftClick())
+                else if (menuButtons[selectedbutton].destinationRec.Contains(KeyMouseReader.CursorViewToWorldPosition) && KeyMouseReader.LeftClick())
                 {
                     return true;
                 }

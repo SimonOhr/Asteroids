@@ -10,43 +10,43 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class DecisionTree
     {
         Pirate actor;
-        PlayerShip target;         
-        public DecisionTree(Pirate actor, PlayerShip target)
+        PlayerShip playerShip;         
+        public DecisionTree(Pirate actor, PlayerShip playerShip)
         {
             this.actor = actor;
-            this.target = target;
+            this.playerShip = playerShip;
 
         }
 
         public IState CommenceIfStatements()
         {
             actor.GetHealth();
-            target.GetHealth();
-            var dist = Vector2.Distance(actor.Pos, target.Pos);
+            playerShip.GetHealth();
+            var dist = Vector2.Distance(actor.Pos, playerShip.Pos);
 
             if (dist < actor.GetSearchRadius() || dist < actor.GetAttackRadius())
             {
-                if (actor.GetHealth() > target.GetHealth() && dist >= (actor.GetAttackRadius() / 2))
+                if (actor.GetHealth() > playerShip.GetHealth() && dist >= (actor.GetAttackRadius() / 2))
                 {
                     if (actor.GetAmmoCount() > 0)
                     {
                         //attack
-                        return new State_AttackPlayer(actor, target);
+                        return new State_AttackPlayer(actor, playerShip);
                     }
                     //chase
-                    return new State_FollowPlayer(actor, target);
+                    return new State_FollowPlayer(actor, playerShip);
                 }
                 if (dist < (actor.GetAttackRadius() / 2) && dist >= (actor.GetAttackRadius() / 3))
                 {
-                    if (actor.GetHealth() >= target.GetHealth())
+                    if (actor.GetHealth() >= playerShip.GetHealth())
                     {
                         if (actor.GetAmmoCount() > 0)
                         {
                             //attack
-                            return new State_AttackPlayer(actor, target);
+                            return new State_AttackPlayer(actor, playerShip);
                         }
                         //chase
-                        return new State_FollowPlayer(actor, target);
+                        return new State_FollowPlayer(actor, playerShip);
                     }
                     //run away
                     return new State_Idle(actor);
@@ -57,7 +57,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     if (actor.GetAmmoCount() > 0)
                     {
                         //attack
-                        return new State_AttackPlayer(actor, target);
+                        return new State_AttackPlayer(actor, playerShip);
                     }
                     //run away
                     return new State_Idle(actor);

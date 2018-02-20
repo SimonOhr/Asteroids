@@ -11,8 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         GameplayManager gm;
         List<ProjectileBase> projectiles;
-        List<Asteroid> asteroids;
-        int shipHealth, pirateHealth;
+        List<Asteroid> asteroids;       
 
         public bool TempInvulnarbility { get; private set; } = false;
         double tempTimer, tempReset = 0;
@@ -30,7 +29,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             asteroids = gm.GetAsteroidList();
             for (int i = 0; i < asteroids.Count -1; i++)
             {
-                if (asteroids[i].isOutOfPlay) asteroids.RemoveAt(i);
+                if (asteroids[i].IsOutOfPlay) asteroids.RemoveAt(i);
             }
         }
 
@@ -46,13 +45,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {                    
                     if (projectiles.Count > 0)
                     {                        
-                        if (Vector2.Distance(asteroids[i].pos, projectiles[j].pos) <= 50)
+                        if (Vector2.Distance(asteroids[i].Pos, projectiles[j].Pos) <= 50)
                         {
-                            EffectsManager.CreateASteroidIsHitEffect(asteroids[i].pos);
+                            EffectsManager.CreateAsteroidIsHitEffect(asteroids[i].Pos);
                             projectiles.RemoveAt(j);
                             if (CheckIfAsteroidisDead(asteroids[i]))
                             {
-                                EffectsManager.CreateAsteroidExplosionEffect(asteroids[i].pos);
+                                EffectsManager.CreateAsteroidExplosionEffect(asteroids[i].Pos);
                                 SoundManager.PlayExplosion();
                                 asteroids.RemoveAt(i);
                             }
@@ -66,8 +65,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private bool CheckIfAsteroidisDead(Asteroid a)
         {
-            a.hitPoints -= 1;
-            if (a.hitPoints <= 0)
+            a.HitPoints -= 1;
+            if (a.HitPoints <= 0)
             {
                 return true;
             }
@@ -90,7 +89,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 for (int i = 0; i < asteroids.Count; i++)
                 {
-                    if (Vector2.Distance(asteroids[i].pos, gm.GetShipPos()) < asteroids[i].radius + (gm.GetShipTex().Width / 2))
+                    if (Vector2.Distance(asteroids[i].Pos, gm.GetShipPos()) < asteroids[i].Radius + (gm.GetShipTex().Width / 2))
                     {
                         TempInvulnarbility = true;
                         gm.SetShipStatus(true);

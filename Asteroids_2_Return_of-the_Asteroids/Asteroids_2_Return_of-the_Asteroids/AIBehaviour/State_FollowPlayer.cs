@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         Pirate actor;
         PlayerShip target;
-        FSM fsm;
+       // FSM fsm;
         int searchRadius;
         public State_FollowPlayer(Pirate actor, PlayerShip target/*, int searchRadius*//*, FSM fsm*/)
         {
@@ -28,14 +28,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Execute()
         {
-            actor.direction = GetDirection();
+            actor.Direction = GetDirection();
          //   fsm.ChangeState(new State_SearchForTarget(actor, target, fsm));          
         }
 
         private Vector2 GetDirection()
         {
-            actor.direction = new Vector2(target.Pos.X - actor.Pos.X, target.Pos.Y - actor.Pos.Y);
-           return  Vector2.Normalize(actor.direction);
+            actor.Direction = new Vector2(target.Pos.X - actor.Pos.X, target.Pos.Y - actor.Pos.Y);
+           return  Vector2.Normalize(actor.Direction);
         }
 
         public void Exit()

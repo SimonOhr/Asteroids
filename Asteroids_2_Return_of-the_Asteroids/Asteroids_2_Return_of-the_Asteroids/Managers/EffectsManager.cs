@@ -23,10 +23,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public static void CreateAfterBurnerEffect(Vector2 pos)
         {
+            AddAfterBurnerTextures();
+            InitializeAfterburner(pos);
+        }
+
+        private static void AddAfterBurnerTextures()
+        {
             afterBurnerTextures = new List<Texture2D>();
             afterBurnerTextures.Add(AssetsManager.particleCircleTex);
             afterBurnerTextures.Add(AssetsManager.particleDiamondTex);
+        }
 
+        private static void InitializeAfterburner(Vector2 pos)
+        {
             afterburnerEffect = new ParticleEngine(afterBurnerTextures, pos, TypeOfEffect.AfterBurner);
         }
 
@@ -37,7 +46,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         }
 
 
-        public static void CreateASteroidIsHitEffect(Vector2 pos)
+        public static void CreateAsteroidIsHitEffect(Vector2 pos)
         {
             asteroidIsHitParticles = new ParticleEngine(AssetsManager.textures, pos, TypeOfEffect.AsteroidHit);
             asteroidIsHitList.Add(asteroidIsHitParticles);
@@ -78,13 +87,17 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 {
                     explosionEffect.Update();
                 }
-                for (int i = 0; i < asteroidExplosionList.Count; i++)
+                RemoveOldEmptyEffects();
+            }
+        }
+
+        private static void RemoveOldEmptyEffects()
+        {
+            for (int i = 0; i < asteroidExplosionList.Count; i++)
+            {                
+                if (asteroidExplosionList[i].particles.Count <= 0)
                 {
-                    //  Console.WriteLine(asteroidExplosionList.Count); 
-                    if (asteroidExplosionList[i].particles.Count <= 0)
-                    {
-                        asteroidExplosionList.RemoveAt(i);
-                    }
+                    asteroidExplosionList.RemoveAt(i);
                 }
             }
         }
@@ -105,9 +118,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         
         public static void SetAfterBurnerIntensity(float speed)
         {
-            afterburnerEffect.intensifier = speed;
+            afterburnerEffect.Intensifier = speed;
         }
-
     }
-
 }

@@ -13,7 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         protected Texture2D projectileTex;
 
-        public new Vector2 pos;
+        public new Vector2 Pos { get; set; }
 
         protected Vector2 velocity, direction, originalPos, targetPos;       
 
@@ -25,7 +25,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public ProjectileBase(Vector2 pos, Vector2 targetPos):base(pos)
         {           
-            this.pos = pos;
+            this.Pos = pos;
 
             originalPos = pos;
 
@@ -38,7 +38,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         virtual protected Vector2 GetDirection()
         {
-            Vector2 Direction = new Vector2(targetPos.X - pos.X, targetPos.Y - pos.Y);
+            Vector2 Direction = new Vector2(targetPos.X - Pos.X, targetPos.Y - Pos.Y);
             return Vector2.Normalize(Direction);
         }
         //KeyMouseReader.cursorViewToWorldPosition
@@ -50,15 +50,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Update(GameTime gt)
         {
-            pos += velocity * direction;
-            hitbox.X = (int)pos.X;
-            hitbox.Y = (int)pos.Y;
+            Pos += velocity * direction;
+            hitbox.X = (int)Pos.X;
+            hitbox.Y = (int)Pos.Y;
             CheckIfOutOfRange();
         }
 
         virtual protected void CheckIfOutOfRange()
         {
-            if (Vector2.Distance(pos, originalPos) >= projectileRange)
+            if (Vector2.Distance(Pos, originalPos) >= projectileRange)
             {
                 doRemove = true;
             }
@@ -66,7 +66,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(projectileTex, pos, null, Color.White, rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(projectileTex, Pos, null, Color.White, rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
         }
     }
 }

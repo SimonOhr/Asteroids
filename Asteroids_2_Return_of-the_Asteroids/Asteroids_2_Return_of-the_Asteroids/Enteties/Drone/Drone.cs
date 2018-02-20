@@ -12,25 +12,25 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         enum droneState { Idle, Follow, Attack, Evade, Save /*, chase*/ }
         droneState currentState;
-        int id;
+        //int id;
         Asteroid enemyTarget;
         // Vector2 targetPos;
         PlayerShip ship;
         LaserCanon weapon;
         Texture2D tex;
-        int patrolRadius, attackRadius, scanRadius, collisionRadius;
+        int patrolRadius, attackRadius, /*scanRadius,*/ collisionRadius;
         double time;
-        float currentRotation;
+       // float currentRotation;
         Random rnd;
-        bool save, evade;
-        bool EVASIVEMANOUVER = false;
-        Vector2 moveTo, velocity, direction, impactVector;
-        int radius = 50;
-        Vector2 ahead;
-        Vector2 ahead2;
-        Vector2 right;
-        Vector2 left;
-        Vector2 back;
+      //  bool save, evade;
+       // bool EVASIVEMANOUVER = false;
+        Vector2 moveTo, velocity, direction/*, impactVector*/;
+      //  int radius = 50;
+        //Vector2 ahead;
+        //Vector2 ahead2;
+        //Vector2 right;
+        //Vector2 left;
+        //Vector2 back;
         public Drone(Vector2 pos, PlayerShip ship) : base(pos)
         {
             this.ship = ship;
@@ -43,34 +43,34 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             rnd = new Random();
             collisionRadius = 100;
-            scanRadius = 300;
+           // scanRadius = 300;
             velocity = new Vector2(5, 5);
             currentState = droneState.Idle;
         }
 
         public override void Update(GameTime gt)
         {
-            weapon.SetPos(pos);
+            weapon.SetPos(Pos);
             weapon.Update(gt);
             UpdatePosition(gt);
 
             switch (currentState)
             {
                 case droneState.Idle:                   
-                    direction = GetDirection(SetPos(gt), pos);
+                    direction = GetDirection(SetPos(gt), Pos);
                     velocity = new Vector2(3, 3);
                     Rotation(gt);
                     
                     enemyTarget = UpdateTargetList(gt, attackRadius);
                     if (enemyTarget != null)
                         currentState = droneState.Attack;
-                    if (Vector2.Distance(ship.Pos, pos) > 250)
+                    if (Vector2.Distance(ship.Pos, Pos) > 250)
                         currentState = droneState.Follow;
                     break;
                 case droneState.Follow:
                     Rotation(gt);
                     velocity = new Vector2(5, 5);
-                    direction = GetDirection(ship.Pos, pos);
+                    direction = GetDirection(ship.Pos, Pos);
                     UpdatePosition(gt);
                     //  if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);
                     //if (save) currentState = droneState.save;
@@ -78,7 +78,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     //{
                     //    currentState = droneState.Evade;
                     //}
-                    if (Vector2.Distance(ship.Pos, pos) <= 100)
+                    if (Vector2.Distance(ship.Pos, Pos) <= 100)
                         currentState = droneState.Idle;
                     break;
                 case droneState.Attack:
@@ -89,7 +89,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 case droneState.Evade:
                     //if (enemyTarget != null) CheckIfCollisionImminent(gt, ref enemyTarget);                    
                     //EvadeCollision();                    
-                    if (Vector2.Distance(enemyTarget.pos, pos) > collisionRadius)
+                    if (Vector2.Distance(enemyTarget.Pos, Pos) > collisionRadius)
                     {
                         currentState = droneState.Follow;
                         Console.WriteLine("Evasive Action Done");
@@ -109,7 +109,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
           //  var steering = CollisionAvoidance(gt, ref direction);
                        
-            pos += velocity * direction /*+ steering*/;
+            Pos += velocity * direction /*+ steering*/;
           
         }
         private Vector2 SetPos(GameTime gt)
@@ -128,7 +128,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 moveTo = SetPos(gt);
             else nextPos = Vector2.Zero;
 
-            Vector2 directionOfShip = moveTo - (pos);
+            Vector2 directionOfShip = moveTo - (Pos);
             currentRotation = (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);
         }
 
@@ -153,14 +153,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void EngageTarget(ref Asteroid a)
         {          
-            if (Vector2.Distance(a.pos, pos) > attackRadius || a.hitPoints == 0)
+            if (Vector2.Distance(a.Pos, Pos) > attackRadius || a.HitPoints == 0)
             {
                 weapon.Shoot(false);
                 currentState = droneState.Follow;
             }
             else
             {
-                weapon.SetTargetPos(a.pos);
+                weapon.SetTargetPos(a.Pos);
                 weapon.Shoot(true);
             }
         }
@@ -258,7 +258,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Draw(SpriteBatch sb)
         {
             weapon.Draw(sb);
-            sb.Draw(tex, pos, null, Color.White, currentRotation, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
+            sb.Draw(tex, Pos, null, Color.White, currentRotation, new Vector2(tex.Width / 2, tex.Height / 2), 1, SpriteEffects.FlipVertically, 1);
             base.Draw(sb);
         }
     }

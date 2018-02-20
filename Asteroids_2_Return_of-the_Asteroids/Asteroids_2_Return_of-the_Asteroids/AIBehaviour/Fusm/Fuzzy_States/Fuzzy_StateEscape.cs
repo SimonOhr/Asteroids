@@ -70,7 +70,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update()
         {
-            actor.direction *= -1;
+            actor.Direction *= -1;
         }
     }
 }

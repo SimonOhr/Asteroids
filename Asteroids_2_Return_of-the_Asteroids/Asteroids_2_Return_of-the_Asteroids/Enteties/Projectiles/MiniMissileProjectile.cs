@@ -27,7 +27,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public MiniMissileProjectile(Vector2 pos, Vector2 targetPos) : base(pos, targetPos)
         {
-            this.pos = pos;
+            this.Pos = pos;
             this.targetPos = targetPos;
 
             velocity = new Vector2(1, 1);
@@ -64,9 +64,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             
 
-            pos += velocity * direction;
-            hitbox.X = (int)pos.X;
-            hitbox.Y = (int)pos.Y;
+            Pos += velocity * direction;
+            hitbox.X = (int)Pos.X;
+            hitbox.Y = (int)Pos.Y;
             CheckIfOutOfRange();
 
             timer += gt.ElapsedGameTime.TotalSeconds;
@@ -77,7 +77,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 timer = reset;
             }
 
-            Console.WriteLine(pos);
+            Console.WriteLine(Pos);
             base.Update(gt);
         }
 
@@ -86,7 +86,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             List<Vector2> rndMissildeEject = new List<Vector2>();
             for (int i = 0; i < 5; i++)
             {
-                rndMissildeEject.Add(pos - (AngleToVector(MathHelper.ToDegrees(rotation + rnd.Next(0, 90))) * curveLocationMultipler));
+                rndMissildeEject.Add(Pos - (AngleToVector(MathHelper.ToDegrees(rotation + rnd.Next(0, 90))) * curveLocationMultipler));
             }            
            
             return rndMissildeEject[rnd.Next(0,5)];
@@ -120,7 +120,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             {
                 it = listCount;
                 targetPos = aimAssist;
-                GetRotation(targetPos, pos);
+                GetRotation(targetPos, Pos);
             }
             else targetPos = curvePath[it];
 
@@ -135,7 +135,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Draw(SpriteBatch sb)
         {
-            sb.Draw(projectileTex, pos, null, Color.White, rotation, new Vector2(projectileTex.Width / 2, projectileTex.Height / 2), 1, SpriteEffects.None, 1);
+            sb.Draw(projectileTex, Pos, null, Color.White, rotation, new Vector2(projectileTex.Width / 2, projectileTex.Height / 2), 1, SpriteEffects.None, 1);
            
         }
     }
