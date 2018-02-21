@@ -13,39 +13,41 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Pirate actor;
         PlayerShip target;
         float activationLevel;
-       
+        public bool CanActivate { get; private set; }
+
 
         public Fuzzy_StateChase_High(Pirate actor, PlayerShip target)
         {
             this.actor = actor;
             this.target = target;
             name = "Chase";
-        }       
+        }
 
         public void Init()
         {
 
-        }       
+        }
 
         public float CalculateActivation()
         {
             //threat based on variable
-            float dist = Vector2.Distance(actor.Pos, target.Pos);    
-            
+            float dist = Vector2.Distance(actor.Pos, target.Pos);
+
             activationLevel = actor.GetSearchRadius() / ((dist - actor.GetObjectRadius()));
             CheckBounds();
 
-           // Console.WriteLine(activationLevel);
+            Console.WriteLine(activationLevel);
             return activationLevel;    // if closer than searchRadius activation > 1, add to activatedStates        
         }
 
-        public bool canActivate()
+        public void SetIsActive(bool isActiveState)
         {
-            if (CalculateActivation() == 1)
-                if (actor.GetHealth() > target.GetHealth())
-                    return true;
-                
-            return false;
+            CanActivate = isActiveState;
+        }
+
+        public bool GetIsActive()
+        {
+            return CanActivate;
         }
 
         public void CheckBounds(float lb = 0.0f, float ub = 1.0f)
@@ -57,24 +59,32 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void CheckLowerBound(float lbound = 0.0f)
         {
             if (activationLevel < lbound)
-                 activationLevel = lbound;
+                activationLevel = lbound;
         }
 
         public void CheckUpperBound(float ubound = 1.0f)
         {
-            if (activationLevel > ubound)
-                activationLevel = ubound;
+            float temp = 0;
+            if (activationLevel > ubound)            
+            {
+                if (activationLevel > 2)
+                    activationLevel = 2;
+
+                temp = activationLevel - 1; // creates a triangle
+                 activationLevel = ubound - temp;
+                Console.WriteLine(activationLevel);
+            }
         }
 
         public void Enter()
         {
-           
+
         }
 
         public void Exit()
         {
-          
-        }        
+
+        }
 
         public void Update()
         {
@@ -85,6 +95,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public string GetName()
         {
             return name;
-        }       
+        }
     }
 }

@@ -62,6 +62,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
           
         }
 
+        public bool GetIsActive()
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetName()
         {
             return name;
@@ -70,6 +75,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void Init()
         {
            
+        }
+
+        public void SetIsActive(bool booleanState)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update()

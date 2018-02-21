@@ -13,6 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Pirate actor;
         PlayerShip target;
         float activationLevel;
+        public bool CanActivate { get; private set; }
         WeaponBase weapon;
 
 
@@ -29,17 +30,18 @@ namespace Asteroids_2_Return_of_the_Asteroids
             float dist = Vector2.Distance(actor.Pos, target.Pos);
             activationLevel = actor.GetAttackRadius() / (dist - actor.GetObjectRadius());
             CheckBounds();
-
+           // Console.WriteLine(activationLevel);
             return activationLevel;
+        } 
+        
+        public void SetIsActive(bool isActiveState)
+        {
+            CanActivate = isActiveState;
         }
 
-        public bool canActivate()
+        public bool GetIsActive()
         {
-            Console.WriteLine("actor Hp " + actor.GetHealth() + " target Hp " + target.GetHealth());
-            if (CalculateActivation() == 1)
-                if (actor.GetHealth() > target.GetHealth())
-                    return true;
-            return false;
+            return CanActivate;
         }
 
         public void CheckBounds(float lb = 0, float ub = 1)
@@ -56,8 +58,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void CheckUpperBound(float ubound = 1)
         {
+            float temp = 0;
             if (activationLevel > ubound)
-                activationLevel = ubound;
+            {
+                if (activationLevel > 2)
+                    activationLevel = 2;
+
+                temp = activationLevel - 1; // creates a triangle
+                activationLevel = ubound - temp;
+                Console.WriteLine(activationLevel);
+            }
         }
 
         public void Enter()
@@ -85,5 +95,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             weapon.SetTargetPos(target.Pos);
             weapon.Shoot(true);
         }
+
+       
     }
 }

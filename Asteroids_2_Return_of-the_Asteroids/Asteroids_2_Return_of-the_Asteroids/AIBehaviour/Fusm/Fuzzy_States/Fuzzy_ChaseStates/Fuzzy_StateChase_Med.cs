@@ -85,5 +85,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             return name;
         }
+
+        public void SetIsActive(bool booleanState)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool GetIsActive()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

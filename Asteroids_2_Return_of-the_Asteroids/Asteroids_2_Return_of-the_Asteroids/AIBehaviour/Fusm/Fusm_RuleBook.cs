@@ -11,7 +11,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         FusmMachine fusm;
         Pirate actor;
-        PlayerShip target;
+        PlayerShip playerShip;
+        float urgencyHigh = 0.66f, urgencyMedium = 0.33f, urgencyLow = 0.0f;
+        int escapeAtHealth = 1;
         //Fuzzy_StateAttack_Low stateAttackLow;
         //Fuzzy_StateAttack_Med stateAttackMed;
         //Fuzzy_StateAttack_High stateAttackHigh;
@@ -31,24 +33,67 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //float dist;
 
 
-        public Fusm_RuleBook(FusmMachine fusm, Pirate actor, PlayerShip target)
+        public Fusm_RuleBook(FusmMachine fusm, Pirate actor, PlayerShip playerShip)
         {
             this.fusm = fusm;
             this.actor = actor;
-            this.target = target;
+            this.playerShip = playerShip;
         }
 
         public void States()
         {
-            fusm.AddState(new Fuzzy_StateChase_Low(actor, target));
-            fusm.AddState(new Fuzzy_StateChase_Med(actor, target));
-            fusm.AddState(new Fuzzy_StateChase_High(actor, target));
-            fusm.AddState(new Fuzzy_StateAttack_Low(actor, target));
-            fusm.AddState(new Fuzzy_StateAttack_Med(actor, target));
-            fusm.AddState(new Fuzzy_StateAttack_High(actor, target));
+           // fusm.AddState(new Fuzzy_StateChase_Low(actor, target));
+           // fusm.AddState(new Fuzzy_StateChase_Med(actor, target));
+            fusm.AddState(new Fuzzy_StateChase_High(actor, playerShip));
+           // fusm.AddState(new Fuzzy_StateAttack_Low(actor, target));
+           // fusm.AddState(new Fuzzy_StateAttack_Med(actor, target));
+            fusm.AddState(new Fuzzy_StateAttack_High(actor, playerShip));
+            fusm.AddState(new Fuzzy_StateEscape(actor, playerShip));
            // fusm.AddState(new Fuzzy_StateEscape(actor, target));
          //   fusm.AddState(new Fuzzy_StateIdle(actor, target));
             //RuleBook();
+        }
+
+        public void CheckRules(IFusmState state)
+        {
+            if(state is Fuzzy_StateAttack_High)
+            {
+                AttackStateFuzzyRules(state);
+            }
+            else if (state is Fuzzy_StateChase_High)
+            {
+                ChaseStateFuzzyRules(state);
+            }
+            else if(state is Fuzzy_StateEscape)
+            {
+                EscapeStateFuzzyRules(state);
+            }
+        }
+
+        private void AttackStateFuzzyRules(IFusmState state)
+        {
+            if(actor.GetAmmoCount() > 0)
+            {
+                if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
+                    state.SetIsActive(true);
+                //else if (urgency <= urgencyHigh && urgency > urgencyMedium && actor.GetHealth() > playerShip.GetHealth())
+                //    state.IsActive(true);
+                //else if (urgency <= urgencyMedium && urgency > urgencyLow && actor.GetHealth() > playerShip.GetHealth() && playerShip.GetHealth() == escapeAtHealth)
+                //    state.IsActive(true);
+            }                  
+        }
+
+        private void ChaseStateFuzzyRules(IFusmState state)
+        {
+            if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
+                state.SetIsActive(true);  
+        }
+
+        private void EscapeStateFuzzyRules(IFusmState state)
+        {
+            float tempDist = Vector2.Distance(actor.Pos, playerShip.Pos);
+            if (tempDist < actor.GetSearchRadius())
+                state.SetIsActive(true);
         }
 
         //private void RuleBook()

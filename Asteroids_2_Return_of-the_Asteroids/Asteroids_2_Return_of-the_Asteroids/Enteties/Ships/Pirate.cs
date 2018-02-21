@@ -16,19 +16,19 @@ namespace Asteroids_2_Return_of_the_Asteroids
       //  public Vector2 Direction { get; set; }
        // public Vector2 Pos { get; private set; }
         private Vector2 avoidance;
-        int radius = 50, attackRange = 600, searchRadius = 600;
+        int radius = 50, attackRange = 400, searchRadius = 600;
        
         public LaserCanon Canon { get; set; }        
        // float rotationSpeed;
 
         //FSM test-------------------------------
-         FSM pirateFSM;
+         //FSM pirateFSM;
 
         //Fuzzy test ----------------------------
-        // FusmMachine fusm;
+         FusmMachine fusm;
 
         //Decisiontree test----------------------
-        DecisionTree dt;
+        //DecisionTree dt;
 
         private Vector2 foundTargetPos;
 
@@ -39,11 +39,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
             Canon = new LaserCanon(pos);
             weapons.Add(Canon);
             currentHealth = 3;
-            // fusm = new FusmMachine(this, playerShip);
+            fusm = new FusmMachine(this, playerShip);
             //fusm.AddState(new Fuzzy_StateChase(this, playerShip));
-            pirateFSM = new FSM();
+           // pirateFSM = new FSM();
             // pirateFSM.ChangeState(new State_SearchForTarget(this, playerShip, pirateFSM));
-            dt = new DecisionTree(this, playerShip);
+           // dt = new DecisionTree(this, playerShip);
 
         }
 
@@ -54,10 +54,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             Canon.Update(gt);            
             base.Pos += velocity * Direction + avoidance;
             base.ShipRotation(base.Pos + (Direction + avoidance), base.Pos);
-            pirateFSM.ChangeState(dt.CommenceIfStatements());
+          //  pirateFSM.ChangeState(dt.CommenceIfStatements());
           //  var a = UpdateTargetList(gt, attackRange);
-              pirateFSM.UpdateState();   
-           // fusm.Update();
+             // pirateFSM.UpdateState();   
+            fusm.Update();
         }
 
         public override void Draw(SpriteBatch sb)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         Pirate actor;
         PlayerShip target;
         float activationLevel;
+        public bool CanActivate { get; private set; }
 
         public Fuzzy_StateEscape(Pirate actor, PlayerShip target)
         {
@@ -20,14 +22,22 @@ namespace Asteroids_2_Return_of_the_Asteroids
             name = "Escape";
         }
         public float CalculateActivation()
-        {
+        {           
+            activationLevel = (actor.GetMaxHealth() / actor.GetHealth()) -1; //-1 to "start count" when health is -> 0
+            
+            CheckBounds();
 
             return activationLevel;
         }
 
-        public bool canActivate()
+        public void SetIsActive(bool booleanState)
         {
-            throw new NotImplementedException();
+            CanActivate = booleanState;
+        }
+
+        public bool GetIsActive()
+        {
+            return CanActivate;
         }
 
         public void CheckBounds(float lb = 0, float ub = 1)
@@ -67,6 +77,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
            
         }
+
+       
 
         public void Update()
         {
