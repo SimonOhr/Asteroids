@@ -22,20 +22,24 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             actor.GetHealth();
             playerShip.GetHealth();
+            List<WeaponBase> ammoForEachWeaponSystem = actor.GetWeapons();
+
             var dist = Vector2.Distance(actor.Pos, playerShip.Pos);
 
             if (dist < actor.GetSearchRadius() || dist < actor.GetAttackRadius())
             {
                 if (actor.GetHealth() > playerShip.GetHealth())
                 {
-                    if (actor.GetAmmoCount() > 0)
+                    foreach (WeaponBase weapon in ammoForEachWeaponSystem)
                     {
-                        //attack
-                        return new State_AttackPlayer(actor, playerShip);
+                        if (weapon.canShoot())
+                        {
+                            //attack
+                            return new State_AttackPlayer(actor, playerShip);
+                        }
                     }
                     //chase
-                    else
-                        return new State_FollowPlayer(actor, playerShip);
+                    return new State_FollowPlayer(actor, playerShip);
                 }
                 else
                 {
@@ -43,25 +47,29 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     {
                         if (actor.GetHealth() >= playerShip.GetHealth())
                         {
-                            if (actor.GetAmmoCount() > 0)
+                            foreach (WeaponBase weapon in ammoForEachWeaponSystem)
                             {
-                                //attack
-                                return new State_AttackPlayer(actor, playerShip);
+                                if (weapon.canShoot())
+                                {
+                                    //attack
+                                    return new State_AttackPlayer(actor, playerShip);
+                                }
                             }
-                            //chase
-                            else
-                                return new State_FollowPlayer(actor, playerShip);
+                            //chase                            
+                            return new State_FollowPlayer(actor, playerShip);
                         }
                         else
-                        {                            
-                            if (actor.GetAmmoCount() > 0)
+                        {
+                            foreach (WeaponBase weapon in ammoForEachWeaponSystem)
                             {
-                                //attack
-                                return new State_AttackPlayer(actor, playerShip);
+                                if (weapon.canShoot())
+                                {
+                                    //attack
+                                    return new State_AttackPlayer(actor, playerShip);
+                                }
                             }
-                            //run away
-                            else
-                                return new State_EscapePlayer(actor, playerShip);
+                            //run away                            
+                            return new State_EscapePlayer(actor, playerShip);
                         }
                     }
                     //run away

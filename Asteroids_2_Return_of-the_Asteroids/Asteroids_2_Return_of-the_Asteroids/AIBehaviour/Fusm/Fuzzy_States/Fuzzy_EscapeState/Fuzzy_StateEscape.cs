@@ -30,12 +30,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
             return activationLevel;
         }
 
-        public void SetIsActive(bool booleanState)
+        public void SetCanActivate(bool booleanState)
         {
             CanActivate = booleanState;
         }
 
-        public bool GetIsActive()
+        public bool GetCanActivate()
         {
             return CanActivate;
         }

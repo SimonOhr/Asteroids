@@ -8,9 +8,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     public interface IFusmState
     {
-        void SetIsActive(bool booleanState);
+        void SetCanActivate(bool booleanState);
 
-        bool GetIsActive();
+        bool GetCanActivate();
 
         void Init();
 

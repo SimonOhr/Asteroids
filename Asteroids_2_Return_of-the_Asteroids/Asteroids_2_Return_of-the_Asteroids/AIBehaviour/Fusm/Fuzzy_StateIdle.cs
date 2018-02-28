@@ -62,7 +62,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
           
         }
 
-        public bool GetIsActive()
+        public bool GetCanActivate()
         {
             throw new NotImplementedException();
         }
@@ -77,7 +77,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
            
         }
 
-        public void SetIsActive(bool booleanState)
+        public void SetCanActivate(bool booleanState)
         {
             throw new NotImplementedException();
         }

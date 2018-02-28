@@ -39,9 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AIBehaviour\DecisionTree.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_High.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Low.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_Med.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack.cs" />
     <Compile Include="AIBehaviour\State_AttackPlayer.cs" />
     <Compile Include="AIBehaviour\State_AvoidIncomingObject.cs" />
     <Compile Include="Camera.cs" />
@@ -51,10 +49,8 @@
     <Compile Include="AIBehaviour\Fusm\FusmMachine.cs" />
     <Compile Include="AIBehaviour\Fusm\Fusm_RuleBook.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_StateIdle.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_Med.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase_High.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_EscapeState\Fuzzy_StateEscape.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_AttackStates\Fuzzy_StateAttack_Low.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Enteties\Projectiles\LaserProjectile.cs" />
     <Compile Include="Menu\GUI.cs" />

@@ -12,11 +12,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         PlayerShip playerShip;
 
-        Vector2 velocity/*, newDirection*/;
+        Vector2 velocity, baseVelocity/*, newDirection*/;
       //  public Vector2 Direction { get; set; }
        // public Vector2 Pos { get; private set; }
         private Vector2 avoidance;
-        int radius = 50, attackRange = 400, searchRadius = 600;
+        int radius = 50, attackRange = 300, searchRadius = 400;
        
         public LaserCanon Canon { get; set; }        
        // float rotationSpeed;
@@ -36,10 +36,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             this.playerShip = playerShip;
             velocity = new Vector2(3, 3);
-            Canon = new LaserCanon(pos);
-            weapons.Add(Canon);
+            //Canon = new LaserCanon(pos);
+            weapons.Add(new LaserCanon(pos));
+            weapons.Add(new MiniMissileLauncher(pos));
             currentHealth = 3;
             fusm = new FusmMachine(this, playerShip);
+            baseVelocity = new Vector2(10, 10);
             //fusm.AddState(new Fuzzy_StateChase(this, playerShip));
            // pirateFSM = new FSM();
             // pirateFSM.ChangeState(new State_SearchForTarget(this, playerShip, pirateFSM));
@@ -50,8 +52,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Update(GameTime gt)
         {
             Pos = base.Pos;
-            Canon.SetPos(base.Pos);
-            Canon.Update(gt);            
+            //Canon.SetPos(base.Pos);
+            //Canon.Update(gt);
+            foreach (WeaponBase weapon in weapons)
+            {
+                weapon.SetPos(base.Pos);
+                weapon.Update(gt);
+            }
             base.Pos += velocity * Direction + avoidance;
             base.ShipRotation(base.Pos + (Direction + avoidance), base.Pos);
           //  pirateFSM.ChangeState(dt.CommenceIfStatements());
@@ -62,7 +69,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public override void Draw(SpriteBatch sb)
         {
-            Canon.Draw(sb);
+            //Canon.Draw(sb);
+            foreach (WeaponBase weapon in weapons)
+            {
+                weapon.Draw(sb);
+            }
             sb.Draw(AssetsManager.shipTex, base.Pos, null, Color.Red, currentRotation + MathHelper.ToRadians(-90), new Vector2(AssetsManager.shipTex.Width / 2, AssetsManager.shipTex.Height / 2), 1, SpriteEffects.None, 0);
             base.Draw(sb);
         }
@@ -82,9 +93,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //    pirateFSM.ChangeState(newState);
         //}
     
-        public WeaponBase GetWeapon()
+        public List<WeaponBase> GetWeapons()
         {
-            return Canon;
+            return weapons;
         }
 
         public void SetAvoidance(Vector2 avoidance)
@@ -116,16 +127,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
         //public void SetNewDirection(Vector2 direction)
         //{
         //   newDirection = direction;
-        //}
-
-        public int GetAmmoCount()
-        {
-            return GetWeapon().GetGuncharge();
-        }
+        //}        
 
         public override int GetMaxHealth()
         {
             return maxHealth;
+        }
+
+        public void SetSpeed(Vector2 newSpeed)
+        {
+            velocity = newSpeed;
+        }
+
+        public Vector2 GetBaseVelocity()
+        {
+            return baseVelocity;
         }
     }
 }

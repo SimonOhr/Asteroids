@@ -24,38 +24,41 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public void Update()
         {
            
-            rules.States();
-            highestActivationLevel = 0;
+            rules.States();            
             if (states.Count != 0)
             {
                 activeStates.Clear();
                 for (int i = 0; i < states.Count; i++)
                 {
                     rules.CheckRules(states[i]);
-
-                    if (highestActivationLevel <= states[i].CalculateActivation() && states[i].GetIsActive())
+                   // Console.WriteLine(states[i].CalculateActivation() + " " + states[i].GetName());
+                    if (/*highestActivationLevel <= states[i].CalculateActivation() &&*/ states[i].GetCanActivate() && states[i].CalculateActivation() > 0)
                     {
-                        if (highestActivationLevel < states[i].CalculateActivation())
-                        {
-                            highestActivationLevel = states[i].CalculateActivation();
-                            priorityState = states[i];
-                          //  Console.WriteLine(states[i].GetName());
-                        }                      
+                        //if (highestActivationLevel < states[i].CalculateActivation())
+                        //{
+                        //    highestActivationLevel = states[i].CalculateActivation();
+                        //    priorityState = states[i];
+                        //  //  Console.WriteLine(states[i].GetName());
+                        //}   
+                        activeStates.Add(states[i]);
+                       // Console.WriteLine(states[i].GetName());
                     }
-                    else
-                        nonActiveStates.Add(states[i]);                    
+                    //else
+                    //    nonActiveStates.Add(states[i]);                    
                 }
-                activeStates.Add(priorityState);
+               // activeStates.Add(priorityState);
 
-                if (nonActiveStates.Count > 0)
-                    for (int i = 0; i < nonActiveStates.Count; i++)
-                    {
-                        nonActiveStates[i].Exit();
-                    }
+                //if (nonActiveStates.Count > 0)
+                //    for (int i = 0; i < nonActiveStates.Count; i++)
+                //    {
+                //        nonActiveStates[i].Exit();
+                //    }
                 if (activeStates.Count > 0)
                     for (int i = 0; i < activeStates.Count; i++)
                     {
+                        activeStates[i].Enter();
                         activeStates[i].Update();
+                        activeStates[i].Exit();
                     }
                 //ResetStates();
                 nonActiveStates.Clear();

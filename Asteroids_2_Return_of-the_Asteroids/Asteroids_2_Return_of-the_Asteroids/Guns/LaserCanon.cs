@@ -20,6 +20,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             chargeRate = 1000f;
             gunChargeTimerReset = 0;
             maxGunCharge = 3;
+            Name = "LaserCanon";
         }
 
         public override void Update(GameTime gt)
@@ -80,7 +81,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             if(currentGunCharge > 0)
             shoot = temp;        
-        }
+        }       
 
         public override void Draw(SpriteBatch sb)
         {

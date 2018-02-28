@@ -20,6 +20,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             chargeRate = 1000f;
             gunChargeTimerReset = 0;
             maxGunCharge = 5;
+            Name = "MiniMissileLauncher";
         }
 
         public override void Update(GameTime gt)
@@ -32,12 +33,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             GunCharging(gt);
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed && currentGunCharge > 0)
+            if (Mouse.GetState().RightButton == ButtonState.Pressed && currentGunCharge > 0 || shoot && currentGunCharge > 0)
             {
                 projectileTargetPos = KeyMouseReader.CursorViewToWorldPosition;
-                PlayerIsShooting(gt);
+                IsShooting(gt);
             }
-            if (Mouse.GetState().RightButton == ButtonState.Released)
+            if (Mouse.GetState().RightButton == ButtonState.Released || !shoot)
             {
                 gunCooldownTimer = 500f;
             }
@@ -60,7 +61,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
         }
 
-        virtual protected void PlayerIsShooting(GameTime gt)
+        virtual protected void IsShooting(GameTime gt)
         {
             gunCooldownTimer += gt.ElapsedGameTime.TotalMilliseconds;
 
@@ -72,6 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 gunCooldownTimer = gunCooldownTimerReset;
                 // Console.WriteLine("number of shots " + projectiles.Count);                
                 SoundManager.PlayShot();
+                shoot = false;
             }
         }
 

@@ -42,29 +42,25 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void States()
         {
-           // fusm.AddState(new Fuzzy_StateChase_Low(actor, target));
-           // fusm.AddState(new Fuzzy_StateChase_Med(actor, target));
-            fusm.AddState(new Fuzzy_StateChase_High(actor, playerShip));
-           // fusm.AddState(new Fuzzy_StateAttack_Low(actor, target));
-           // fusm.AddState(new Fuzzy_StateAttack_Med(actor, target));
-            fusm.AddState(new Fuzzy_StateAttack_High(actor, playerShip));
-            fusm.AddState(new Fuzzy_StateEscape(actor, playerShip));
-           // fusm.AddState(new Fuzzy_StateEscape(actor, target));
-         //   fusm.AddState(new Fuzzy_StateIdle(actor, target));
+            
+            fusm.AddState(new Fuzzy_StateChase(actor, playerShip));          
+            fusm.AddState(new Fuzzy_StateAttack(actor, playerShip));
+            fusm.AddState(new Fuzzy_StateEscape(actor, playerShip));          
+            //   fusm.AddState(new Fuzzy_StateIdle(actor, target));
             //RuleBook();
         }
 
         public void CheckRules(IFusmState state)
         {
-            if(state is Fuzzy_StateAttack_High)
+            if (state is Fuzzy_StateAttack)
             {
                 AttackStateFuzzyRules(state);
             }
-            else if (state is Fuzzy_StateChase_High)
+            else if (state is Fuzzy_StateChase)
             {
                 ChaseStateFuzzyRules(state);
             }
-            else if(state is Fuzzy_StateEscape)
+            else if (state is Fuzzy_StateEscape)
             {
                 EscapeStateFuzzyRules(state);
             }
@@ -72,28 +68,35 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void AttackStateFuzzyRules(IFusmState state)
         {
-            if(actor.GetAmmoCount() > 0)
+            List<WeaponBase> ammoForEachWeaponSystem = actor.GetWeapons();
+            
+            foreach (WeaponBase weapon in ammoForEachWeaponSystem)
             {
-                if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
-                    state.SetIsActive(true);
-                //else if (urgency <= urgencyHigh && urgency > urgencyMedium && actor.GetHealth() > playerShip.GetHealth())
-                //    state.IsActive(true);
-                //else if (urgency <= urgencyMedium && urgency > urgencyLow && actor.GetHealth() > playerShip.GetHealth() && playerShip.GetHealth() == escapeAtHealth)
-                //    state.IsActive(true);
-            }                  
+                if (weapon.canShoot())
+                {
+                    if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
+                        state.SetCanActivate(true);
+                }
+            }
+
+            //else if (urgency <= urgencyHigh && urgency > urgencyMedium && actor.GetHealth() > playerShip.GetHealth())
+            //    state.IsActive(true);
+            //else if (urgency <= urgencyMedium && urgency > urgencyLow && actor.GetHealth() > playerShip.GetHealth() && playerShip.GetHealth() == escapeAtHealth)
+            //    state.IsActive(true);
+
         }
 
         private void ChaseStateFuzzyRules(IFusmState state)
         {
             if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
-                state.SetIsActive(true);  
+                state.SetCanActivate(true);
         }
 
         private void EscapeStateFuzzyRules(IFusmState state)
         {
             float tempDist = Vector2.Distance(actor.Pos, playerShip.Pos);
-            if (tempDist < actor.GetSearchRadius())
-                state.SetIsActive(true);
+            if (tempDist < actor.GetSearchRadius() && actor.GetHealth() <= escapeAtHealth)
+                state.SetCanActivate(true);
         }
 
         //private void RuleBook()
