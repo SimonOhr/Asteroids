@@ -122,23 +122,23 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Update()
         {
-            foreach (WeaponBase weapon in weapons)
-            {
-                if (activationLevel > 0.8)
-                    if (weapon.canShoot() && weapon.Name == "MiniMissileLauncher" && activationLevel > 0.8)
-                    {
-                        //Console.WriteLine("FIRE MISSILES");
-                        weapon.SetTargetPos(target.Pos);
-                        weapon.Shoot(true);
-                    }
+            //foreach (WeaponBase weapon in weapons)
+            //{
+            //    if (activationLevel > 0.8)
+            //        if (weapon.canShoot() && weapon.Name == "MiniMissileLauncher" && activationLevel > 0.8)
+            //        {
+            //            //Console.WriteLine("FIRE MISSILES");
+            //            weapon.SetTargetPos(target.Pos);
+            //            weapon.Shoot(true);
+            //        }
 
-                if (weapon.canShoot() && weapon.Name == "LaserCanon")
-                {
-                    weapon.SetTargetPos(target.Pos);
-                    weapon.Shoot(true);
-                }
+            //    if (weapon.canShoot() && weapon.Name == "LaserCanon")
+            //    {
+            //        weapon.SetTargetPos(target.Pos);
+            //        weapon.Shoot(true);
+            //    }
 
-            }
+            //}
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 for (int i = 0; i < states.Count; i++)
                 {
                     rules.CheckRules(states[i]);
-                   // Console.WriteLine(states[i].CalculateActivation() + " " + states[i].GetName());
+                    Console.WriteLine(states[i].CalculateActivation() + " " + states[i].GetName());
                     if (/*highestActivationLevel <= states[i].CalculateActivation() &&*/ states[i].GetCanActivate() && states[i].CalculateActivation() > 0)
                     {
                         //if (highestActivationLevel < states[i].CalculateActivation())

@@ -25,6 +25,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         protected bool shoot;
         public String Name { get; set; }       
         public Vector2 targetPos { get; set; }
+        public ShipBase objectOwner { get; set; }
 
         public WeaponBase(Vector2 pos):base(pos)
         {

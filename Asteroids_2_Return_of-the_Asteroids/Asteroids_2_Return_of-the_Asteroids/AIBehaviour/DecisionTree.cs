@@ -26,60 +26,66 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             var dist = Vector2.Distance(actor.Pos, playerShip.Pos);
 
-            if (dist < actor.GetSearchRadius() || dist < actor.GetAttackRadius())
+            if (dist < actor.GetSearchRadius() || dist < actor.GetAttackRadius() && actor.GetHealth() >= playerShip.GetHealth())
             {
-                if (actor.GetHealth() > playerShip.GetHealth())
+                if (actor.GetHealth() >= playerShip.GetHealth())
                 {
-                    foreach (WeaponBase weapon in ammoForEachWeaponSystem)
-                    {
-                        if (weapon.canShoot())
+                    if (dist < actor.GetAttackRadius())
+
+                        foreach (WeaponBase weapon in ammoForEachWeaponSystem)
                         {
-                            //attack
-                            return new State_AttackPlayer(actor, playerShip);
+                            if (weapon.canShoot())
+                            {
+                                //attack
+                                return new State_AttackPlayer(actor, playerShip, true);
+                            }
                         }
-                    }
                     //chase
-                    return new State_FollowPlayer(actor, playerShip);
+                    return new State_FollowPlayer(actor, playerShip, true);
                 }
                 else
                 {
-                    if (dist <= (actor.GetAttackRadius() * 0.66f) && dist > 0)
-                    {
-                        if (actor.GetHealth() >= playerShip.GetHealth())
-                        {
-                            foreach (WeaponBase weapon in ammoForEachWeaponSystem)
-                            {
-                                if (weapon.canShoot())
-                                {
-                                    //attack
-                                    return new State_AttackPlayer(actor, playerShip);
-                                }
-                            }
-                            //chase                            
-                            return new State_FollowPlayer(actor, playerShip);
-                        }
-                        else
-                        {
-                            foreach (WeaponBase weapon in ammoForEachWeaponSystem)
-                            {
-                                if (weapon.canShoot())
-                                {
-                                    //attack
-                                    return new State_AttackPlayer(actor, playerShip);
-                                }
-                            }
-                            //run away                            
-                            return new State_EscapePlayer(actor, playerShip);
-                        }
-                    }
+                    //if (dist <= (actor.GetAttackRadius() * 0.66f) && dist > 0)
+                    //{
+                        //if (actor.GetHealth() >= playerShip.GetHealth())
+                        //{
+                        //    foreach (WeaponBase weapon in ammoForEachWeaponSystem)
+                        //    {
+                        //        if (weapon.canShoot())
+                        //        {
+                        //            //attack
+                        //            return new State_AttackPlayer(actor, playerShip);
+                        //        }
+                        //    }
+                        //    //chase                            
+                        //    return new State_FollowPlayer(actor, playerShip);
+                        //}
+                        //else
+                        //{
+                        //    foreach (WeaponBase weapon in ammoForEachWeaponSystem)
+                        //    {
+                        //        if (weapon.canShoot())
+                        //        {
+                        //            //attack
+                        //            return new State_AttackPlayer(actor, playerShip);
+                        //        }
+                        //    }
+                        //    //run away                            
+                            return new State_EscapePlayer(actor, playerShip, true);
+                        //}
+                    //}
                     //run away
-                    else
-                        return new State_EscapePlayer(actor, playerShip);
+                    //else
+                      //  return new State_EscapePlayer(actor, playerShip);
                 }
             }
             //idle
             else
-                return new State_Idle(actor);
+            {
+                if (actor.GetHealth() < playerShip.GetHealth())
+                    return new State_EscapePlayer(actor, playerShip, true);
+                return new State_Idle(actor, playerShip, true);
+            }               
         }
     }
 }

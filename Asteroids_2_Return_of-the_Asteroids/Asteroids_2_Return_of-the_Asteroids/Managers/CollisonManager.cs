@@ -123,7 +123,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
                     tempTimer = tempReset;
                 }
             }
-            else if (!TempInvulnarbility)
+            else
             {
                 for (int i = 0; i < asteroids.Count; i++)
                 {
@@ -133,6 +133,30 @@ namespace Asteroids_2_Return_of_the_Asteroids
                         gm.SetShipStatus(true);
                         gm.UpdatePlayerHealth(-1);
                     }
+                }
+                for (int i = 0; i < projectiles.Count; i++)
+                {
+                    if (projectiles[i].objectOwner is PlayerShip)
+                        continue;                    
+                    if(Vector2.Distance(projectiles[i].Pos, gm.GetShipPos()) < 50)
+                    {
+                        TempInvulnarbility = true;
+                        gm.SetShipStatus(true);
+                        gm.UpdatePlayerHealth(-1);
+                    }
+                }
+            }
+        }
+
+        public void CheckIfPirateisHit()
+        {
+            for (int i = 0; i < projectiles.Count; i++)
+            {
+                if (projectiles[i].objectOwner is Pirate)
+                    continue;
+                if (Vector2.Distance(projectiles[i].Pos, gm.GetPiratePos()) < 50)
+                {                   
+                    gm.UpdatePirateHealth(-1);
                 }
             }
         }

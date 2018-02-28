@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         public static Texture2D backgroundTex, shipTex, asteroid1Tex, asteroid2Tex, crosshairTex, laserProjectileTex,
             bulletTex, buttonTex, transBackgroundTex, particleStarTex, particleCircleTex, particleDiamondTex, particleNewCircleTestTex,
-            spaceStationTex, missileTex, droneTex, healthBarTex;
+            spaceStationTex, missileTex, droneTex, healthBarTex, directionalArrow;
 
         public static SpriteFont Text { get; set; }
         public static SpriteFont Score { get; set; }
@@ -46,6 +46,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             missileTex = Content.Load<Texture2D>("missileTex_v1");
             droneTex = Content.Load<Texture2D>("DroneTEST");
             healthBarTex = Content.Load<Texture2D>("Healthbar_v3");
+            directionalArrow = Content.Load<Texture2D>("directionalArrow");
 
             Text = Content.Load<SpriteFont>(@"text");
             Score = Content.Load<SpriteFont>(@"Score");

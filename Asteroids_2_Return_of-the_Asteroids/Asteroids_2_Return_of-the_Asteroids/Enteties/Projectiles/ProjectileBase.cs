@@ -21,7 +21,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public bool doRemove;               
       
-        protected float rotation;        
+        protected float rotation;
+
+        public ShipBase objectOwner { get; set; }
 
         public ProjectileBase(Vector2 pos, Vector2 targetPos):base(pos)
         {           
@@ -67,6 +69,6 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override void Draw(SpriteBatch sb)
         {
             sb.Draw(projectileTex, Pos, null, Color.White, rotation + MathHelper.ToRadians(90), new Vector2(projectileTex.Width / 2 , projectileTex.Height / 2), 1, SpriteEffects.None, 1);
-        }
+        }        
     }
 }

@@ -22,15 +22,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             hitbox = new Rectangle((int)pos.X, (int)pos.Y, Tex.Width, Tex.Height);
 
-            maxHealth = 3;
+            maxHealth = 10;
             currentHealth = 3;
             
             //srcHealthbarTex = new Rectangle(0, 0, hitPoints * healthmultiplier, AssetsManager.healthBarTex.Height);
 
             EffectsManager.CreateAfterBurnerEffect(Pos);
 
-            weapons.Add(new LaserCanon(Pos));
-            weapons.Add(new MiniMissileLauncher(pos));
+            weapons.Add(new LaserCanon(Pos, this));
+            weapons.Add(new MiniMissileLauncher(pos, this));
 
            
             speed = 4;
@@ -43,10 +43,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             EffectsManager.UpdateAfterBurnerEffect(Pos - (GetDirection(mousePos, Pos) * 50));
             drone.Update(gt);            
             mousePos = KeyMouseReader.CursorViewToWorldPosition;
-            //oldMousePos = mousePos;
-            //mousePos.X = Mouse.GetState().X;
-            //mousePos.Y = Mouse.GetState().Y;
-           // var deltaMouse = mousePos - oldMousePos;
+            
 
             Pos += speed * GetDirection(mousePos, Pos);
             SoftInSoftOut();
@@ -120,6 +117,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public override int GetMaxHealth()
         {
             return maxHealth;
+        }
+
+        public Vector2 GetShipDirection()
+        {
+            return GetDirection(mousePos, Pos);
         }
     }
 }

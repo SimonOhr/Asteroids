@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 {
     class MiniMissileLauncher : WeaponBase
     {
-        public MiniMissileLauncher(Vector2 pos) : base(pos)
+        public MiniMissileLauncher(Vector2 pos, ShipBase objectOwner) : base(pos)
         {
             gunRateOfFire = 0.15f;
             gunCooldownTimer = 0;
@@ -21,6 +21,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
             gunChargeTimerReset = 0;
             maxGunCharge = 5;
             Name = "MiniMissileLauncher";
+            this.objectOwner = objectOwner;
         }
 
         public override void Update(GameTime gt)
@@ -67,7 +68,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             if (gunCooldownTimer > gunRateOfFire)
             {
-                projectile = new MiniMissileProjectile(Pos, projectileTargetPos); // create weapon
+                projectile = new MiniMissileProjectile(Pos, projectileTargetPos, objectOwner); // create weapon
                 projectiles.Add(projectile);
                 currentGunCharge--;
                 gunCooldownTimer = gunCooldownTimerReset;

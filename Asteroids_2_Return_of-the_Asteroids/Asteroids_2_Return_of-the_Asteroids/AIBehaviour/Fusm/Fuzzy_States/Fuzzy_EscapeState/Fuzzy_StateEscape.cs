@@ -22,9 +22,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
             name = "Escape";
         }
         public float CalculateActivation()
-        {           
-            activationLevel = (actor.GetMaxHealth() / actor.GetHealth()) -1; //-1 to "start count" when health is -> 0
-            
+        {
+            // activationLevel = (actor.GetMaxHealth() / actor.GetHealth()) -1; //-1 to "start count" when health is -> 0
+
+            if (actor.GetHealth() == 3)
+                activationLevel = 0;
+            else if (actor.GetHealth() == 2)
+                activationLevel = 0.5f;
+            else
+                activationLevel = 1;
+
             CheckBounds();
 
             return activationLevel;
@@ -60,12 +67,12 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Enter()
         {
-          
+
         }
 
         public void Exit()
         {
-           
+
         }
 
         public string GetName()
@@ -75,14 +82,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void Init()
         {
-           
-        }
 
-       
+        }
 
         public void Update()
         {
-            actor.Direction *= -1;
+            Vector2 Direction = new Vector2(target.Pos.X - actor.Pos.X, target.Pos.Y - actor.Pos.Y);
+
+            actor.Direction = Vector2.Normalize(Direction) * -1;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         private static Rectangle srcHealthbarTex;
         static int healthmultiplier = (AssetsManager.healthBarTex.Width / 10);
         public static ButtonMenu startMenu, hiScMenu, endgameMenu, pauseMenu;
-        public static Vector2 defaultPositionWorldToView, defaultPositionViewToWorld, healthbarPositionWorldToView, healthBarPositionViewToWorld, scoreFontPositionWorldToView, scoreFontPositionViewToWorld;
+        public static Vector2 defaultPositionWorldToView, defaultPositionViewToWorld, healthbarPositionWorldToView, healthBarPositionViewToWorld, scoreFontPositionWorldToView, scoreFontPositionViewToWorld, directionalArrowWorldToView, directionalArrowViewToWorld;
         private static Rectangle screenRec;
 
         public static void Load(Rectangle screenRec, int playerHealth)
@@ -24,12 +24,14 @@ namespace Asteroids_2_Return_of_the_Asteroids
             srcHealthbarTex = new Rectangle(0, 0, playerHealth * healthmultiplier, AssetsManager.healthBarTex.Height);
             healthbarPositionWorldToView = Vector2.Zero;
             scoreFontPositionWorldToView = new Vector2(0, 50);
+            directionalArrowWorldToView = new Vector2(100, 300);
         }
         public static void UpdateGUIMatrix()
         {
             healthBarPositionViewToWorld = Vector2.Transform(healthbarPositionWorldToView, Matrix.Invert(KeyMouseReader.PassCameraInformation().GetTransform()));
             scoreFontPositionViewToWorld = Vector2.Transform(scoreFontPositionWorldToView, Matrix.Invert(KeyMouseReader.PassCameraInformation().GetTransform()));
             defaultPositionViewToWorld = Vector2.Transform(defaultPositionWorldToView, Matrix.Invert(KeyMouseReader.PassCameraInformation().GetTransform()));
+            directionalArrowViewToWorld = Vector2.Transform(directionalArrowWorldToView, Matrix.Invert(KeyMouseReader.PassCameraInformation().GetTransform()));
         }
 
         public static void DrawHealthBar(SpriteBatch sb, int playerHealth)
@@ -49,6 +51,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             sb.DrawString(AssetsManager.Score, "Score: " + Game1.score, scoreFontPositionViewToWorld, Color.White);
             //sb.DrawString(AssetsManager.text, "Hull Hitpoints: " + ShipBase.hitPoints, new Vector2(10, 30), Color.White);
+        }
+
+        public static void DrawDirectionalArrow(SpriteBatch sb, float direction)
+        {            
+            sb.Draw(AssetsManager.directionalArrow, directionalArrowViewToWorld, null, Color.White, direction, new Vector2(AssetsManager.directionalArrow.Width / 2, AssetsManager.directionalArrow.Height / 2), 1, SpriteEffects.None, 1);           
         }
         /// <summary>
         /// creating menus here, so that their position is correct, the way the classes uses the position means, after they're craeted, the position cannot be updated, which would be a much better solution.

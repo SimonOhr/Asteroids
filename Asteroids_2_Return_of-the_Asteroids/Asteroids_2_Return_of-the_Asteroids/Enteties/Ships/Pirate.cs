@@ -22,13 +22,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
        // float rotationSpeed;
 
         //FSM test-------------------------------
-         //FSM pirateFSM;
-
-        //Fuzzy test ----------------------------
-         FusmMachine fusm;
+         
+        public FSM pirateFSM { get; set; }
+                                           //Fuzzy test ----------------------------
+        FusmMachine fusm;
 
         //Decisiontree test----------------------
-        //DecisionTree dt;
+        DecisionTree dt;
 
         private Vector2 foundTargetPos;
 
@@ -37,15 +37,15 @@ namespace Asteroids_2_Return_of_the_Asteroids
             this.playerShip = playerShip;
             velocity = new Vector2(3, 3);
             //Canon = new LaserCanon(pos);
-            weapons.Add(new LaserCanon(pos));
-            weapons.Add(new MiniMissileLauncher(pos));
+            weapons.Add(new LaserCanon(pos, this));
+            weapons.Add(new MiniMissileLauncher(pos, this));
             currentHealth = 3;
             fusm = new FusmMachine(this, playerShip);
             baseVelocity = new Vector2(10, 10);
             //fusm.AddState(new Fuzzy_StateChase(this, playerShip));
-           // pirateFSM = new FSM();
-            // pirateFSM.ChangeState(new State_SearchForTarget(this, playerShip, pirateFSM));
-           // dt = new DecisionTree(this, playerShip);
+            pirateFSM = new FSM();
+            pirateFSM.ChangeState(new State_BaseCase(this, playerShip, pirateFSM)); //basecase
+            dt = new DecisionTree(this, playerShip);
 
         }
 
@@ -61,10 +61,10 @@ namespace Asteroids_2_Return_of_the_Asteroids
             }
             base.Pos += velocity * Direction + avoidance;
             base.ShipRotation(base.Pos + (Direction + avoidance), base.Pos);
-          //  pirateFSM.ChangeState(dt.CommenceIfStatements());
+           // pirateFSM.ChangeState(dt.CommenceIfStatements());
           //  var a = UpdateTargetList(gt, attackRange);
-             // pirateFSM.UpdateState();   
-            fusm.Update();
+              pirateFSM.UpdateState();   
+           // fusm.Update();
         }
 
         public override void Draw(SpriteBatch sb)

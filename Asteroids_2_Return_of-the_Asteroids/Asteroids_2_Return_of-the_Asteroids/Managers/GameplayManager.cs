@@ -17,7 +17,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         
         CollisonManager cm;
         DefaultSpaceStation st;
-        Pirate pirateTEST;
+        Pirate pirateShip;
         Asteroid asteroid;
         public static List<Asteroid> asteroids = new List<Asteroid>();
 
@@ -56,7 +56,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             SoundManager.PlayBgMusic();
 
-            pirateTEST = new Pirate(new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height / 2), Ship);
+            pirateShip = new Pirate(new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height / 2), Ship);
         }        
 
         private void CreatePlayerShip()
@@ -73,7 +73,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {                        
             cursorPosition = KeyMouseReader.CursorViewToWorldPosition;
             GUI.UpdateGUIMatrix();
-            CreateAsteroids(gt);
+            //CreateAsteroids(gt);
             //CheckIfAsteroidIsInPlay();
             Ship.Update(gt);
             st.Update(gt);           
@@ -87,7 +87,9 @@ namespace Asteroids_2_Return_of_the_Asteroids
             cm.CheckIfAsteroidIsHit();
             cm.CheckIfAsteroidInPlay();
             cm.CheckIfShipIsHit(gt);
-            pirateTEST.Update(gt);
+            cm.CheckIfPirateisHit();            
+            if(pirateShip.GetHealth() > 0)
+                pirateShip.Update(gt);
         }       
         
         private void CreateAsteroids(GameTime gt)
@@ -174,16 +176,21 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 }
 
             EffectsManager.Draw(sb);
-
-            pirateTEST.Draw(sb);
+            if (pirateShip.GetHealth() > 0)
+                pirateShip.Draw(sb);
             Ship.Draw(sb);
             GUI.DrawHealthBar(sb, GetPlayerShipHealth());
+            GUI.DrawDirectionalArrow(sb, GetDirectionFromPirateToShip());
             foreach (Asteroid tempAsteroid in asteroids)
             {
                 tempAsteroid.Draw(sb);
             }
         }
-
+        float GetDirectionFromPirateToShip()
+        {
+            Vector2 directionOfShip = pirateShip.Pos - Ship.Pos;
+            return (float)Math.Atan2(directionOfShip.Y, directionOfShip.X);                 
+        }
         public ref List<WeaponBase> GetWeaponeList()
         {
             return ref Ship.GetWeaponList();
@@ -218,6 +225,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
         {
             return Ship.Tex;
         } 
+
+        public Vector2 GetPiratePos()
+        {
+            return pirateShip.Pos;
+        }
         
         public int GetPlayerShipHealth()
         {
@@ -231,7 +243,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public int GetPirateHealth()
         {
-            return pirateTEST.GetHealth();
+            return pirateShip.GetHealth();
         }
 
         public void UpdatePlayerHealth(int deltaHealth)
@@ -241,7 +253,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         public void UpdatePirateHealth(int deltaHealth)
         {
-            pirateTEST.SetHealth(deltaHealth);
+            pirateShip.SetHealth(deltaHealth);
         }
     }
 }

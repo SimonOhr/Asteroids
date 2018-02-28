@@ -11,7 +11,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
     class LaserProjectile: ProjectileBase
     {
         
-        public LaserProjectile(Vector2 pos, Vector2 targetPos):base(pos, targetPos)
+        public LaserProjectile(Vector2 pos, Vector2 targetPos, ShipBase objectOwner):base(pos, targetPos)
         {
             projectileTex = AssetsManager.laserProjectileTex;
 
@@ -19,7 +19,8 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
             projectileRange = 800;
 
-            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 30, 30);            
+            hitbox = new Rectangle((int)pos.X, (int)pos.Y, 30, 30);
+            this.objectOwner = objectOwner;
         }       
 
         public override void Update(GameTime gt)

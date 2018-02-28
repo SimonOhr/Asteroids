@@ -12,7 +12,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         FusmMachine fusm;
         Pirate actor;
         PlayerShip playerShip;
-        float urgencyHigh = 0.66f, urgencyMedium = 0.33f, urgencyLow = 0.0f;
+        //float urgencyHigh = 0.66f, urgencyMedium = 0.33f, urgencyLow = 0.0f;
         int escapeAtHealth = 1;
         //Fuzzy_StateAttack_Low stateAttackLow;
         //Fuzzy_StateAttack_Med stateAttackMed;
@@ -88,7 +88,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         private void ChaseStateFuzzyRules(IFusmState state)
         {
-            if (actor.GetHealth() >= playerShip.GetHealth() && actor.GetHealth() > escapeAtHealth)
+            if (/*actor.GetHealth() >= playerShip.GetHealth() &&*/ actor.GetHealth() > escapeAtHealth)
                 state.SetCanActivate(true);
         }
 

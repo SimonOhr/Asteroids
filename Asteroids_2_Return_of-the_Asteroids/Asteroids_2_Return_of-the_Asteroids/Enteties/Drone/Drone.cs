@@ -34,7 +34,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
         public Drone(Vector2 pos, PlayerShip ship) : base(pos)
         {
             this.ship = ship;
-            weapon = new LaserCanon(pos);
+            weapon = new LaserCanon(pos, this);
             tex = AssetsManager.droneTex;
             patrolRadius = 200;
             attackRadius = 150;

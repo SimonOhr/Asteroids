@@ -25,10 +25,11 @@ namespace Asteroids_2_Return_of_the_Asteroids
 
         Random rnd;
 
-        public MiniMissileProjectile(Vector2 pos, Vector2 targetPos) : base(pos, targetPos)
+        public MiniMissileProjectile(Vector2 pos, Vector2 targetPos, ShipBase objectOwner) : base(pos, targetPos)
         {
             this.Pos = pos;
             this.targetPos = targetPos;
+            this.objectOwner = objectOwner;
 
             velocity = new Vector2(1, 1);
 
@@ -54,6 +55,7 @@ namespace Asteroids_2_Return_of_the_Asteroids
           
             GetRotation(targetPos, pos);
             curvePoint = CurveLocation();
+           
                         
             CreatePath();
             

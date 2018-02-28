@@ -10,13 +10,16 @@ namespace Asteroids_2_Return_of_the_Asteroids
     {
         Pirate actor;
         PlayerShip target;
-       // FSM fsm;
+        FSM fsm;
         List<WeaponBase> weapons;
-        public State_AttackPlayer(Pirate actor, PlayerShip target/*, FSM fsm*/)
+        bool isDt;
+        public State_AttackPlayer(Pirate actor, PlayerShip target, bool isDt)
         {
             this.actor = actor;
             this.target = target;
-         //   this.fsm = fsm;
+            this.isDt = isDt;
+            if (!isDt)
+                fsm = actor.pirateFSM;
         }
         public void Enter()
         {
@@ -31,13 +34,13 @@ namespace Asteroids_2_Return_of_the_Asteroids
                 weapon.SetTargetPos(target.Pos);
                 weapon.Shoot(true);
             }
-                     
-          //  fsm.RevertToPreviousState();           
+            if (!isDt)
+                fsm.RevertToPreviousState();
         }
 
         public void Exit()
         {
-            
+
         }
     }
 }

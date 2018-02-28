@@ -48,7 +48,7 @@
     <Compile Include="AIBehaviour\FSM.cs" />
     <Compile Include="AIBehaviour\Fusm\FusmMachine.cs" />
     <Compile Include="AIBehaviour\Fusm\Fusm_RuleBook.cs" />
-    <Compile Include="AIBehaviour\Fusm\Fuzzy_StateIdle.cs" />
+    <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_IdleState\Fuzzy_StateIdle.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_ChaseStates\Fuzzy_StateChase.cs" />
     <Compile Include="AIBehaviour\Fusm\Fuzzy_States\Fuzzy_EscapeState\Fuzzy_StateEscape.cs" />
     <Compile Include="GameObject.cs" />
@@ -87,10 +87,10 @@
     <Compile Include="Enteties\Ships\ShipBase.cs" />
     <Compile Include="Managers\SoundManager.cs" />
     <Compile Include="Guns\WeaponBase.cs" />
-    <Compile Include="AIBehaviour\State_SearchForTarget.cs" />
+    <Compile Include="AIBehaviour\State_BaseCase.cs" />
     <Compile Include="AIBehaviour\State_FollowPlayer.cs" />
     <Compile Include="AIBehaviour\State_Idle.cs" />
-    <Compile Include="State_EscapePlayer.cs" />
+    <Compile Include="AIBehaviour\State_EscapePlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
